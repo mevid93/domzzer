@@ -1,9 +1,11 @@
 const express = require('express')
+const cors = require('cors')
 const serverInfoService = require('./services/serverInfoService')
 const app = express()
 
 // set middlewares into use
 app.use(express.json())
+app.use(cors())
 
 // define usefull variables to hold data
 const slaves = []
