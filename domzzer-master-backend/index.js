@@ -1,11 +1,37 @@
 const express = require('express')
+const serverInfoService = require('./services/serverInfoService')
 const app = express()
-const port = 3001
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+// set middlewares into use
+app.use(express.json())
+
+// define usefull variables to hold data
+const slaves = []
+const vulnerabilities = []
+const testsPerformed = 0
+
+///////////////////// ROUTES //////////////////////
+
+
+app.get('/info', (req, res) => {
+  const info = serverInfoService.getSystemInformation()
+  const details = {
+    "numberOfPotentialVulnerabilities" : vulnerabilities.length,
+    "numberOfSlaves" : slaves.length,
+    "numberOfTestsPerformed" : testsPerformed,
+    "serverDate" : info.time,
+    "serverMemoryMb": info.serverMemoryMb,
+    "serverName" : info.hostname,
+    "serverType" : info.serverType,
+    "serverUptime" : info.uptime,
+    "serverVersion": info.serverVersion,
+  }
+  res.send(details)
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`)
+//////////////// SET TO LISTEN PORT //////////////
+
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`domzzer-master-backend listening on port ${PORT}!`)
 });
