@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const baseUrl = '/api/info'
+const baseUrl = '/api/slaves'
 
-const getInfo = () => {
+const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then(response => response.data)
 }
 
-const service = { getInfo }
+const service = { getAll }
 export default service
