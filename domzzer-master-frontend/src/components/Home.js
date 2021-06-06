@@ -4,7 +4,7 @@ import { serverInfoChange } from '../reducers/ServerInfoReducer'
 import serverInfoService from '../services/ServerInfoService'
 
 const ServerInfo = ({ serverInfo }) => {
-  if (serverInfo === undefined || serverInfo === null) {
+  if (serverInfo === undefined || serverInfo.serverName === undefined) {
     return (
       <div>
         <p>Server information not available!</p>

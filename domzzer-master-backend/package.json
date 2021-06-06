@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../domzzer-master-frontend/ && npm run build --prod && cp -r build ../domzzer-master-backend/"
   },
   "author": "Martin Vidjeskog",
   "license": "GPL-3.0-or-later",
