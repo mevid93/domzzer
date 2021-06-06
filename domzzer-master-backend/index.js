@@ -5,6 +5,7 @@ const app = express()
 
 // set middlewares into use
 app.use(express.json())
+app.use(express.static('build'))
 app.use(cors())
 
 // define usefull variables to hold data
