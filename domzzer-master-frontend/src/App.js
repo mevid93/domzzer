@@ -4,6 +4,7 @@ import {
 } from "react-router-dom"
 import { AppBar, Container, Toolbar, Button } from '@material-ui/core/'
 import Home from './components/Home'
+import Slaves from './components/Slaves'
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
 
           </Route>
           <Route path="/slaves">
-
+            <Slaves />
           </Route>
           <Route path="/">
             <Home />

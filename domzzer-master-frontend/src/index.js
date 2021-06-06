@@ -4,9 +4,11 @@ import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import App from './App'
 import serverInfoReducer from './reducers/ServerInfoReducer'
+import slaveReducer from './reducers/SlaveReducer'
 
 const reducer = combineReducers({
   serverInfo: serverInfoReducer,
+  slaves: slaveReducer
 })
 const store = createStore(reducer)
 

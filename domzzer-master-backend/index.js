@@ -16,25 +16,37 @@ const testsPerformed = 0
 ///////////////////// ROUTES //////////////////////
 
 
-app.get('/info', (req, res) => {
+app.get('/api/info', (req, res) => {
   const info = serverInfoService.getSystemInformation()
   const details = {
-    "numberOfPotentialVulnerabilities" : vulnerabilities.length,
-    "numberOfSlaves" : slaves.length,
-    "numberOfTestsPerformed" : testsPerformed,
-    "serverDate" : info.time,
+    "numberOfPotentialVulnerabilities": vulnerabilities.length,
+    "numberOfSlaves": slaves.length,
+    "numberOfTestsPerformed": testsPerformed,
+    "serverDate": info.time,
     "serverMemoryMb": info.serverMemoryMb,
-    "serverName" : info.hostname,
-    "serverType" : info.serverType,
-    "serverUptime" : info.uptime,
+    "serverName": info.hostname,
+    "serverType": info.serverType,
+    "serverUptime": info.uptime,
     "serverVersion": info.serverVersion,
   }
   res.send(details)
-});
+})
+
+app.get('/api/slaves', (req, res) => {
+  const slaves = [{
+    "id": 0,
+    "name": "slaavikone",
+    "address": "http://127.0.0.0:3333",
+    "status": "UNAVAILABLE",
+    "testsDone": 0,
+    "vulnerabilitiesFound": 0
+  }]
+  res.send(slaves)
+})
 
 //////////////// SET TO LISTEN PORT //////////////
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`domzzer-master-backend listening on port ${PORT}!`)
-});
+})
