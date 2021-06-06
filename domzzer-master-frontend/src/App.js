@@ -2,23 +2,22 @@ import {
   BrowserRouter as Router,
   Switch, Route, Link
 } from "react-router-dom"
+import { AppBar, Container, Toolbar, Button } from '@material-ui/core/'
 import Home from './components/Home'
 
 function App() {
-
-  const padding = {
-    padding: 5
-  }
-
   return (
-    <div>
-      <Router>
-        <div>
-          <Link style={padding} to="/">home</Link>
-          <Link style={padding} to="/slaves">slaves</Link>
-          <Link style={padding} to="/vulnerabilities">vulnerabilities</Link>
-          <Link style={padding} to="/settings">settings</Link>
-        </div>
+    <Router>
+      <Container>
+
+        <AppBar position="static">
+          <Toolbar>
+            <Button color="inherit" component={Link} to="/">home</Button>
+            <Button color="inherit" component={Link} to="/slaves">slaves</Button>
+            <Button color="inherit" component={Link} to="/vulnerabilities">vulnerabilities</Button>
+            <Button color="inherit" component={Link} to="/settings">settings</Button>
+          </Toolbar>
+        </AppBar>
 
         <Switch>
           <Route path="/settings">
@@ -31,11 +30,12 @@ function App() {
 
           </Route>
           <Route path="/">
-            <Home/>
+            <Home />
           </Route>
         </Switch>
-      </Router>
-    </div>
+
+      </Container>
+    </Router>
   )
 }
 
