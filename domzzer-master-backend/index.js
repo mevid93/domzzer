@@ -1,6 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const serverInfoService = require('./services/serverInfoService')
+const Slave = require('./models/slave')
 const app = express()
 
 // set middlewares into use
@@ -9,39 +11,34 @@ app.use(express.static('build'))
 app.use(cors())
 
 // define usefull variables to hold data
-const slaves = []
-const vulnerabilities = []
-const testsPerformed = 0
+const numberOfVulnerabilities = 0
+const numberOfTestsPerformed = 0
 
 ///////////////////// ROUTES //////////////////////
 
 
 app.get('/api/info', (req, res) => {
-  const info = serverInfoService.getSystemInformation()
-  const details = {
-    "numberOfPotentialVulnerabilities": vulnerabilities.length,
-    "numberOfSlaves": slaves.length,
-    "numberOfTestsPerformed": testsPerformed,
-    "serverDate": info.time,
-    "serverMemoryMb": info.serverMemoryMb,
-    "serverName": info.hostname,
-    "serverType": info.serverType,
-    "serverUptime": info.uptime,
-    "serverVersion": info.serverVersion,
-  }
-  res.send(details)
+  Slave.countDocuments({}).then(count => {
+    const info = serverInfoService.getSystemInformation()
+    const details = {
+      "numberOfPotentialVulnerabilities": numberOfVulnerabilities,
+      "numberOfSlaves": count,
+      "numberOfTestsPerformed": numberOfTestsPerformed,
+      "serverDate": info.time,
+      "serverMemoryMb": info.serverMemoryMb,
+      "serverName": info.hostname,
+      "serverType": info.serverType,
+      "serverUptime": info.uptime,
+      "serverVersion": info.serverVersion,
+    }
+    res.send(details)
+  })
 })
 
 app.get('/api/slaves', (req, res) => {
-  const slaves = [{
-    "id": 0,
-    "name": "slaavikone",
-    "address": "http://127.0.0.0:3333",
-    "status": "UNAVAILABLE",
-    "testsDone": 0,
-    "vulnerabilitiesFound": 0
-  }]
-  res.send(slaves)
+  Slave.find({}).then(slaves =>{
+    res.json(slaves)
+  })
 })
 
 //////////////// SET TO LISTEN PORT //////////////
