@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { slavesChange } from '../reducers/SlaveReducer'
 import slaveService from '../services/SlaveService'
@@ -8,7 +9,7 @@ const SlaveTable = ({ slaves }) => {
   return (
     <TableContainer>
       <Table aria-label="simple table">
-      <TableHead>
+        <TableHead>
           <TableRow>
             <TableCell>Server name</TableCell>
             <TableCell>Server addess</TableCell>
@@ -18,7 +19,7 @@ const SlaveTable = ({ slaves }) => {
         <TableBody>
           {slaves.map(s =>
             <TableRow key={s.id}>
-              <TableCell align="left">{s.name}</TableCell>
+              <TableCell align="left"><Link to={`/slaves/${s.id}`}>{s.name}</Link></TableCell>
               <TableCell align="left">{s.address}</TableCell>
               <TableCell align="left">{s.status}</TableCell>
             </TableRow>
