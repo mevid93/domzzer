@@ -7,6 +7,7 @@ import Home from './components/Home'
 import Slaves from './components/Slaves'
 import Slave from './components/Slave'
 import Vulnerabilities from './components/Vulnerabilities'
+import Vulnerability from './components/Vulnerability'
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         <Switch>
           <Route path="/settings">
 
+          </Route>
+          <Route path="/vulnerabilities/:id">
+            <Vulnerability />
           </Route>
           <Route path="/vulnerabilities">
             <Vulnerabilities />
