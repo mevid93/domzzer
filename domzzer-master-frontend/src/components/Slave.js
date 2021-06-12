@@ -10,7 +10,6 @@ const Slave = () => {
   const slaves = useSelector(state => state.slaves)
   const slave = slaves.find(s => s.id === id)
 
-  // try to get the slave from server in case direct url access
   useEffect(() => {
     slaveService.getById(id)
       .then(slave => {

@@ -65,6 +65,17 @@ app.get('/api/vulnerabilities', (req, res) => {
   })
 })
 
+app.get('/api/vulnerabilities/:id', (req, res) => {
+  Vulnerability.findById(req.params.id)
+    .then(vulnerability => {
+      res.json(vulnerability)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(400).end()
+    })
+})
+
 //////////////// SET APP TO LISTEN PORT ////////////////
 
 const PORT = process.env.PORT || 3001
