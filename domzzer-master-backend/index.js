@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const serverInfoService = require('./services/serverInfoService')
 const Slave = require('./models/slave')
+const Vulnerability = require('./models/vulnerability')
 const app = express()
 
 // set middlewares into use
@@ -38,6 +39,9 @@ app.get('/api/info', (req, res) => {
 app.get('/api/slaves', (req, res) => {
   Slave.find({}).then(slaves => {
     res.json(slaves)
+  }).catch(error => {
+    console.log(error)
+    res.status(500).end()
   })
 })
 
@@ -52,7 +56,16 @@ app.get('/api/slaves/:id', (req, res) => {
     })
 })
 
-//////////////// SET TO LISTEN PORT //////////////
+app.get('/api/vulnerabilities', (req, res) => {
+  Vulnerability.find({}).then(vulnerabilities => {
+    res.json(vulnerabilities)
+  }).catch(error => {
+    console.log(error)
+    res.status(500).end()
+  })
+})
+
+//////////////// SET APP TO LISTEN PORT ////////////////
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

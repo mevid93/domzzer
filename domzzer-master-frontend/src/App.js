@@ -6,6 +6,7 @@ import { AppBar, Container, Toolbar, Button } from '@material-ui/core/'
 import Home from './components/Home'
 import Slaves from './components/Slaves'
 import Slave from './components/Slave'
+import Vulnerabilities from './components/Vulnerabilities'
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
 
           </Route>
           <Route path="/vulnerabilities">
-
+            <Vulnerabilities />
           </Route>
           <Route path="/slaves/:id">
             <Slave />
