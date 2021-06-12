@@ -7,5 +7,10 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-const service = { getAll }
+const getById = (id) => {
+  const request = axios.get(`${baseUrl}/${id}`)
+  return request.then(response => response.data)
+}
+
+const service = { getAll, getById }
 export default service

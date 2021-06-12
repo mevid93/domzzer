@@ -41,6 +41,14 @@ app.get('/api/slaves', (req, res) => {
   })
 })
 
+app.get('/api/slaves/:id', (req, res) => {
+  Slave.findById(req.params.id)
+    .then(slave => {
+      res.json(slave)
+    })
+    .catch(error => res.status(400).end())
+})
+
 //////////////// SET TO LISTEN PORT //////////////
 
 const PORT = process.env.PORT || 3001
