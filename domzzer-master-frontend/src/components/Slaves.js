@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { slavesChange } from '../reducers/SlaveReducer'
+import { errorMsgChange } from '../reducers/ErrorMsgReducer'
 import slaveService from '../services/SlaveService'
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core/'
 
@@ -38,7 +39,12 @@ const Slaves = () => {
     slaveService
       .getAll()
       .then(slaves => dispatch(slavesChange(slaves)))
-      .catch(e => console.log("Could not connect to master-server!"))
+      .catch(e => {
+        dispatch(errorMsgChange("Could not retrieve slave information from server!"))
+        setTimeout(() => {
+          dispatch(errorMsgChange(null))
+        }, 5000)
+      })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
