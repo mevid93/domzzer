@@ -4,8 +4,10 @@ const url = process.env.MONGODB_URI
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
   .then(result => {
+    console.log(result)
   })
-  .catch((error) => {
+  .catch(error => {
+    console.log(error)
   })
 
 const slaveSchema = new mongoose.Schema({
