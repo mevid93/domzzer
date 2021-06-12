@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { serverInfoChange } from '../reducers/ServerInfoReducer'
 import serverInfoService from '../services/ServerInfoService'
 import { TableContainer, Table, TableBody, TableRow, TableCell } from '@material-ui/core/'
+import { errorMsgChange } from '../reducers/ErrorMsgReducer'
 
 const ServerInfo = ({ serverInfo }) => {
   if (serverInfo === undefined || serverInfo.serverName === undefined) {
@@ -91,7 +92,12 @@ const Home = () => {
     serverInfoService
       .getInfo()
       .then(info => dispatch(serverInfoChange(info)))
-      .catch(e => console.log("Could not connect to master-server!"))
+      .catch(e => {
+        dispatch(errorMsgChange("Could not retrieve server information!"))
+        setTimeout(() => {
+          dispatch(errorMsgChange(null))
+        }, 5000)
+      })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

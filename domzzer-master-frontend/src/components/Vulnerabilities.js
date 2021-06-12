@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { vulnerabilitiesChange } from '../reducers/VulnerabilityReducer'
+import { errorMsgChange } from '../reducers/ErrorMsgReducer'
 import vulnerabilityService from '../services/VulnerabilityService'
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core/'
 
@@ -43,8 +44,10 @@ const Vulnerabilities = () => {
       .getAll()
       .then(vulnerabilities => dispatch(vulnerabilitiesChange(vulnerabilities)))
       .catch(e => {
-        console.log(e)
-        console.log("Could not connect to master-server!")
+        dispatch(errorMsgChange("Could not retrieve vulnerability information from server!"))
+        setTimeout(() => {
+          dispatch(errorMsgChange(null))
+        }, 5000)
       })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

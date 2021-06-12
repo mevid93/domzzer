@@ -3,6 +3,8 @@ import {
   Switch, Route, Link
 } from "react-router-dom"
 import { AppBar, Container, Toolbar, Button } from '@material-ui/core/'
+import InfoNotification from './components/InfoNotification'
+import ErrorNotification from './components/ErrorNotification'
 import Home from './components/Home'
 import Slaves from './components/Slaves'
 import Slave from './components/Slave'
@@ -22,6 +24,9 @@ function App() {
             <Button color="inherit" component={Link} to="/settings">settings</Button>
           </Toolbar>
         </AppBar>
+
+        <InfoNotification />
+        <ErrorNotification />
 
         <Switch>
           <Route path="/settings">
