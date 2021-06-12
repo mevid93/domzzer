@@ -21,22 +21,22 @@ app.get('/api/info', (req, res) => {
   Slave.countDocuments({}).then(count => {
     const info = serverInfoService.getSystemInformation()
     const details = {
-      "numberOfPotentialVulnerabilities": numberOfVulnerabilities,
-      "numberOfSlaves": count,
-      "numberOfTestsPerformed": numberOfTestsPerformed,
-      "serverDate": info.time,
-      "serverMemoryMb": info.serverMemoryMb,
-      "serverName": info.hostname,
-      "serverType": info.serverType,
-      "serverUptime": info.uptime,
-      "serverVersion": info.serverVersion,
+      'numberOfPotentialVulnerabilities': numberOfVulnerabilities,
+      'numberOfSlaves': count,
+      'numberOfTestsPerformed': numberOfTestsPerformed,
+      'serverDate': info.time,
+      'serverMemoryMb': info.serverMemoryMb,
+      'serverName': info.hostname,
+      'serverType': info.serverType,
+      'serverUptime': info.uptime,
+      'serverVersion': info.serverVersion,
     }
     res.send(details)
   })
 })
 
 app.get('/api/slaves', (req, res) => {
-  Slave.find({}).then(slaves =>{
+  Slave.find({}).then(slaves => {
     res.json(slaves)
   })
 })
@@ -46,7 +46,10 @@ app.get('/api/slaves/:id', (req, res) => {
     .then(slave => {
       res.json(slave)
     })
-    .catch(error => res.status(400).end())
+    .catch(error => {
+      console.log(error)
+      res.status(400).end()
+    })
 })
 
 //////////////// SET TO LISTEN PORT //////////////
