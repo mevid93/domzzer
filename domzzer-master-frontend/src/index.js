@@ -5,10 +5,12 @@ import { Provider } from 'react-redux'
 import App from './App'
 import serverInfoReducer from './reducers/ServerInfoReducer'
 import slaveReducer from './reducers/SlaveReducer'
+import vulnerabilityReducer from './reducers/VulnerabilityReducer'
 
 const reducer = combineReducers({
   serverInfo: serverInfoReducer,
-  slaves: slaveReducer
+  slaves: slaveReducer,
+  vulnerabilities: vulnerabilityReducer,
 })
 const store = createStore(reducer)
 
