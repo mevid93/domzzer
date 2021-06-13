@@ -53,7 +53,7 @@ const Vulnerabilities = () => {
 
   return (
     <div>
-      <h1>domzzer - Vulnerabilities</h1>
+      <h1>domzzer / Vulnerabilities</h1>
       <h3>Vulnerabilities in Database</h3>
       <VulnerabilityTable vulnerabilities={vulnerabilities} />
     </div>

@@ -12,5 +12,10 @@ const getById = (id) => {
   return request.then(response => response.data)
 }
 
-const service = { getAll, getById }
+const create = (newSlave) => {
+  const request = axios.post(baseUrl, newSlave)
+  return request.then(response => response.data)
+}
+
+const service = { getAll, getById , create}
 export default service

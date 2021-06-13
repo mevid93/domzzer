@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { slavesChange } from '../reducers/SlaveReducer'
 import { errorMsgChange } from '../reducers/ErrorMsgReducer'
 import slaveService from '../services/SlaveService'
-import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core/'
+import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Button } from '@material-ui/core/'
 
 const SlaveTable = ({ slaves }) => {
   return (
@@ -49,7 +49,8 @@ const Slaves = () => {
 
   return (
     <div>
-      <h1>domzzer - Slaves</h1>
+      <h1>domzzer / Slaves</h1>
+      <Button color="primary" variant="contained" component={Link} to="/slaves/new">add new slave</Button>
       <h3>Slaves in Database</h3>
       <SlaveTable slaves={slaves} />
     </div>
