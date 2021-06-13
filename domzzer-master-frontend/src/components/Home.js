@@ -102,7 +102,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1>domzzer - Home</h1>
+      <h1>domzzer / Home</h1>
       <h3>Master Server Information</h3>
       <ServerInfo serverInfo={serverInfo} />
       <br />

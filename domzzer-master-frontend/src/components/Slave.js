@@ -29,7 +29,7 @@ const Slave = () => {
 
   return (
     <div>
-      <h1>domzzer - Slaves - {slave.name} </h1>
+      <h1>domzzer / Slaves / {slave.name} </h1>
       <h3>address: {slave.address}</h3>
       <h3>status: {slave.status}</h3>
     </div>

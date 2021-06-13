@@ -45,6 +45,30 @@ app.get('/api/slaves', (req, res) => {
   })
 })
 
+app.post('/api/slaves', (req, res) => {
+  const body = req.body
+
+  if (body.name === undefined || body.address === undefined) {
+    res.status(400).json({ error: 'invalid slave information' }).end()
+    return
+  }
+
+  const slave = new Slave({
+    name: body.name,
+    address: body.address,
+    status: 'OFFLINE',
+    testsDone: 0,
+    vulnerabilitiesFound: 0
+  })
+
+  slave.save().then(savedSlave => {
+    res.json(savedSlave)
+  }).catch(error => {
+    console.log(error)
+    res.status(500).end()
+  })
+})
+
 app.get('/api/slaves/:id', (req, res) => {
   Slave.findById(req.params.id)
     .then(slave => {
