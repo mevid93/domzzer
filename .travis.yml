@@ -1,6 +1,6 @@
 jobs:
   include:
-  
+
     # tests for the domzzer-master-frontend
     - language: node_js
       node_js:
@@ -27,7 +27,4 @@ jobs:
         - cd ../domzzer-slave-backend    
       script:
         - echo "No tests"
-        
-
-
 
