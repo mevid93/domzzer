@@ -1,0 +1,36 @@
+jobs:
+  include:
+
+    # tests for the domzzer-master-frontend
+    - language: node_js
+      node_js:
+        - "stable"
+      cache:
+        directories:
+          - node_modules
+      before_script:
+        - cd ./domzzer-master-frontend
+      script:
+        - npm install
+        - npm run build
+        - echo "No tests"
+  
+    # tests for the domzzer-master-backend
+    - language: node_js
+      node_js:
+        - "stable"
+      before_script:
+        - cd ./domzzer-master-backend
+      script:
+        - echo "No tests"
+
+    # tests for the domzzer-slave-backend
+    - language: python
+      python: 3.6
+      before_install:
+        - cd ./domzzer-slave-backend
+      install:
+        - pip install -r requirements.txt    
+      script:
+        - echo "No tests"
+
