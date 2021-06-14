@@ -8,7 +8,7 @@ In the project directory, you can run:
 
 Runs the app in the development mode.
 
-### 'npm run dev'
+### `npm run dev`
 
 Runs the app in the development mode, where code changes will restart the server.
 
@@ -16,7 +16,7 @@ Runs the app in the development mode, where code changes will restart the server
 
 Builds the domzzer-master-frontend and copies to build folder into the root folder of domzzer-master-backend.
 
-### 'npm run lint'
+### `npm run lint`
 
 Checks errors in coding style.
 
