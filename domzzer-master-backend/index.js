@@ -1,12 +1,13 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const unknownEndpoint = require('./middlewares/unknownEndpoint')
+const errorHandler = require('./middlewares/errorHandler')
 const serverInfoService = require('./services/serverInfoService')
 const Slave = require('./models/slave')
 const Vulnerability = require('./models/vulnerability')
-const app = express()
 
-// set middlewares into use
+const app = express()
 app.use(express.json())
 app.use(express.static('build'))
 app.use(cors())
@@ -36,16 +37,13 @@ app.get('/api/info', (req, res) => {
   })
 })
 
-app.get('/api/slaves', (req, res) => {
+app.get('/api/slaves', (req, res, next) => {
   Slave.find({}).then(slaves => {
     res.json(slaves)
-  }).catch(error => {
-    console.log(error)
-    res.status(500).end()
-  })
+  }).catch(error => next(error))
 })
 
-app.post('/api/slaves', (req, res) => {
+app.post('/api/slaves', (req, res, next) => {
   const body = req.body
 
   if (body.name === undefined || body.address === undefined) {
@@ -63,42 +61,33 @@ app.post('/api/slaves', (req, res) => {
 
   slave.save().then(savedSlave => {
     res.json(savedSlave)
-  }).catch(error => {
-    console.log(error)
-    res.status(500).end()
-  })
+  }).catch(error => next(error))
 })
 
-app.get('/api/slaves/:id', (req, res) => {
+app.get('/api/slaves/:id', (req, res, next) => {
   Slave.findById(req.params.id)
     .then(slave => {
       res.json(slave)
     })
-    .catch(error => {
-      console.log(error)
-      res.status(400).end()
-    })
+    .catch(error => next(error))
 })
 
-app.get('/api/vulnerabilities', (req, res) => {
+app.get('/api/vulnerabilities', (req, res, next) => {
   Vulnerability.find({}).then(vulnerabilities => {
     res.json(vulnerabilities)
-  }).catch(error => {
-    console.log(error)
-    res.status(500).end()
-  })
+  }).catch(error => next(error))
 })
 
-app.get('/api/vulnerabilities/:id', (req, res) => {
+app.get('/api/vulnerabilities/:id', (req, res, next) => {
   Vulnerability.findById(req.params.id)
     .then(vulnerability => {
       res.json(vulnerability)
     })
-    .catch(error => {
-      console.log(error)
-      res.status(400).end()
-    })
+    .catch(error => next(error))
 })
+
+app.use(unknownEndpoint)
+app.use(errorHandler)
 
 //////////////// SET APP TO LISTEN PORT ////////////////
 
