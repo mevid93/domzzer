@@ -22,6 +22,7 @@ jobs:
       before_script:
         - cd ./domzzer-master-backend
       script:
+        - npm run lint
         - echo "No tests"
 
     # tests for the domzzer-slave-backend
