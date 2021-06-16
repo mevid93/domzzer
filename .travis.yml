@@ -5,9 +5,6 @@ jobs:
     - language: node_js
       node_js:
         - "stable"
-      cache:
-        directories:
-          - node_modules
       before_script:
         - cd ./domzzer-master-frontend
       script:
@@ -22,6 +19,8 @@ jobs:
       before_script:
         - cd ./domzzer-master-backend
       script:
+        - npm install
+        - npm run lint
         - echo "No tests"
 
     # tests for the domzzer-slave-backend
