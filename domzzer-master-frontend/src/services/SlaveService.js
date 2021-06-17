@@ -17,5 +17,10 @@ const create = (newSlave) => {
   return request.then(response => response.data)
 }
 
-const service = { getAll, getById , create}
+const remove = (id) => {
+  const request = axios.delete(`${baseUrl}/${id}`)
+  return request.then(response => response.data)
+}
+
+const service = { getAll, getById , create, remove}
 export default service
