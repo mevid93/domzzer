@@ -31,4 +31,12 @@ slavesRouter.get('/:id', (req, res, next) => {
     .catch(error => next(error))
 })
 
+slavesRouter.delete('/:id', (req, res, next) => {
+  Slave.findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.status(204).end()
+    })
+    .catch(error => next(error))
+})
+
 module.exports = slavesRouter
