@@ -21,7 +21,7 @@ jobs:
       script:
         - npm install
         - npm run lint
-        - echo "No tests"
+        - npm run test
 
     # tests for the domzzer-slave-backend
     - language: python
