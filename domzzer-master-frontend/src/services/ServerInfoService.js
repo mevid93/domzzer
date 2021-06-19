@@ -7,5 +7,5 @@ const getInfo = () => {
   return request.then(response => response.data)
 }
 
-const service = { getInfo }
+const service = { getInfo, }
 export default service

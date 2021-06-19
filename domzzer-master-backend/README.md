@@ -20,3 +20,7 @@ Builds the domzzer-master-frontend and copies to build folder into the root fold
 
 Checks errors in coding style.
 
+### `npm run test`
+
+Run automated tests.
+

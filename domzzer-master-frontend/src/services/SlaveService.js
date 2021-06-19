@@ -22,5 +22,5 @@ const remove = (id) => {
   return request.then(response => response.data)
 }
 
-const service = { getAll, getById , create, remove}
+const service = { getAll, getById, create, remove, }
 export default service
