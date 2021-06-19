@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { useMessager } from '../hooks/Messager'
 import { serverInfoChange } from '../reducers/ServerInfoReducer'
 import serverInfoService from '../services/ServerInfoService'
-import { TableContainer, Table, TableBody, TableRow, TableCell } from '@material-ui/core/'
-import { errorMsgChange } from '../reducers/ErrorMsgReducer'
+
+import TableContainer from '@material-ui/core/TableContainer'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableRow from '@material-ui/core/TableRow'
+import TableCell from '@material-ui/core/TableCell'
 
 const ServerInfo = ({ serverInfo }) => {
   if (serverInfo === undefined || serverInfo.serverName === undefined) {
@@ -85,6 +91,7 @@ const VulnerabilityInfo = ({ serverInfo }) => {
 }
 
 const Home = () => {
+  const messager = useMessager()
   const dispatch = useDispatch()
   const serverInfo = useSelector(state => state.serverInfo)
 
@@ -92,11 +99,8 @@ const Home = () => {
     serverInfoService
       .getInfo()
       .then(info => dispatch(serverInfoChange(info)))
-      .catch(e => {
-        dispatch(errorMsgChange("Could not retrieve server information!"))
-        setTimeout(() => {
-          dispatch(errorMsgChange(null))
-        }, 5000)
+      .catch(() => {
+        messager.showErrorMessage("Could not retrieve server information!")
       })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

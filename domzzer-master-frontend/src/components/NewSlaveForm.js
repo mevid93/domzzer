@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
+
 import slaveService from '../services/SlaveService'
-import { useDispatch } from 'react-redux'
-import { errorMsgChange } from '../reducers/ErrorMsgReducer'
-import { infoMsgChange } from '../reducers/InfoMsgReducer'
+import { useMessager } from '../hooks/Messager'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
@@ -26,42 +26,30 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-
 const NewSlaveForm = () => {
-  const dispatch = useDispatch()
+  const messager = useMessager()
   const classes = useStyles()
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const addSlave = (event) => {
     event.preventDefault()
-    const newSlave = {
-      name: name,
-      address: address
-    }
+
+    const newSlave = { name, address, username, password }
+
     slaveService.create(newSlave)
-      .then(result => {
-        dispatch(infoMsgChange("Succesfully added new slave to database!"))
-        setTimeout(() => {
-          dispatch(infoMsgChange(null))
-        }, 5000)
+      .then(() => {
+        messager.showInfoMessage("Succesfully added new slave to database!")
         setName('')
         setAddress('')
+        setUsername('')
+        setPassword('')
       })
-      .catch(error => {
-        dispatch(errorMsgChange("Could not add new slave to database!"))
-        setTimeout(() => {
-          dispatch(errorMsgChange(null))
-        }, 5000)
+      .catch(() => {
+        messager.showErrorMessage("Could not add new slave to database!!!")
       })
-  }
-
-  const handleSlaveNameChange = (event) => {
-    setName(event.target.value)
-  }
-
-  const handleSlaveAddressChange = (event) => {
-    setAddress(event.target.value)
   }
 
   return (
@@ -81,7 +69,7 @@ const NewSlaveForm = () => {
               margin="normal"
               required
               fullWidth
-              onChange={handleSlaveNameChange}
+              onChange={(event) => setName(event.target.value)}
               value={name}
             />
 
@@ -91,8 +79,29 @@ const NewSlaveForm = () => {
               margin="normal"
               required
               fullWidth
-              onChange={handleSlaveAddressChange}
+              onChange={(event) => setAddress(event.target.value)}
               value={address}
+            />
+
+            <TextField
+              label="Username (optional)"
+              variant="outlined"
+              margin="normal"
+              required={false}
+              fullWidth
+              onChange={(event) => setUsername(event.target.value)}
+              value={username}
+            />
+
+            <TextField
+              label="Password (optional)"
+              variant="outlined"
+              margin="normal"
+              required={false}
+              fullWidth
+              type="password"
+              onChange={(event) => setPassword(event.target.value)}
+              value={password}
             />
 
             <Button
@@ -101,9 +110,7 @@ const NewSlaveForm = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
-            >
-              Add
-            </Button>
+            >Add</Button>
 
           </form>
 
