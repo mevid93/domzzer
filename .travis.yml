@@ -20,6 +20,8 @@ jobs:
         - mongodb
       before_script:
         - cd ./domzzer-master-backend
+        - sleep 15
+        - mongo domzzer_test --eval 'db.createUser({user:"admin",pwd:"admin",roles:["readWrite"]});'
       script:
         - npm install
         - npm run lint

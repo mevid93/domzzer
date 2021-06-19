@@ -13,7 +13,6 @@ describe('/api/info', () => {
   })
 
   test('should return info as json', async () => {
-    console.log('RESPONSE FOR GET', response)
     expect(response.status).toEqual(200)
     expect(response.type).toEqual('application/json')
   })
