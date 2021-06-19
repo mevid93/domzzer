@@ -3,6 +3,8 @@ const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
 
+jest.setTimeout(10000)
+
 describe('/api/info', () => {
   let response
 
