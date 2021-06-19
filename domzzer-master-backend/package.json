@@ -4,10 +4,10 @@
   "description": "Backend for the dommzer master node",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\"",
     "build:ui": "rm -rf build && cd ../domzzer-master-frontend/ && npm run build --prod && cp -r build ../domzzer-master-backend/"
   },
   "author": "Martin Vidjeskog",
@@ -20,7 +20,13 @@
     "mongoose-unique-validator": "^2.0.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^7.28.0",
-    "nodemon": "^2.0.7"
+    "jest": "^27.0.4",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

@@ -16,12 +16,16 @@ jobs:
     - language: node_js
       node_js:
         - "stable"
+      services:
+        - mongodb
       before_script:
         - cd ./domzzer-master-backend
+        - sleep 15
+        - mongo domzzer_test --eval 'db.createUser({user:"admin",pwd:"admin",roles:["readWrite"]});'
       script:
         - npm install
         - npm run lint
-        - echo "No tests"
+        - npm run test
 
     # tests for the domzzer-slave-backend
     - language: python
