@@ -16,6 +16,8 @@ jobs:
     - language: node_js
       node_js:
         - "stable"
+      services:
+        - mongodb
       before_script:
         - cd ./domzzer-master-backend
       script:
