@@ -1,14 +1,13 @@
 const slavesRouter = require('express').Router()
 const Slave = require('../models/slave')
 
-slavesRouter.get('/', (req, res, next) => {
-  Slave.find({}).then(slaves => {
-    res.json(slaves)
-  }).catch(error => next(error))
+slavesRouter.get('/', async (request, response) => {
+  const slaves = await Slave.find({})
+  response.json(slaves)
 })
 
-slavesRouter.post('/', (req, res, next) => {
-  const body = req.body
+slavesRouter.post('/', async (request, response) => {
+  const body = request.body
 
   const slave = new Slave({
     name: body.name,
@@ -18,25 +17,31 @@ slavesRouter.post('/', (req, res, next) => {
     vulnerabilitiesFound: 0
   })
 
-  slave.save().then(savedSlave => {
-    res.json(savedSlave)
-  }).catch(error => next(error))
+  const savedSlave = await slave.save()
+  response.json(savedSlave)
 })
 
-slavesRouter.get('/:id', (req, res, next) => {
-  Slave.findById(req.params.id)
-    .then(slave => {
-      res.json(slave)
-    })
-    .catch(error => next(error))
+slavesRouter.get('/:id', async (request, response) => {
+  const slave = await Slave.findById(request.params.id)
+  response.json(slave)
 })
 
-slavesRouter.delete('/:id', (req, res, next) => {
-  Slave.findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.status(204).end()
-    })
-    .catch(error => next(error))
+slavesRouter.put('/:id', async (request, response) => {
+  const slave = await Slave.findByIdAndUpdate(
+    request.params.id,
+    request.body,
+    {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    }
+  )
+  response.json(slave)
+})
+
+slavesRouter.delete('/:id', async (request, response) => {
+  await Slave.findByIdAndRemove(request.params.id)
+  response.status(204).end()
 })
 
 module.exports = slavesRouter
