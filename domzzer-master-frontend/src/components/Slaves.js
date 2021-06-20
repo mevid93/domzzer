@@ -45,7 +45,7 @@ const Slaves = () => {
 
       <Grid container spacing={3} justify="space-around">
 
-        <Grid item xs={6} style={{ display: "flex", justifyContent: "flex-start" }}>
+        <Grid item xs={6} style={{ marginTop: 15, display: "flex", justifyContent: "flex-start" }}>
           <TextField
             onChange={(event) => setFilter(event.target.value)}
             fullWidth

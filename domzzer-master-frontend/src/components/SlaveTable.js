@@ -1,34 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom"
+
+import StyledTableRow from './StyledTableRow'
+import StyledTableCell from './StyledTableCell'
 
 import TableContainer from '@material-ui/core/TableContainer'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
+import TablePagination from '@material-ui/core/TablePagination'
 
 const SlaveTable = ({ slaves }) => {
+  const [page, setPage] = useState(0)
+  const rowsPerPage = 10
+
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, slaves.length - page * rowsPerPage);
+
+
   return (
-    <TableContainer style={{ marginTop: 30 }}>
+    <TableContainer style={{ marginTop: 50 }}>
       <Table aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell>Server name</TableCell>
-            <TableCell>Server addess</TableCell>
-            <TableCell>Server status</TableCell>
-          </TableRow>
+          <StyledTableRow>
+            <StyledTableCell>Server name</StyledTableCell>
+            <StyledTableCell>Server addess</StyledTableCell>
+            <StyledTableCell>Server status</StyledTableCell>
+          </StyledTableRow>
         </TableHead>
         <TableBody>
-          {slaves.map(s =>
-            <TableRow key={s.id}>
-              <TableCell align="left"><Link to={`/slaves/${s.id}`}>{s.name}</Link></TableCell>
-              <TableCell align="left">{s.address}</TableCell>
-              <TableCell align="left">{s.status}</TableCell>
-            </TableRow>
-          )}
+          {slaves
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map(s =>
+              <StyledTableRow key={s.id}>
+                <StyledTableCell align="left"><Link to={`/slaves/${s.id}`}>{s.name}</Link></StyledTableCell>
+                <StyledTableCell align="left">{s.address}</StyledTableCell>
+                <StyledTableCell align="left">{s.status}</StyledTableCell>
+              </StyledTableRow>
+            )}
+          {emptyRows > 0 && (
+            <StyledTableRow style={{ height: 53 * emptyRows }}>
+              <StyledTableCell colSpan={6} />
+            </StyledTableRow>)}
         </TableBody>
       </Table>
+      <TablePagination
+        rowsPerPageOptions={[10]}
+        component="div"
+        count={slaves.length}
+        rowsPerPage={10}
+        page={page}
+        onChangePage={(event, newPage) => setPage(newPage)}
+      />
     </TableContainer>
   )
 }

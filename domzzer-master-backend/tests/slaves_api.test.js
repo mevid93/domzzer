@@ -159,7 +159,6 @@ describe('/api/slaves/:id', () => {
     const { id, ...slave } = slaves[0]
     const updatedSlave = { ...slave, name: 'UpdatedName1' }
     const response = await api.put(`/api/slaves/${id}`).send(updatedSlave)
-    console.log(response.error)
     expect(response.status).toEqual(200)
     expect(response.body.name).toEqual('UpdatedName1')
   })
@@ -168,7 +167,6 @@ describe('/api/slaves/:id', () => {
     const slaves = await slaveHelper.slavesInDb()
     const { id, ...slave } = slaves[0]
     const updatedSlave = { ...slave, name: '12' }
-    console.log(updatedSlave)
     const response = await api.put(`/api/slaves/${id}`).send(updatedSlave)
     expect(response.status).toEqual(400)
   })
