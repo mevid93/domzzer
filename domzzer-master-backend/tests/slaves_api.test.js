@@ -32,6 +32,8 @@ describe('/api/slaves', () => {
       status: 'OFFLINE',
       testsDone: 0,
       vulnerabilitiesFound: 0,
+      username: 'User3',
+      password: 'Password3'
     }
     const slavesBefore = await slaveHelper.slavesInDb()
     const response = await api.post('/api/slaves').send(newSlave)
@@ -92,6 +94,46 @@ describe('/api/slaves', () => {
     const errorText = JSON.parse(response.error.text).error
     expect(errorText).toEqual('Slave validation failed: name: field must be unique!')
   })
+
+  test('should return 400 when posted information contains username but no password', async () => {
+    const newSlave = {
+      name: 'SlaveMachine4',
+      address: 'http:127.0.0.0:1004',
+      status: 'OFFLINE',
+      testsDone: 0,
+      vulnerabilitiesFound: 0,
+      username: 'user4',
+    }
+    const response = await api.post('/api/slaves').send(newSlave)
+    expect(response.status).toEqual(400)
+  })
+
+  test('should return 400 when posted information contains password but no username', async () => {
+    const newSlave = {
+      name: 'SlaveMachine4',
+      address: 'http:127.0.0.0:1004',
+      status: 'OFFLINE',
+      testsDone: 0,
+      vulnerabilitiesFound: 0,
+      password: 'YOLOadmin'
+    }
+    const response = await api.post('/api/slaves').send(newSlave)
+    expect(response.status).toEqual(400)
+  })
+
+  test('should return correct error message when posted information contains password but no username', async () => {
+    const newSlave = {
+      name: 'SlaveMachine4',
+      address: 'http:127.0.0.0:1004',
+      status: 'OFFLINE',
+      testsDone: 0,
+      vulnerabilitiesFound: 0,
+      password: 'YOLOadmin'
+    }
+    const response = await api.post('/api/slaves').send(newSlave)
+    const errorText = JSON.parse(response.error.text).error
+    expect(errorText).toEqual('Slave validation failed: username: field is required when password is defined!')
+  })
 })
 
 describe('/api/slaves/:id', () => {
@@ -104,12 +146,14 @@ describe('/api/slaves/:id', () => {
   test('should return existing slave when trying to get with valid id', async () => {
     const response = await api.get('/api/slaves')
     const slaves = response.body
+    console.log(slaves)
     const slaveToView = slaves[0]
     const resultSlave = await api
       .get(`/api/slaves/${slaveToView.id}`)
       .then(200)
+      .then(response => response.body)
     const processedSlaveToView = JSON.parse(JSON.stringify(slaveToView))
-    expect(resultSlave.body).toEqual(processedSlaveToView)
+    expect(resultSlave).toEqual(processedSlaveToView)
   })
 
   test('should return 404 when trying to get nonexisting slave', async () => {
