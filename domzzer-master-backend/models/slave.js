@@ -29,6 +29,16 @@ const slaveSchema = new mongoose.Schema({
     minimum: [0, 'field value must be at least 0!'],
     required: [true, 'field is required!']
   },
+  username: {
+    type: String,
+    minlength: [5, 'field length must be at least 5 characters!'],
+    required: [function () { return this.password !== undefined }, 'field is required when password is defined!']
+  },
+  password: {
+    type: String,
+    minlength: [8, 'field length must be at least 8 characters!'],
+    required: [function () { return this.username !== undefined }, 'field is required when username is defined!']
+  }
 })
 slaveSchema.plugin(uniqueValidator, { message: 'field must be unique!' })
 

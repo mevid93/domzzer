@@ -1,6 +1,16 @@
 const Slave = require('../models/slave')
+const aes256 = require('../services/aesCryptoService')
 
 const initialSlaves = [
+  {
+    name: 'SlaveMachine0',
+    address: 'http://127.0.0.1:1000',
+    status: 'OFFLINE',
+    testsDone: 50,
+    vulnerabilitiesFound: 0,
+    username: 'admin123',
+    password: aes256.encrypt('DontTellAnyone')
+  },
   {
     name: 'SlaveMachine1',
     address: 'http://127.0.0.1:1001',

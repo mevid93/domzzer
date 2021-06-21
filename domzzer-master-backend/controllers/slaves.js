@@ -1,5 +1,6 @@
 const slavesRouter = require('express').Router()
 const Slave = require('../models/slave')
+const aes256 = require('../services/aesCryptoService')
 
 slavesRouter.get('/', async (request, response) => {
   const slaves = await Slave.find({})
@@ -14,7 +15,9 @@ slavesRouter.post('/', async (request, response) => {
     address: body.address,
     status: 'OFFLINE',
     testsDone: 0,
-    vulnerabilitiesFound: 0
+    vulnerabilitiesFound: 0,
+    username: body.username,
+    password: aes256.encrypt(body.password),
   })
 
   const savedSlave = await slave.save()
@@ -27,16 +30,17 @@ slavesRouter.get('/:id', async (request, response) => {
 })
 
 slavesRouter.put('/:id', async (request, response) => {
-  const slave = await Slave.findByIdAndUpdate(
+  const slave = request.body
+  const updatedSlave = await Slave.findByIdAndUpdate(
     request.params.id,
-    request.body,
+    { ...slave, password: aes256.encrypt(slave.password) },
     {
       new: true,
       runValidators: true,
       context: 'query',
     }
   )
-  response.json(slave)
+  response.json(updatedSlave)
 })
 
 slavesRouter.delete('/:id', async (request, response) => {
