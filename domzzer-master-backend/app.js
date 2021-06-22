@@ -4,8 +4,11 @@ require('express-async-errors')
 const cors = require('cors')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
+const configurator = require('./services/configurationService')
+const usersRouter = require('./controllers/users')
 const infoRouter = require('./controllers/info')
 const slavesRouter = require('./controllers/slaves')
+const loginRouter = require('./controllers/login')
 const vulnerabilitiesRouter = require('./controllers/vulnerabilities')
 const mongoose = require('mongoose')
 
@@ -27,11 +30,15 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 
 app.use(middleware.requestLogger)
 
+app.use('/api/login', loginRouter)
+app.use('/api/users', usersRouter)
 app.use('/api/info', infoRouter)
 app.use('/api/slaves', slavesRouter)
 app.use('/api/vulnerabilities', vulnerabilitiesRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
+
+configurator.configure()
 
 module.exports = app

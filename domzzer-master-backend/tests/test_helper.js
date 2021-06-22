@@ -1,4 +1,5 @@
 const Slave = require('../models/slave')
+const User = require('../models/user')
 const aes256 = require('../services/aesCryptoService')
 
 const initialSlaves = [
@@ -27,7 +28,7 @@ const initialSlaves = [
   }
 ]
 
-const nonExistingId = async () => {
+const nonExistingSlaveId = async () => {
   const slave = new Slave({
     name: 'NonExistingSlave',
     address: 'http://127.0.0.1:1003',
@@ -45,6 +46,14 @@ const slavesInDb = async () => {
   return slaves.map(slave => slave.toJSON())
 }
 
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users.map(user => user.toJSON())
+}
+
 module.exports = {
-  initialSlaves, nonExistingId, slavesInDb
+  initialSlaves,
+  nonExistingSlaveId,
+  slavesInDb,
+  usersInDb,
 }
