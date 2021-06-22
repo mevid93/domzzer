@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
-const slaveHelper = require('./slaves_test_helper')
+const helper = require('./test_helper')
 const Slave = require('../models/slave')
 
 jest.setTimeout(10000)
@@ -11,7 +11,7 @@ describe('/api/slaves', () => {
 
   beforeEach(async () => {
     await Slave.deleteMany({})
-    await Slave.insertMany(slaveHelper.initialSlaves)
+    await Slave.insertMany(helper.initialSlaves)
   })
 
   test('should return existing slaves as json', async () => {
@@ -22,7 +22,7 @@ describe('/api/slaves', () => {
 
   test('should return all existing slaves', async () => {
     const response = await api.get('/api/slaves')
-    expect(response.body).toHaveLength(slaveHelper.initialSlaves.length)
+    expect(response.body).toHaveLength(helper.initialSlaves.length)
   })
 
   test('should add slave to dabase when posted information contains all required fields', async () => {
@@ -35,9 +35,9 @@ describe('/api/slaves', () => {
       username: 'User3',
       password: 'Password3'
     }
-    const slavesBefore = await slaveHelper.slavesInDb()
+    const slavesBefore = await helper.slavesInDb()
     const response = await api.post('/api/slaves').send(newSlave)
-    const slavesAfter = await slaveHelper.slavesInDb()
+    const slavesAfter = await helper.slavesInDb()
     expect(response.status).toEqual(200)
     expect(slavesBefore.length).toEqual(slavesAfter.length - 1)
   })
@@ -49,9 +49,9 @@ describe('/api/slaves', () => {
       testsDone: 0,
       vulnerabilitiesFound: 0
     }
-    const slavesBefore = await slaveHelper.slavesInDb()
+    const slavesBefore = await helper.slavesInDb()
     const response = await api.post('/api/slaves').send(newSlave)
-    const slavesAfter = await slaveHelper.slavesInDb()
+    const slavesAfter = await helper.slavesInDb()
     expect(response.status).toEqual(400)
     expect(slavesBefore.length).toEqual(slavesAfter.length)
   })
@@ -69,7 +69,7 @@ describe('/api/slaves', () => {
   })
 
   test('should return 400 when posted information contains name that already exists', async () => {
-    const slaves = await slaveHelper.slavesInDb()
+    const slaves = await helper.slavesInDb()
     const newSlave = {
       name: slaves[0].name,
       address: 'http:127.0.0.0:1004',
@@ -82,7 +82,7 @@ describe('/api/slaves', () => {
   })
 
   test('should return correct error message when posted information contains name that already exists', async () => {
-    const slaves = await slaveHelper.slavesInDb()
+    const slaves = await helper.slavesInDb()
     const newSlave = {
       name: slaves[0].name,
       address: 'http:127.0.0.0:1004',
@@ -140,13 +140,12 @@ describe('/api/slaves/:id', () => {
 
   beforeEach(async () => {
     await Slave.deleteMany({})
-    await Slave.insertMany(slaveHelper.initialSlaves)
+    await Slave.insertMany(helper.initialSlaves)
   })
 
   test('should return existing slave when trying to get with valid id', async () => {
     const response = await api.get('/api/slaves')
     const slaves = response.body
-    console.log(slaves)
     const slaveToView = slaves[0]
     const resultSlave = await api
       .get(`/api/slaves/${slaveToView.id}`)
@@ -156,9 +155,11 @@ describe('/api/slaves/:id', () => {
     expect(resultSlave).toEqual(processedSlaveToView)
   })
 
-  test('should return 404 when trying to get nonexisting slave', async () => {
-    const response = await api.get(`/api/slaves/${slaveHelper.nonExistingId}`)
-    expect(response.status).toEqual(404)
+  test('should return null when trying to get nonexisting slave', async () => {
+    const id = await helper.nonExistingSlaveId()
+    const response = await api.get(`/api/slaves/${id}`)
+    expect(response.status).toEqual(200)
+    expect(response.body).toEqual(null)
   })
 
   test('should return 400 when trying to get with invalid id', async () => {
@@ -183,8 +184,9 @@ describe('/api/slaves/:id', () => {
   })
 
   test('should return 404 when trying to delete nonexisting slave', async () => {
-    const response = await api.delete(`/api/slaves/${slaveHelper.nonExistingId}`)
-    expect(response.status).toEqual(404)
+    const id = await helper.nonExistingSlaveId()
+    const response = await api.delete(`/api/slaves/${id}`)
+    expect(response.status).toEqual(204)
   })
 
   test('should return 400 when trying to delete with invalid id', async () => {
@@ -199,7 +201,7 @@ describe('/api/slaves/:id', () => {
   })
 
   test('should update existing slave when id is valid and update information is valid', async () => {
-    const slaves = await slaveHelper.slavesInDb()
+    const slaves = await helper.slavesInDb()
     const { id, ...slave } = slaves[0]
     const updatedSlave = { ...slave, name: 'UpdatedName1' }
     const response = await api.put(`/api/slaves/${id}`).send(updatedSlave)
@@ -208,7 +210,7 @@ describe('/api/slaves/:id', () => {
   })
 
   test('should return 400 when id is valid and update information is invalid', async () => {
-    const slaves = await slaveHelper.slavesInDb()
+    const slaves = await helper.slavesInDb()
     const { id, ...slave } = slaves[0]
     const updatedSlave = { ...slave, name: '12' }
     const response = await api.put(`/api/slaves/${id}`).send(updatedSlave)
@@ -216,7 +218,7 @@ describe('/api/slaves/:id', () => {
   })
 
   test('should return correct error message when id is valid and update contains invalid name', async () => {
-    const slaves = await slaveHelper.slavesInDb()
+    const slaves = await helper.slavesInDb()
     const { id, ...slave } = slaves[0]
     const updatedSlave = { ...slave, name: '12' }
     const response = await api.put(`/api/slaves/${id}`).send(updatedSlave)
