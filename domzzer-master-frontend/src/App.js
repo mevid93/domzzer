@@ -68,6 +68,9 @@ function App() {
             <ErrorNotification />
 
             <Switch>
+              <Route path="/login">
+
+              </Route>
               <Route path="/users">
 
               </Route>
