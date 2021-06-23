@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
+const bcrypt = require('bcrypt')
 const app = require('../app')
 const api = supertest(app)
+const User = require('../models/user')
+const config = require('../utils/config')
 
 jest.setTimeout(10000)
 
@@ -9,7 +12,12 @@ describe('/api/info', () => {
   let response
 
   beforeAll(async () => {
-    response = await api.get('/api/info')
+    await User.deleteMany({})
+    const passwordHash = await bcrypt.hash('sekret', config.SALT_ROUNDS)
+    const user = new User({ username: 'rootme', userRole: 'ADMIN', passwordHash })
+    await user.save()
+    const loginInfo = await api.post('/api/login').send({ username: 'rootme', password: 'sekret' })
+    response = await api.get('/api/info').set('authorization', `bearer ${loginInfo.body.token}`)
   })
 
   test('should return info as json', async () => {

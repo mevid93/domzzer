@@ -1,11 +1,18 @@
 const infoRouter = require('express').Router()
 const Slave = require('../models/slave')
 const serverInfoService = require('../services/serverInfoService')
+const privilegesService = require('../services/privilegesService')
 
 const numberOfVulnerabilities = 0
 const numberOfTestsPerformed = 0
 
-infoRouter.get('/', (req, res, next) => {
+infoRouter.get('/', (request, response, next) => {
+
+  const error = privilegesService.checkLitePrivileges(request.token)
+  if (error) {
+    return response.status(401).json({ error: error })
+  }
+
   Slave.countDocuments({}).then(count => {
     const info = serverInfoService.getSystemInformation()
     const details = {
@@ -19,7 +26,7 @@ infoRouter.get('/', (req, res, next) => {
       'serverUptime': info.uptime,
       'serverVersion': info.serverVersion,
     }
-    res.send(details)
+    response.send(details)
   }).catch(error => next(error))
 })
 

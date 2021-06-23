@@ -23,7 +23,7 @@ const SlaveTable = ({ slaves }) => {
         <TableHead>
           <StyledTableRow>
             <StyledTableCell>Server name</StyledTableCell>
-            <StyledTableCell>Server addess</StyledTableCell>
+            <StyledTableCell>Server address</StyledTableCell>
             <StyledTableCell>Server status</StyledTableCell>
           </StyledTableRow>
         </TableHead>
