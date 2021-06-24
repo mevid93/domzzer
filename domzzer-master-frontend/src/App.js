@@ -1,16 +1,17 @@
-import {
-  BrowserRouter as Router,
-  Switch, Route, Link
-} from "react-router-dom"
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Switch, Route, Link, useHistory } from "react-router-dom"
 
 import InfoNotification from './components/InfoNotification'
 import ErrorNotification from './components/ErrorNotification'
-import Home from './components/Home'
+import LoginPage from './components/LoginPage'
+import HomePage from './components/HomePage'
 import NewSlaveForm from './components/NewSlaveForm'
-import Slaves from './components/Slaves'
+import SlavesPage from './components/SlavesPage'
 import Slave from './components/Slave'
 import Vulnerabilities from './components/Vulnerabilities'
 import Vulnerability from './components/Vulnerability'
+import { setUser } from './reducers/UserReducer'
 
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -44,20 +45,39 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function App() {
+  const history = useHistory()
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('domzzerUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      dispatch(setUser(user))
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (user === null) {
+    history.push('/login')
+  }
 
   return (
-    <Router>
+    <div>
       <div className={classes.root}>
         <CssBaseline />
 
         <AppBar position="absolute" className={classes.appBar}>
           <Toolbar>
-            <Button color="inherit" component={Link} to="/">home</Button>
-            <Button color="inherit" component={Link} to="/slaves">slaves</Button>
-            <Button color="inherit" component={Link} to="/vulnerabilities">vulnerabilities</Button>
-            <Button color="inherit" component={Link} to="/users">users</Button>
-            <Button color="inherit" component={Link} to="/settings">settings</Button>
+            {user !== null &&
+              <div>
+                <Button color="inherit" component={Link} to="/">home</Button>
+                <Button color="inherit" component={Link} to="/slaves">slaves</Button>
+                <Button color="inherit" component={Link} to="/vulnerabilities">vulnerabilities</Button>
+                <Button color="inherit" component={Link} to="/users">users</Button>
+                <Button color="inherit" component={Link} to="/settings">settings</Button>
+              </div>
+            }
           </Toolbar>
         </AppBar>
 
@@ -68,38 +88,20 @@ function App() {
             <ErrorNotification />
 
             <Switch>
-              <Route path="/login">
-
-              </Route>
-              <Route path="/users">
-
-              </Route>
-              <Route path="/settings">
-
-              </Route>
-              <Route path="/vulnerabilities/:id">
-                <Vulnerability />
-              </Route>
-              <Route path="/vulnerabilities">
-                <Vulnerabilities />
-              </Route>
-              <Route path="/slaves/new">
-                <NewSlaveForm />
-              </Route>
-              <Route path="/slaves/:id">
-                <Slave />
-              </Route>
-              <Route path="/slaves">
-                <Slaves />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
+              {user === null && <Route path="/login"><LoginPage /></Route>}
+              {user !== null && <Route path="/users"></Route>}
+              {user !== null && <Route path="/settings"></Route>}
+              {user !== null && <Route path="/vulnerabilities/:id"><Vulnerability /></Route>}
+              {user !== null && <Route path="/vulnerabilities"><Vulnerabilities /></Route>}
+              {user !== null && <Route path="/slaves/new"><NewSlaveForm /></Route>}
+              {user !== null && <Route path="/slaves/:id"><Slave /></Route>}
+              {user !== null && <Route path="/slaves"><SlavesPage /></Route>}
+              {user !== null && <Route path="/"><HomePage /></Route>}
             </Switch>
           </Container>
         </main>
       </div>
-    </Router>
+    </div>
   )
 }
 

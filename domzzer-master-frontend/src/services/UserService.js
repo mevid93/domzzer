@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = '/api/slaves'
+const baseUrl = '/api/users'
 
 let token = null
 
@@ -26,12 +26,12 @@ const getById = (id) => {
   return request.then(response => response.data)
 }
 
-const create = (newSlave) => {
+const create = (user) => {
   const config = {
     headers: { Authorization: token },
   }
 
-  const request = axios.post(baseUrl, newSlave, config)
+  const request = axios.post(baseUrl, user, config)
   return request.then(response => response.data)
 }
 
