@@ -7,7 +7,7 @@ import serverInfoService from '../services/ServerInfoService'
 import ServerInfo from './ServerInfo'
 import VulnerabilityInfo from './VulnerabilityInfo'
 
-const Home = () => {
+const HomePage = () => {
   const messager = useMessager()
   const dispatch = useDispatch()
   const serverInfo = useSelector(state => state.serverInfo)
@@ -16,8 +16,9 @@ const Home = () => {
     serverInfoService
       .getInfo()
       .then(info => dispatch(serverInfoChange(info)))
-      .catch(() => {
-        messager.showErrorMessage("Could not retrieve server information!")
+      .catch((exception) => {
+        const error = exception.response.data.error || "Could not retrieve server information!"
+        messager.showErrorMessage(error)
       })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -33,4 +34,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage

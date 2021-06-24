@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 
-const Slaves = () => {
+const SlavesPage = () => {
   const dispatch = useDispatch()
   const messager = useMessager()
   const [filter, setFilter] = useState('')
@@ -33,9 +33,10 @@ const Slaves = () => {
   useEffect(() => {
     slaveService
       .getAll()
-      .then(slaves => dispatch(slavesChange(slaves)))
-      .catch(() => {
-        messager.showErrorMessage("Could not retrieve slave information from server!")
+      .then(resultSlaves => dispatch(slavesChange(resultSlaves)))
+      .catch(exception => {
+        const error = exception.response.data.error || "Could not retrieve slave data from server!"
+        messager.showErrorMessage(error)
       })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -69,4 +70,4 @@ const Slaves = () => {
   )
 }
 
-export default Slaves
+export default SlavesPage
