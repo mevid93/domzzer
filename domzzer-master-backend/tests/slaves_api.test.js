@@ -226,7 +226,7 @@ describe('/api/slaves/:id', () => {
     expect(slave).not.toBeDefined()
   })
 
-  test('should return 404 when trying to delete nonexisting slave', async () => {
+  test('should return 204 when trying to delete nonexisting slave', async () => {
     const id = await helper.nonExistingSlaveId()
     const response = await api.delete(`/api/slaves/${id}`).set('authorization', `bearer ${token}`)
     expect(response.status).toEqual(204)

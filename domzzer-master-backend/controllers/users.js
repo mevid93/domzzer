@@ -4,12 +4,22 @@ const config = require('../utils/config')
 const User = require('../models/user')
 const privilegesService = require('../services/privilegesService')
 
-usersRouter.get('/', async (requres, response) => {
+usersRouter.get('/', async (request, response) => {
+  const error = privilegesService.checkAdminPrivileges(request.token)
+  if (error) {
+    return response.status(401).json({ error: error })
+  }
+
   const users = await User.find({})
   response.json(users)
 })
 
 usersRouter.post('/', async (request, response) => {
+  const error = privilegesService.checkAdminPrivileges(request.token)
+  if (error) {
+    return response.status(401).json({ error: error })
+  }
+
   const body = request.body
 
   const passwordHash = await bcrypt.hash(body.password, config.SALT_ROUNDS)
@@ -26,7 +36,6 @@ usersRouter.post('/', async (request, response) => {
 })
 
 usersRouter.get('/:id', async (request, response) => {
-
   const error = privilegesService.checkLitePrivileges(request.token)
   if (error) {
     return response.status(401).json({ error: error })
