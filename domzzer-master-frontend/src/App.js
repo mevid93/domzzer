@@ -1,17 +1,23 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Switch, Route, Link, useHistory } from "react-router-dom"
+import { Switch, Route, Link, useHistory, Redirect } from "react-router-dom"
 
 import InfoNotification from './components/InfoNotification'
 import ErrorNotification from './components/ErrorNotification'
 import LoginPage from './components/LoginPage'
 import HomePage from './components/HomePage'
-import NewSlaveForm from './components/NewSlaveForm'
+import NewSlavePage from './components/NewSlavePage'
 import SlavesPage from './components/SlavesPage'
-import Slave from './components/Slave'
-import Vulnerabilities from './components/Vulnerabilities'
-import Vulnerability from './components/Vulnerability'
-import { setUser } from './reducers/UserReducer'
+import SlavePage from './components/SlavePage'
+import VulnerabilitiesPage from './components/VulnerabilitiesPage'
+import VulnerabilityPage from './components/VulnerabilityPage'
+import NewUserPage from './components/NewUserPage'
+import UsersPage from './components/UsersPage'
+import UserPage from './components/UserPage'
+import SettingsPage from './components/SettingsPage'
+import { setUser, resetUser } from './reducers/UserReducer'
+import { useTokenizer } from './hooks/Tokenizer'
+import userService from './services/UserService'
 
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -19,6 +25,10 @@ import Container from '@material-ui/core/Container'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import Avatar from '@material-ui/core/Avatar'
+import IconButton from "@material-ui/core/IconButton"
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,26 +51,50 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+  },
+  rightToolbar: {
+    marginLeft: "auto"
   }
 }))
 
 function App() {
+  const tokenizer = useTokenizer()
   const history = useHistory()
   const classes = useStyles()
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  }
+
+  const handleLogout = () => {
+    setAnchorEl(null)
+    dispatch(resetUser())
+    window.localStorage.removeItem('domzzerUser')
+    history.push('/login')
+  }
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('domzzerUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      dispatch(setUser(user))
+      tokenizer.updateServicesWithToken(user.token)
+      userService.getById(user.id).then(() => {
+        dispatch(setUser(user))
+      }).catch(error => {
+        dispatch(resetUser())
+        tokenizer.clearServicesFromToken()
+        window.localStorage.removeItem('domzzerUser')
+      })
+
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-  if (user === null) {
-    history.push('/login')
-  }
 
   return (
     <div>
@@ -78,6 +112,28 @@ function App() {
                 <Button color="inherit" component={Link} to="/settings">settings</Button>
               </div>
             }
+            {user !== null &&
+              <div className={classes.rightToolbar}>
+                <IconButton
+                  color="inherit"
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                >
+                  <Avatar>{user.username[0].toUpperCase()}</Avatar>
+                </IconButton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose} component={Link} to="/">Profile settings</MenuItem>
+                  <MenuItem onClick={handleLogout} component={Link} to="/login">Logout</MenuItem>
+                </Menu>
+              </div>
+            }
           </Toolbar>
         </AppBar>
 
@@ -88,15 +144,39 @@ function App() {
             <ErrorNotification />
 
             <Switch>
-              {user === null && <Route path="/login"><LoginPage /></Route>}
-              {user !== null && <Route path="/users"></Route>}
-              {user !== null && <Route path="/settings"></Route>}
-              {user !== null && <Route path="/vulnerabilities/:id"><Vulnerability /></Route>}
-              {user !== null && <Route path="/vulnerabilities"><Vulnerabilities /></Route>}
-              {user !== null && <Route path="/slaves/new"><NewSlaveForm /></Route>}
-              {user !== null && <Route path="/slaves/:id"><Slave /></Route>}
-              {user !== null && <Route path="/slaves"><SlavesPage /></Route>}
-              {user !== null && <Route path="/"><HomePage /></Route>}
+              <Route path="/login">
+                {user === null ? <LoginPage /> : <Redirect to="/" />}
+              </Route>
+              <Route path="/settings">
+                {user !== null ? <SettingsPage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/users/new">
+                {user !== null ? <NewUserPage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/users/:id">
+                {user !== null ? <UserPage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/users">
+                {user !== null ? <UsersPage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/vulnerabilities/:id">
+                {user !== null ? <VulnerabilityPage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/vulnerabilities">
+                {user !== null ? <VulnerabilitiesPage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/slaves/new">
+                {user !== null ? <NewSlavePage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/slaves/:id">
+                {user !== null ? <SlavePage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/slaves">
+                {user !== null ? <SlavesPage /> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/">
+                {user !== null ? <HomePage /> : <Redirect to="/login" />}
+              </Route>
             </Switch>
           </Container>
         </main>

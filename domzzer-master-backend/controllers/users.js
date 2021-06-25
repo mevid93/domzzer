@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const config = require('../utils/config')
 const User = require('../models/user')
+const privilegesService = require('../services/privilegesService')
 
 usersRouter.get('/', async (requres, response) => {
   const users = await User.find({})
@@ -22,6 +23,17 @@ usersRouter.post('/', async (request, response) => {
   const savedUser = await user.save()
 
   response.json(savedUser)
+})
+
+usersRouter.get('/:id', async (request, response) => {
+
+  const error = privilegesService.checkLitePrivileges(request.token)
+  if (error) {
+    return response.status(401).json({ error: error })
+  }
+
+  const user = await User.findById(request.params.id)
+  response.json(user)
 })
 
 module.exports = usersRouter

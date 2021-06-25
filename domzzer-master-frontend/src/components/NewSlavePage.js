@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const NewSlaveForm = () => {
+const NewSlavePage = () => {
   const messager = useMessager()
   const classes = useStyles()
   const [name, setName] = useState('')
@@ -120,4 +120,4 @@ const NewSlaveForm = () => {
   )
 }
 
-export default NewSlaveForm
+export default NewSlavePage
