@@ -36,13 +36,23 @@ usersRouter.post('/', async (request, response) => {
 })
 
 usersRouter.get('/:id', async (request, response) => {
-  const error = privilegesService.checkLitePrivileges(request.token)
+  const error = privilegesService.checkTokenMatchesUserId(request.token, request.params.id)
   if (error) {
     return response.status(401).json({ error: error })
   }
 
   const user = await User.findById(request.params.id)
   response.json(user)
+})
+
+usersRouter.delete('/:id', async (request, response) => {
+  const error = privilegesService.checkAdminPrivileges(request.token)
+  if (error) {
+    return response.status(401).json({ error: error })
+  }
+
+  await User.findByIdAndRemove(request.params.id)
+  response.status(204).end()
 })
 
 module.exports = usersRouter

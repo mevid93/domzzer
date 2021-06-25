@@ -52,6 +52,17 @@ const usersInDb = async () => {
   return users.map(user => user.toJSON())
 }
 
+const nonExistingUserId = async () => {
+  const user = new User({
+    username: 'unknown',
+    passwordHash: 'idafdafdafdafadas',
+    userRole: 'LITE',
+  })
+  await user.save()
+  await user.remove()
+  return user._id.toString()
+}
+
 const initialVulnerabilities = [
   {
     serverAddress: 'http://192.168.1.1',
@@ -77,8 +88,9 @@ module.exports = {
   initialSlaves,
   nonExistingSlaveId,
   slavesInDb,
+  nonExistingUserId,
   usersInDb,
   initialVulnerabilities,
   nonExistingVulnerabilityId,
-  vulnerabilitiesInDb,
+  vulnerabilitiesInDb
 }
