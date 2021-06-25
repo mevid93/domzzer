@@ -11,7 +11,7 @@ describe('/api/users', () => {
 
   describe('when logged in as admin', () => {
     let token
-    
+
     beforeEach(async () => {
       await User.deleteMany({})
       const passwordHash = await bcrypt.hash('sekret', config.SALT_ROUNDS)

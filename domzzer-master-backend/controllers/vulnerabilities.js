@@ -50,5 +50,5 @@ vulnerabilitiesRouter.delete('/:id', async (request, response) => {
   await Vulnerability.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
-  
+
 module.exports = vulnerabilitiesRouter
