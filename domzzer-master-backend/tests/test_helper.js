@@ -1,5 +1,6 @@
 const Slave = require('../models/slave')
 const User = require('../models/user')
+const Vulnerability = require('../models/vulnerability')
 const aes256 = require('../services/aesCryptoService')
 
 const initialSlaves = [
@@ -51,9 +52,33 @@ const usersInDb = async () => {
   return users.map(user => user.toJSON())
 }
 
+const initialVulnerabilities = [
+  {
+    serverAddress: 'http://192.168.1.1',
+    targetBrowser: 'chrome',
+    timestamp: new Date(2021, 6, 25, 10, 51, 0, 0),
+    status: 'OPEN'
+  },
+]
+
+const nonExistingVulnerabilityId = async () => {
+  const vulnerability = new Vulnerability(initialVulnerabilities[0])
+  await vulnerability.save()
+  await vulnerability.remove()
+  return vulnerability._id.toString()
+}
+
+const vulnerabilitiesInDb = async () => {
+  const vulnerabilities = await Vulnerability.find({})
+  return vulnerabilities.map(vulnerability => vulnerability.toJSON())
+}
+
 module.exports = {
   initialSlaves,
   nonExistingSlaveId,
   slavesInDb,
   usersInDb,
+  initialVulnerabilities,
+  nonExistingVulnerabilityId,
+  vulnerabilitiesInDb,
 }
