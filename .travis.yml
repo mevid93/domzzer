@@ -11,7 +11,7 @@ jobs:
         - npm install
         - npm run build
         - npm run lint
-        - echo "No tests"
+        - npm run test
   
     # tests for the domzzer-master-backend
     - language: node_js
