@@ -6,7 +6,7 @@ import { vulnerabilitiesChange } from '../reducers/VulnerabilityReducer'
 import vulnerabilityService from '../services/VulnerabilityService'
 import VulnerabilityTable from './VulnerabilityTable'
 
-const Vulnerabilities = () => {
+const VulnerabilitiesPage = () => {
   const messager = useMessager()
   const dispatch = useDispatch()
   const vulnerabilities = useSelector(state => state.vulnerabilities)
@@ -29,4 +29,4 @@ const Vulnerabilities = () => {
   )
 }
 
-export default Vulnerabilities
+export default VulnerabilitiesPage

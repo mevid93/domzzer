@@ -19,7 +19,7 @@ export const setUser = user => {
 
 export const resetUser = () => {
   return {
-    type: 'resetUser',
+    type: 'RESET_USER',
   }
 }
 

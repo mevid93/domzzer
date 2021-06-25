@@ -85,7 +85,7 @@ const SlaveForm = ({ slave, classes }) => {
   )
 }
 
-const Slave = () => {
+const SlavePage = () => {
   const classes = useStyles()
   const history = useHistory()
   const dispatch = useDispatch()
@@ -147,4 +147,4 @@ const Slave = () => {
   )
 }
 
-export default Slave
+export default SlavePage
