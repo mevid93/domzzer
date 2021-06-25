@@ -91,6 +91,7 @@ const SlavePage = () => {
   const dispatch = useDispatch()
   const id = useParams().id
   const slaves = useSelector(state => state.slaves)
+  const user = useSelector(statue => statue.user)
   const slave = slaves.find(s => s.id === id)
 
   useEffect(() => {
@@ -124,25 +125,27 @@ const SlavePage = () => {
   return (
     <div>
       <h1>domzzer / Slaves / {slave.name} </h1>
-      
+
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
           <SlaveForm slave={slave} classes={classes} />
         </div>
       </Container>
 
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid item className={classes.gridItem} xs>
-          <Button color="primary" variant="contained" size="large">
-            Edit information
-          </Button>
+      {user !== null && user.userRole !== 'LITE' &&
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item className={classes.gridItem} xs>
+            <Button color="primary" variant="contained" size="large">
+              Edit information
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <Button color="secondary" variant="contained" size="large" onClick={deleteSlave} >
+              Remove from database
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Button color="secondary" variant="contained" size="large" onClick={deleteSlave} >
-            Remove from database
-          </Button>
-        </Grid>
-      </Grid>
+      }
     </div>
   )
 }

@@ -13,6 +13,7 @@ import vulnerabilityReducer from './reducers/VulnerabilityReducer'
 import infoMsgReducer from './reducers/InfoMsgReducer'
 import errorMsgReducer from './reducers/ErrorMsgReducer'
 import userReducer from './reducers/UserReducer'
+import allUsersReducer from './reducers/AllUsersReducer'
 
 const reducer = combineReducers({
   serverInfo: serverInfoReducer,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   infoMsg: infoMsgReducer,
   errorMsg: errorMsgReducer,
   user: userReducer,
+  allUsers: allUsersReducer,
 })
 const store = createStore(reducer)
 

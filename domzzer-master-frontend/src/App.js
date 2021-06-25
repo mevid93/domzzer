@@ -108,8 +108,8 @@ function App() {
                 <Button color="inherit" component={Link} to="/">home</Button>
                 <Button color="inherit" component={Link} to="/slaves">slaves</Button>
                 <Button color="inherit" component={Link} to="/vulnerabilities">vulnerabilities</Button>
-                <Button color="inherit" component={Link} to="/users">users</Button>
-                <Button color="inherit" component={Link} to="/settings">settings</Button>
+                {user.userRole === 'ADMIN' && <Button color="inherit" component={Link} to="/users">users</Button>}
+                {user.userRole === 'ADMIN' && <Button color="inherit" component={Link} to="/settings">settings</Button>}
               </div>
             }
             {user !== null &&
@@ -148,16 +148,16 @@ function App() {
                 {user === null ? <LoginPage /> : <Redirect to="/" />}
               </Route>
               <Route path="/settings">
-                {user !== null ? <SettingsPage /> : <Redirect to="/login" />}
+                {user !== null && user.userRole === 'ADMIN' ? <SettingsPage /> : <Redirect to="/login" />}
               </Route>
               <Route path="/users/new">
-                {user !== null ? <NewUserPage /> : <Redirect to="/login" />}
+                {user !== null && user.userRole === 'ADMIN' ? <NewUserPage /> : <Redirect to="/login" />}
               </Route>
               <Route path="/users/:id">
                 {user !== null ? <UserPage /> : <Redirect to="/login" />}
               </Route>
               <Route path="/users">
-                {user !== null ? <UsersPage /> : <Redirect to="/login" />}
+                {user !== null && user.userRole === 'ADMIN' ? <UsersPage /> : <Redirect to="/login" />}
               </Route>
               <Route path="/vulnerabilities/:id">
                 {user !== null ? <VulnerabilityPage /> : <Redirect to="/login" />}
@@ -166,7 +166,7 @@ function App() {
                 {user !== null ? <VulnerabilitiesPage /> : <Redirect to="/login" />}
               </Route>
               <Route path="/slaves/new">
-                {user !== null ? <NewSlavePage /> : <Redirect to="/login" />}
+                {user !== null && user.userRole !== 'LITE' ? <NewSlavePage /> : <Redirect to="/login" />}
               </Route>
               <Route path="/slaves/:id">
                 {user !== null ? <SlavePage /> : <Redirect to="/login" />}
