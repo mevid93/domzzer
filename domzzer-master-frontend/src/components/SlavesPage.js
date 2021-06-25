@@ -16,6 +16,7 @@ const SlavesPage = () => {
   const messager = useMessager()
   const [filter, setFilter] = useState('')
   const slaves = useSelector(state => state.slaves)
+  const user = useSelector(state => state.user)
 
   const filteredSlaves = slaves.filter(s => {
     if (s.name.toLowerCase().includes(filter.toLowerCase())) {
@@ -44,7 +45,7 @@ const SlavesPage = () => {
     <div>
       <h1>domzzer / Slaves</h1>
 
-      <Grid container spacing={3} justify="space-around">
+      <Grid container spacing={3} justify="flex-start">
 
         <Grid item xs={6} style={{ marginTop: 15, display: "flex", justifyContent: "flex-start" }}>
           <TextField
@@ -55,14 +56,16 @@ const SlavesPage = () => {
           />
         </Grid>
 
-        <Grid item xs={6} style={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            color="primary"
-            variant="contained"
-            component={Link}
-            to="/slaves/new"
-          >add new slave</Button>
-        </Grid>
+        {user !== null && user.userRole !== 'LITE' &&
+          <Grid item xs={6} style={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              color="primary"
+              variant="contained"
+              component={Link}
+              to="/slaves/new"
+            >add new slave</Button>
+          </Grid>
+        }
       </Grid>
 
       <SlaveTable slaves={filteredSlaves} />
