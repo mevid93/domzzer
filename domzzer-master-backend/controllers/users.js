@@ -22,6 +22,11 @@ usersRouter.post('/', async (request, response) => {
 
   const body = request.body
 
+  const passwordError = checkPasswordLength(body.password)
+  if (passwordError) {
+    return response.status(400).json({ error: passwordError })
+  }
+
   const passwordHash = await bcrypt.hash(body.password, config.SALT_ROUNDS)
 
   const user = new User({
@@ -54,5 +59,37 @@ usersRouter.delete('/:id', async (request, response) => {
   await User.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
+
+usersRouter.put('/:id', async (request, response) => {
+  const error = privilegesService.checkTokenMatchesUserId(request.token, request.params.id)
+  if (error) {
+    return response.status(401).json({ error: error })
+  }
+
+  const body = request.body
+  const passwordError = checkPasswordLength(body.password)
+  if (passwordError) {
+    return response.status(400).json({ error: passwordError })
+  }
+
+  const passwordHash = await bcrypt.hash(body.password, config.SALT_ROUNDS)
+
+  const user = await User.findByIdAndUpdate(
+    request.params.id,
+    { ...body, passwordHash },
+    {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    }
+  )
+  response.json(user)
+})
+
+const checkPasswordLength = (password) => {
+  if (password === null || password === undefined || password.length < 5) {
+    return 'Validation failed: password: field length must be at least 5 characters!'
+  }
+}
 
 module.exports = usersRouter
