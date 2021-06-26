@@ -151,6 +151,8 @@ describe('/api/slaves', () => {
     }
     const response = await api.post('/api/slaves').send(newSlave).set('authorization', `bearer ${token}`)
     expect(response.status).toEqual(400)
+    const errorText = JSON.parse(response.error.text).error
+    expect(errorText).toEqual('Slave validation failed: username: field is required when password is defined!')
   })
 
   test('should return correct error message when posted information contains password but no username', async () => {
@@ -191,7 +193,8 @@ describe('/api/slaves/:id', () => {
     const slaves = response.body
     const slaveToView = slaves[0]
     const resultSlave = await api
-      .get(`/api/slaves/${slaveToView.id}`).set('authorization', `bearer ${token}`)
+      .get(`/api/slaves/${slaveToView.id}`)
+      .set('authorization', `bearer ${token}`)
       .then(200)
       .then(response => response.body)
     const processedSlaveToView = JSON.parse(JSON.stringify(slaveToView))

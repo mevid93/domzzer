@@ -12,7 +12,7 @@ const slaveReducer = (state = [], action) => {
   }
 }
 
-export const slavesChange = slaves => {
+export const setSlaves = slaves => {
   return {
     type: 'SET_SLAVES',
     slaves
