@@ -126,6 +126,7 @@ const EditUserForm = ({ user }) => {
             onClick={() => {
               setEditMode(!editMode)
               setUsername(user.username)
+              setUserRole(user.userRole)
             }}
             color="primary"
             variant="contained"

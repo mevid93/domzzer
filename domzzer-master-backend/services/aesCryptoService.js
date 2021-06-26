@@ -6,7 +6,7 @@ const KEY = config.AES256_KEY
 const IV = 'WnZr4u7x!A%D*G-K'
 
 const encrypt = (plaintext) => {
-  if (plaintext === undefined) {
+  if (plaintext === null || plaintext === undefined) {
     return undefined
   }
   let cipher = crypto.createCipheriv(ALGORITHM, Buffer.from(KEY), IV)
@@ -16,7 +16,7 @@ const encrypt = (plaintext) => {
 }
 
 const decrypt = (ciphertext) => {
-  if (ciphertext === undefined) {
+  if (ciphertext === null || ciphertext === undefined) {
     return undefined
   }
   let encryptedText = Buffer.from(ciphertext, 'hex')

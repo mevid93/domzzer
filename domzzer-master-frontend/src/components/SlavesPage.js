@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 
-import { slavesChange } from '../reducers/SlaveReducer'
+import { setSlaves } from '../reducers/SlaveReducer'
 import slaveService from '../services/SlaveService'
 import { useMessager } from '../hooks/Messager'
 import SlaveTable from './SlaveTable'
@@ -34,7 +34,7 @@ const SlavesPage = () => {
   useEffect(() => {
     slaveService
       .getAll()
-      .then(resultSlaves => dispatch(slavesChange(resultSlaves)))
+      .then(resultSlaves => dispatch(setSlaves(resultSlaves)))
       .catch(exception => {
         const error = exception.response.data.error || "Could not retrieve slave data from server!"
         messager.showErrorMessage(error)
