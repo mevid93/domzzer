@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useMessager } from '../hooks/Messager'
-import { vulnerabilitiesChange } from '../reducers/VulnerabilityReducer'
+import { setVulnerabilities } from '../reducers/VulnerabilityReducer'
 import vulnerabilityService from '../services/VulnerabilityService'
 import VulnerabilityTable from './VulnerabilityTable'
 
@@ -19,13 +19,13 @@ const VulnerabilitiesPage = () => {
     if (v.serverAddress.toLowerCase().includes(filter.toLowerCase())) {
       return true
     }
-    if(v.targetBrowser.toLowerCase().includes(filter.toLowerCase())){
+    if (v.targetBrowser.toLowerCase().includes(filter.toLowerCase())) {
       return true
     }
-    if(v.timestamp.toLowerCase().includes(filter.toLowerCase())){
+    if (v.timestamp.toLowerCase().includes(filter.toLowerCase())) {
       return true
     }
-    if(v.status.toLowerCase().includes(filter.toLowerCase())){
+    if (v.status.toLowerCase().includes(filter.toLowerCase())) {
       return true
     }
     return false
@@ -34,7 +34,7 @@ const VulnerabilitiesPage = () => {
   useEffect(() => {
     vulnerabilityService
       .getAll()
-      .then(vulnerabilities => dispatch(vulnerabilitiesChange(vulnerabilities)))
+      .then(vulnerabilities => dispatch(setVulnerabilities(vulnerabilities)))
       .catch(exception => {
         const error = exception.response.data.error || "Could not retrieve slave data from server!"
         messager.showErrorMessage(error)
