@@ -100,6 +100,26 @@ describe('/api/users', () => {
       const response = await api.delete('/api/users/NotSovalidID1234').set('authorization', `bearer ${token}`)
       expect(response.status).toEqual(400)
     })
+
+    test('update succeeds with valid user and user data', async () => {
+      const users = await helper.usersInDb()
+      const userToBeUpdated = users[0]
+      const newUserData = { ...userToBeUpdated, password: 'jotain123', userRole: 'LITE' }
+      const response = await api.put(`/api/users/${userToBeUpdated.id}`).send(newUserData).set('authorization', `bearer ${token}`)
+      expect(response.status).toEqual(200)
+      expect(response.body.userRole).toEqual('LITE')
+      expect(response.body.userRole).not.toEqual(userToBeUpdated.userRole)
+    })
+
+    test('update should fail with valid user and invalid data', async () => {
+      const users = await helper.usersInDb()
+      const userToBeUpdated = users[0]
+      const newUserData = { ...userToBeUpdated, password: '', userRole: 'LITE' }
+      const response = await api.put(`/api/users/${userToBeUpdated.id}`).send(newUserData).set('authorization', `bearer ${token}`)
+      expect(response.status).toEqual(400)
+      const errorText = JSON.parse(response.error.text).error
+      expect(errorText).toEqual('Validation failed: password: field length must be at least 5 characters!')
+    })
   })
 
   describe('when not logged in as admin', () => {

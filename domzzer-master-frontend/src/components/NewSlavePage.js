@@ -47,8 +47,9 @@ const NewSlavePage = () => {
         setUsername('')
         setPassword('')
       })
-      .catch(() => {
-        messager.showErrorMessage("Could not add new slave to database!!!")
+      .catch((exception) => {
+        const error = exception.response.data.error || "Could not save slave data to server!"
+        messager.showErrorMessage(error)
       })
   }
 

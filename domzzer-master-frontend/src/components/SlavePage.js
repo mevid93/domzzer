@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import slaveService from '../services/SlaveService'
 import { slaveInsert, slavesChange } from '../reducers/SlaveReducer'
+import { useMessager } from '../hooks/Messager'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
@@ -89,9 +90,10 @@ const SlavePage = () => {
   const classes = useStyles()
   const history = useHistory()
   const dispatch = useDispatch()
+  const messager = useMessager()
   const id = useParams().id
   const slaves = useSelector(state => state.slaves)
-  const user = useSelector(statue => statue.user)
+  const user = useSelector(state => state.user)
   const slave = slaves.find(s => s.id === id)
 
   useEffect(() => {
@@ -99,7 +101,9 @@ const SlavePage = () => {
       .then(slave => {
         dispatch(slaveInsert(slave))
       })
-      .catch(error => {
+      .catch((exception) => {
+        const error = exception.response.data.error || "Could not retrieve slave data from server!"
+        messager.showErrorMessage(error)
       })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -110,7 +114,9 @@ const SlavePage = () => {
         dispatch(slavesChange(filteredSlaves))
         history.push('/slaves')
       })
-      .catch(error => {
+      .catch((exception) => {
+        const error = exception.response.data.error || "Could not delete slave data from server!"
+        messager.showErrorMessage(error)
       })
   }
 

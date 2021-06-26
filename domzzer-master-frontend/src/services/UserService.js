@@ -44,5 +44,14 @@ const remove = (id) => {
   return request.then(response => response.data)
 }
 
-const service = { getAll, getById, create, remove, setToken }
+const update = (id, newData) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const request = axios.put(`${baseUrl}/${id}`, newData, config)
+  return request.then(response => response.data)
+}
+
+const service = { getAll, getById, create, remove, update, setToken }
 export default service

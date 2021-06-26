@@ -129,7 +129,7 @@ function App() {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose} component={Link} to="/">Profile settings</MenuItem>
+                  <MenuItem onClick={handleClose} component={Link} to={`/users/${user.id}`}>Profile settings</MenuItem>
                   <MenuItem onClick={handleLogout} component={Link} to="/login">Logout</MenuItem>
                 </Menu>
               </div>
