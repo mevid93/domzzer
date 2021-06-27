@@ -14,6 +14,7 @@ import infoMsgReducer from './reducers/InfoMsgReducer'
 import errorMsgReducer from './reducers/ErrorMsgReducer'
 import userReducer from './reducers/UserReducer'
 import allUsersReducer from './reducers/AllUsersReducer'
+import settingsReducer from './reducers/SettingsReducer'
 
 const reducer = combineReducers({
   serverInfo: serverInfoReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   errorMsg: errorMsgReducer,
   user: userReducer,
   allUsers: allUsersReducer,
+  settings: settingsReducer,
 })
 const store = createStore(reducer)
 
