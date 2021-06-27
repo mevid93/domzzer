@@ -9,6 +9,7 @@ const usersRouter = require('./controllers/users')
 const infoRouter = require('./controllers/info')
 const slavesRouter = require('./controllers/slaves')
 const loginRouter = require('./controllers/login')
+const settingsRouter = require('./controllers/settings')
 const vulnerabilitiesRouter = require('./controllers/vulnerabilities')
 const mongoose = require('mongoose')
 
@@ -31,6 +32,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
+app.use('/api/settings', settingsRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/info', infoRouter)
