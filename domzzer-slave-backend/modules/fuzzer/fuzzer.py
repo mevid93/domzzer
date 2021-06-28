@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 from threading import Thread
-import time
 
 
 class Fuzzer (Thread):
