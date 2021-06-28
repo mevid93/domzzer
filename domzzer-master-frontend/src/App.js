@@ -62,7 +62,7 @@ function App() {
   const history = useHistory()
   const classes = useStyles()
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
+  let user = useSelector(state => state.user)
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -83,16 +83,16 @@ function App() {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('domzzerUser')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      tokenizer.updateServicesWithToken(user.token)
-      userService.getById(user.id).then(() => {
-        dispatch(setUser(user))
-      }).catch(error => {
+      const tokenuser = JSON.parse(loggedUserJSON)
+      dispatch(setUser(tokenuser))
+      tokenizer.updateServicesWithToken(tokenuser.token)
+      userService.getById(tokenuser.id).then(() => {
+        return
+      }).catch(() => {
         dispatch(resetUser())
         tokenizer.clearServicesFromToken()
         window.localStorage.removeItem('domzzerUser')
       })
-
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
