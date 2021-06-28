@@ -5,8 +5,6 @@ let POLL_INTERVAL = 10
 
 const pollSlaves = async () => {
   const slaves = await Slave.find({}).lean()
-  console.log(Date.now())
-  console.log(POLL_INTERVAL)
   slaves.forEach(s => {
     console.log('polling slave ', s.name)
   })
