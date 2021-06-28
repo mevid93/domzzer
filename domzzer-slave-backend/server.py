@@ -1,21 +1,16 @@
+#!/usr/bin/python
+
 import os
 
+from flask import Flask
+
+from modules.general.config import Config
 from modules.fuzzer.fuzzer import Fuzzer
 from modules.generator.generator import Generator
-from flask import Flask
-from dotenv import load_dotenv
 
-
-APP_ROOT = os.getcwd()
-DOTENV_PATH = os.path.join(APP_ROOT, ".env")
-load_dotenv(DOTENV_PATH)
-
-SERVER_USERNAME = os.getenv("SERVER_USERNAME")
-SERVER_PASSWORD = os.getenv("SERVER_PASSWORD")
-PORT = os.getenv("PORT")
 
 app = Flask(__name__)
-
+config = Config(os.getcwd())
 generator = Generator()
 dom_fuzzer = Fuzzer(generator, [], None)
 
@@ -28,6 +23,7 @@ def fuzzer_document_loaded():
     """
     return "Document loaded succesfully"
 
+
 @app.route("/fuzzer/start")
 def fuzzer_start():
     """
@@ -35,6 +31,7 @@ def fuzzer_start():
     If fuzzer is already running, this will have no effect.
     """
     return "Start fuzzer!"
+
 
 @app.route("/fuzzer/stop")
 def fuzzer_stop():
@@ -44,12 +41,14 @@ def fuzzer_stop():
     """
     return "Stop fuzzer!"
 
+
 @app.route("/fuzzer/reset")
 def fuzzer_reset():
     """
     HTTP POST to this path will reset the fuzzer to default settings.
     """
     return "Reset fuzzer!"
+
 
 @app.route("/fuzzer/configure")
 def fuzzer_configure():
@@ -59,12 +58,14 @@ def fuzzer_configure():
     """
     return "Configure fuzzer!"
 
+
 @app.route("/fuzzer/status")
 def fuzzer_status():
     """
     HTTP GET to this path will return fuzzer status.
     """
     return "Fuzzer status!"
+
 
 @app.route("/db/tests")
 def db_tests():
@@ -74,12 +75,14 @@ def db_tests():
     """
     return "Number of tests performed!"
 
+
 @app.route("/db/vulnerabilities")
 def db_vulnerabilities():
     """
     HTTP GET to this path will return all the potential vulnerabilities found by the fuzzer.
     """
     return "Potential vulnerabilities!"
+
 
 @app.route("/db/tests/reset")
 def db_tests_reset():
@@ -88,6 +91,7 @@ def db_tests_reset():
     Value after response will be 0.
     """
     return "Reset number of tests performed!"
+
 
 @app.route("/db/vulnerabilities/reset")
 def db_vulnerabilities_reset():
@@ -100,4 +104,4 @@ def db_vulnerabilities_reset():
 
 
 # start the slave server
-app.run(host="0.0.0.0", port=PORT)
+app.run(host="0.0.0.0", port=config.get_server_port())
