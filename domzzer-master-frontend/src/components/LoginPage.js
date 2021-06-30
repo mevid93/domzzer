@@ -46,10 +46,11 @@ const LoginPage = () => {
       window.localStorage.setItem('domzzerUser', JSON.stringify(user))
       tokenizer.updateServicesWithToken(user.token)
       dispatch(setUser(user))
-      messager.showInfoMessage(`Welcome to domzzer, ${user.username}`)
+      messager.showInfoMessage(`Welcome, ${user.username}`)
       history.push("/")   
     } catch (exception) {
-      messager.showErrorMessage(exception.response.data.error)
+      const error = exception.response.data.error || "Could not login. Server is likely offline!"
+      messager.showErrorMessage(error)
     }
   }
 
