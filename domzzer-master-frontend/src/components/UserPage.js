@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 
 import userService from '../services/UserService'
 import { useMessager } from '../hooks/Messager'
 import { insertUser, setAllUsers } from '../reducers/AllUsersReducer'
+import DeleteDialog from './DeleteDialog'
 import EditUserForm from './EditUserForm'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -40,6 +41,7 @@ const UserPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const messager = useMessager()
+  const [deleteDialogVisible, setDeleteDialogVisible] = useState(false)
   const id = useParams().id
   const allUsers = useSelector(state => state.allUsers)
   const loggedUser = useSelector(state => state.user)
@@ -56,7 +58,7 @@ const UserPage = () => {
       })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const deleteSlave = () => {
+  const deleteUser = () => {
     userService.remove(id)
       .then(() => {
         messager.showInfoMessage('User data succesfully deleted!')
@@ -68,6 +70,15 @@ const UserPage = () => {
         const error = exception.response.data.error || "Could not delete user data from server!"
         messager.showErrorMessage(error)
       })
+  }
+
+  const handleDeleteDialogYesAnswer = () => {
+    setDeleteDialogVisible(false)
+    deleteUser()
+  }
+
+  const handleDeleteDialogNoAnswer = () => {
+    setDeleteDialogVisible(false)
   }
 
   if (user === undefined) {
@@ -92,17 +103,22 @@ const UserPage = () => {
         {loggedUser !== null && loggedUser.userRole === 'ADMIN' &&
           <Grid item xs>
             <Button
-              style={{ marginTop:25 }}
+              style={{ marginTop: 25 }}
               color="secondary"
               variant="contained"
               size="large"
-              onClick={deleteSlave} >
+              onClick={() => setDeleteDialogVisible(true)} >
               Remove from database
             </Button>
+            <DeleteDialog
+              open={deleteDialogVisible}
+              handleDialogYesAnswer={handleDeleteDialogYesAnswer}
+              handleDialogNoAnswer={handleDeleteDialogNoAnswer}
+            />
           </Grid>
         }
       </Grid>
-    </div>
+    </div >
   )
 }
 

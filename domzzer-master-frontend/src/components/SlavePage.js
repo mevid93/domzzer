@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 
 import slaveService from '../services/SlaveService'
 import { setSlaves, slaveInsert } from '../reducers/SlaveReducer'
 import { useMessager } from '../hooks/Messager'
+import DeleteDialog from './DeleteDialog'
 import EditSlaveForm from './EditSlaveForm'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -40,6 +41,7 @@ const SlavePage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const messager = useMessager()
+  const [deleteDialogVisible, setDeleteDialogVisible] = useState(false)
   const id = useParams().id
   const slaves = useSelector(state => state.slaves)
   const user = useSelector(state => state.user)
@@ -70,6 +72,15 @@ const SlavePage = () => {
       })
   }
 
+  const handleDeleteDialogYesAnswer = () => {
+    setDeleteDialogVisible(false)
+    deleteSlave()
+  }
+
+  const handleDeleteDialogNoAnswer = () => {
+    setDeleteDialogVisible(false)
+  }
+
   if (slave === undefined) {
     return (
       <div>
@@ -96,10 +107,15 @@ const SlavePage = () => {
               color="secondary"
               variant="contained"
               size="large"
-              onClick={deleteSlave}
+              onClick={() => setDeleteDialogVisible(true)}
             >
               Remove from database
             </Button>
+            <DeleteDialog
+              open={deleteDialogVisible}
+              handleDialogYesAnswer={handleDeleteDialogYesAnswer}
+              handleDialogNoAnswer={handleDeleteDialogNoAnswer}
+            />
           </Grid>
         </Grid>
       }
