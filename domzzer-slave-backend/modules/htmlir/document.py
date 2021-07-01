@@ -4,8 +4,8 @@ class HTMLDocument:
 
     Attributes
     ----------
-    declaration: HTMLDeclaration
-        HTML document declaration
+    doctype: HTMLDoctype
+        HTML document type declaration
     head: HTMLHead
         HTML document head
     body: HTMLBody
@@ -19,19 +19,19 @@ class HTMLDocument:
         Converts HTMLDocument object into real HTML code
     """
 
-    def __init__(self, declaration=None, head=None, body=None):
+    def __init__(self, doctype=None, head=None, body=None):
         """ Constructor for HTMLDocument object.
 
         Parameters
         ----------
-        declaration: HTMLDeclaration, optional
-            HTML document declaration (default is None)
+        doctype: HTMLDoctype, optional
+            HTML document type declaration (default is None)
         head: HTMLHead, optional
             HTML document head (default is None)
         body: HTMLBody, optional
             HTML document body (default is None)
         """
-        self.declaration = declaration
+        self.doctype = doctype
         self.head = head
         self.body = body
 
@@ -49,7 +49,7 @@ class HTMLDocument:
         str
             a string of real HTML code
         """
-        document_str = self.declaration.to_string() if self.declaration != None else ""
+        document_str = self.doctype.to_string() if self.doctype != None else ""
         document_str += "<html>\n"
         document_str += self.head.to_string() if self.head != None else ""
         document_str += self.body.to_string() if self.body != None else ""
