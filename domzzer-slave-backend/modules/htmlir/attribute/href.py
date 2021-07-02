@@ -13,12 +13,12 @@ class HTMLHrefAttribute(HTMLAttribute):
     """
 
     def __init__(self, value=None):
-        """ Constructor for HTMLTargetAttribute object.
+        """ Constructor for HTMLHrefAttribute object.
 
         Parameters
         ----------
         value: str, optional
-            Target attribute value (default is None)
+            Href attribute value (default is None)
         """
         self.value = None
         if value != None:
@@ -31,19 +31,19 @@ class HTMLHrefAttribute(HTMLAttribute):
         self.value = POSSIBLE_HREF_VALUES[index]
 
     def convert(self):
-        target_str = "href=\""
-        target_str += self.value if self.value != None else ""
-        target_str += "\""
-        return target_str
+        href_str = "href=\""
+        href_str += self.value if self.value != None else ""
+        href_str += "\""
+        return href_str
 
     @staticmethod
     def generate():
-        target = HTMLHrefAttribute()
-        target.mutate()
-        return target
+        href = HTMLHrefAttribute()
+        href.mutate()
+        return href
 
 
-# hardcoded list of target values
+# hardcoded list of href values
 POSSIBLE_HREF_VALUES = [
     "https://localhost:3002/unknown",
     ""
