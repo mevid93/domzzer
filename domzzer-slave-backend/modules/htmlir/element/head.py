@@ -2,6 +2,7 @@ from random import randint
 
 from modules.htmlir.attribute.profile import HTMLProfileAttribute
 from modules.htmlir.element.base import HTMLBaseElement
+from modules.htmlir.element.element import HTMLElement
 from modules.htmlir.element.link import HTMLLinkElement
 from modules.htmlir.element.meta import HTMLMetaElement
 from modules.htmlir.element.noscript import HTMLNoscriptElement
@@ -11,7 +12,7 @@ from modules.htmlir.element.template import HTMLTemplateElement
 from modules.htmlir.element.title import HTMLTitleElement
 
 
-class HTMLHeadElement:
+class HTMLHeadElement(HTMLElement):
     """ Class representing HTML document head element.
 
     HTML head element can have one attribute (profile) and eight
@@ -45,22 +46,6 @@ class HTMLHeadElement:
         HTML template element (default is None)
     attribute_profile: HTMLAttributeProfile, optional
         HTML attribute profile (default is None)
-
-    Methods
-    -------
-    get_child_elements()
-        Get list of all child elements
-    get_attributes()
-        Get list of all attributes
-    mutate()
-        Mutates the HTMLElementHead
-    convert()
-        Converts HTMLElementHead object into real HTML code
-
-    Static methods
-    --------------
-    generate()
-        Generates random HTMLElementHead object and returns it
     """
 
     def __init__(self, title=None, base=None, link=None, style=None, meta=None,
@@ -135,14 +120,7 @@ class HTMLHeadElement:
                 raise TypeError
             self.attribute_profile = profile
 
-    def get__child_elements(self):
-        """ Get list of child elements.
-
-        Returns
-        -------
-        list
-            list of child elements
-        """
+    def get_child_elements(self):
         elements = []
         if self.element_title != None:
             elements.append(self.element_title)
@@ -163,23 +141,15 @@ class HTMLHeadElement:
         return elements
 
     def get_attributes(self):
-        """ Get list of attributes of element.
-
-        Returns
-        -------
-        list
-            list of child elements
-        """
         attributes = []
         if self.attribute_profile != None:
             attributes.append(self.attribute_profile)
         return attributes
+    
+    def get_text(self):
+        return None
 
     def mutate(self):
-        """ Mutates the HTMLElementHead. 
-
-        Randomly changes the element types and attributes.
-        """
         # first decide whether profile attribute should be set or not
         self.attribute_profile = None
         r = randint(0, 1)
@@ -230,15 +200,6 @@ class HTMLHeadElement:
             del possible_elements[index]
 
     def convert(self):
-        """ Returns HTMLElementHead as string.
-
-        This method converts HTMLElementHead object into real HTML code.
-
-        Returns
-        -------
-        str
-            a string of real HTML code
-        """
         head_str = "<head"
         head_str += " " + self.attribute_profile.convert() if self.attribute_profile != None else ""
         head_str += ">\n"
@@ -255,15 +216,6 @@ class HTMLHeadElement:
 
     @staticmethod
     def generate():
-        """ Generates random HTMLElementHead.
-
-        Method generates random HTMLElementHead object and returns it.
-
-        Returns
-        -------
-        HTMLElementHead
-            Randomly generated head element
-        """
         head = HTMLHeadElement()
         head.mutate()
         return head

@@ -18,6 +18,10 @@ class TestHTMLHeadElement(unittest.TestCase):
     def test_constructor_throws_type_error(self):
         self.assertRaises(TypeError, HTMLHeadElement, "wrong type")
 
+    def test_get_text_works(self):
+        head = HTMLHeadElement()
+        self.assertIsNone(head.get_text())
+    
     def test_generate_works(self):
         pass
 
