@@ -1,5 +1,5 @@
 
-class HTMLElementTemplate:
+class HTMLTemplateElement:
     
     def __init__(self) -> None:
         raise NotImplementedError

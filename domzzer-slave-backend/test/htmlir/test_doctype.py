@@ -20,11 +20,11 @@ class TestHTMLDoctype(unittest.TestCase):
     def test_constructor_throws_type_error(self):
         self.assertRaises(TypeError, HTMLDoctype, "not integer")
 
-    def test_generator_works(self):
+    def test_generate_works(self):
         doctype = HTMLDoctype.generate()
         self.assertTrue(doctype.type >= 0 and doctype.type <= 20)
 
-    def test_mutator_works(self):
+    def test_mutate_works(self):
         random.seed(666)
         doctype = HTMLDoctype()
         doctype.mutate()
