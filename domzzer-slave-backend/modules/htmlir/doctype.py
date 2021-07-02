@@ -31,7 +31,7 @@ class HTMLDoctype:
 
     Attributes
     ----------
-    type
+    type: integer, optional
         HTMLDocument type (default is 1)
 
     Methods
@@ -50,13 +50,13 @@ class HTMLDoctype:
     def __init__(self, type=0):
         """ Constructor for HTMLDoctype object.
 
-        Takes optional parameter type (number from 0 to 20) as input.
+        Takes optional parameter type (integer from 0 to 20) as input.
         If no parameter is given, the default value is used instead.
         Raises error, if parameter provided is not integer.
 
         Parameters
         ----------
-        type: number, optional
+        type: integer, optional
             HTML document type declaration (default is None)
         """
         if isinstance(type, int) and type >= 0 and type <= 20:
@@ -67,7 +67,7 @@ class HTMLDoctype:
             raise TypeError
 
     def mutate(self):
-        """ Mutates the HTMLDocument 
+        """ Mutates the HTMLDocument. 
 
         Randomly changes the document type to another.
         """
@@ -84,7 +84,9 @@ class HTMLDoctype:
         str
             a string of real HTML code
         """
-        return DOCTYPES[self.type]
+        type_str = DOCTYPES[self.type]
+        type_str += "\n"
+        return type_str
 
     @staticmethod
     def generate():
