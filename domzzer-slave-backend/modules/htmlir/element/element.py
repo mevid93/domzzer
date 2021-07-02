@@ -53,7 +53,7 @@ class HTMLElement(ABC):
         """ Get text from HTML element
 
         Some HTML elements can display text. This method returns
-        text if element has text.
+        text if element supports it, and it is defined.
 
         Returns
         -------
