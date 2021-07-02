@@ -16,7 +16,7 @@ class HTMLTitleElement(HTMLElement):
     """
 
     def __init__(self, title_text=None):
-        """ Constructor for HTMLTitleLement object.
+        """ Constructor for HTMLTitleElement object.
 
         Parameters
         ----------
@@ -55,7 +55,7 @@ class HTMLTitleElement(HTMLElement):
         return title
 
 
-# list of possible hard coded elements
+# hard coded list of possible elements
 POSSIBLE_TITLES = [
     "DOMZZER_TITLE",
     "?????????????",
