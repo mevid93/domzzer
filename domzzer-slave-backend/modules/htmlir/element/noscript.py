@@ -1,5 +1,5 @@
 
-class HTMLElementNoscript:
+class HTMLNoscriptElement:
     
     def __init__(self) -> None:
         raise NotImplementedError

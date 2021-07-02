@@ -1,17 +1,17 @@
 from random import randint
 
-from modules.htmlir.attribute.profile import HTMLAttributeProfile
-from modules.htmlir.element.base import HTMLElementBase
-from modules.htmlir.element.link import HTMLElementLink
-from modules.htmlir.element.meta import HTMLElementMeta
-from modules.htmlir.element.noscript import HTMLElementNoscript
-from modules.htmlir.element.script import HTMLElementScript
-from modules.htmlir.element.style import HTMLElementStyle
-from modules.htmlir.element.template import HTMLElementTemplate
-from modules.htmlir.element.title import HTMLElementTitle
+from modules.htmlir.attribute.profile import HTMLProfileAttribute
+from modules.htmlir.element.base import HTMLBaseElement
+from modules.htmlir.element.link import HTMLLinkElement
+from modules.htmlir.element.meta import HTMLMetaElement
+from modules.htmlir.element.noscript import HTMLNoscriptElement
+from modules.htmlir.element.script import HTMLScriptElement
+from modules.htmlir.element.style import HTMLStyleElement
+from modules.htmlir.element.template import HTMLTemplateElement
+from modules.htmlir.element.title import HTMLTitleElement
 
 
-class HTMLElementHead:
+class HTMLHeadElement:
     """ Class representing HTML document head element.
 
     HTML head element can have one attribute (profile) and eight
@@ -97,41 +97,41 @@ class HTMLElementHead:
         self.element_noscript = None
         self.element_template = None
         self.attribute_profile = None
-        
+
         if title != None:
-            if not isinstance(title, HTMLElementTitle):
+            if not isinstance(title, HTMLTitleElement):
                 raise TypeError
             self.element_title = title
         if base != None:
-            if not isinstance(base, HTMLElementBase):
+            if not isinstance(base, HTMLBaseElement):
                 raise TypeError
             self.element_base = base
         if link != None:
-            if not isinstance(link, HTMLElementLink):
+            if not isinstance(link, HTMLLinkElement):
                 raise TypeError
             self.element_link = link
         if style != None:
-            if not isinstance(style, HTMLElementStyle):
+            if not isinstance(style, HTMLStyleElement):
                 raise TypeError
             self.element_style = style
         if meta != None:
-            if not isinstance(meta, HTMLElementMeta):
+            if not isinstance(meta, HTMLMetaElement):
                 raise TypeError
             self.element_meta = meta
         if script != None:
-            if not isinstance(script, HTMLElementScript):
+            if not isinstance(script, HTMLScriptElement):
                 raise TypeError
             self.element_script = script
         if noscript != None:
-            if not isinstance(noscript, HTMLElementNoscript):
+            if not isinstance(noscript, HTMLNoscriptElement):
                 raise TypeError
             self.element_noscript = noscript
         if template != None:
-            if not isinstance(template, HTMLElementTemplate):
+            if not isinstance(template, HTMLTitleElement):
                 raise TypeError
             self.element_template = template
         if profile != None:
-            if not isinstance(profile, HTMLAttributeProfile):
+            if not isinstance(profile, HTMLProfileAttribute):
                 raise TypeError
             self.attribute_profile = profile
 
@@ -183,7 +183,7 @@ class HTMLElementHead:
         # first decide whether profile attribute should be set or not
         self.attribute_profile = None
         r = randint(0, 1)
-        self.attribute_profile = HTMLAttributeProfile.generate() if r == 1 else None
+        self.attribute_profile = HTMLProfileAttribute.generate() if r == 1 else None
 
         # then choose random child elements
         number_of_elements = randint(0, 8)
@@ -264,6 +264,6 @@ class HTMLElementHead:
         HTMLElementHead
             Randomly generated head element
         """
-        head = HTMLElementHead()
+        head = HTMLHeadElement()
         head.mutate()
         return head
