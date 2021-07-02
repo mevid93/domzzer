@@ -1,6 +1,6 @@
 import unittest
 
-from modules.general.config import Config
+from modules.fuzzer.config import Config
 
 class TestConfig(unittest.TestCase):
 
