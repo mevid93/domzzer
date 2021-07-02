@@ -1,7 +1,9 @@
 from random import randint
 
+from modules.htmlir.attribute.attribute import HTMLAttribute
 
-class HTMLProfileAttribute:
+
+class HTMLProfileAttribute(HTMLAttribute):
     """ Class representing HTML document profile attribute of head element.
 
     HTML head element can have one attribute (profile) and this class represents
@@ -11,18 +13,6 @@ class HTMLProfileAttribute:
     ----------
     value: str, optional
         Attribute value (default is None)
-
-    Methods
-    -------
-    mutate()
-        Mutates the HTMLProfileAttribute
-    convert()
-        Converts HTMLProfileAttribute into real HTML code
-
-    Static methods
-    --------------
-    generate()
-        Generates random HTMLProfileAttribute object and returns it
     """
 
     def __init__(self, value=None):
@@ -40,34 +30,15 @@ class HTMLProfileAttribute:
             self.value = value
 
     def mutate(self):
-        """ Randomly mutate the HTMLProfileAttribute object."""
         index = randint(0, len(POSSIBLE_PROFILE_VALUES) - 1)
         self.value = POSSIBLE_PROFILE_VALUES[index]
 
     def convert(self):
-        """ Returns HTMLProfileAttribute as string.
-
-        This method converts HTMLProfileAttribute object into real HTML code.
-
-        Returns
-        -------
-        str
-            a string of real HTML code
-        """
         profile_str = "profile=\"" + self.value + "\""
         return profile_str
 
     @staticmethod
     def generate():
-        """ Generates random HTMLProfileAttribute.
-
-         Method generates random HTMLProfileAttribute object and returns it.
-
-         Returns
-         -------
-         HTMLProfileAttribute
-             Randomly generated profile attribute
-         """
         profile = HTMLProfileAttribute()
         profile.mutate()
         return profile
