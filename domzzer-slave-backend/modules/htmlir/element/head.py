@@ -211,21 +211,21 @@ class HTMLHeadElement:
             index = randint(0, len(possible_elements)-1)
             value = possible_elements[index]
             if value == "title":
-                self.element_title = HTMLElementTitle.generate()
+                self.element_title = HTMLTitleElement.generate()
             elif value == "base":
-                self.element_base = HTMLElementBase.generate()
+                self.element_base = HTMLBaseElement.generate()
             elif value == "link":
-                self.element_link = HTMLElementLink.generate()
+                self.element_link = HTMLLinkElement.generate()
             elif value == "style":
-                self.element_style = HTMLElementStyle.generate()
+                self.element_style = HTMLStyleElement.generate()
             elif value == "meta":
-                self.element_meta = HTMLElementMeta.generate()
+                self.element_meta = HTMLMetaElement.generate()
             elif value == "script":
-                self.element_script = HTMLElementScript.generate()
+                self.element_script = HTMLScriptElement.generate()
             elif value == "noscript":
-                self.element_noscript = HTMLElementNoscript.generate()
+                self.element_noscript = HTMLNoscriptElement.generate()
             elif value == "template":
-                self.element_template = HTMLElementTemplate.generate()
+                self.element_template = HTMLTemplateElement.generate()
 
             del possible_elements[index]
 
