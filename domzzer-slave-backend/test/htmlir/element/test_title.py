@@ -1,3 +1,5 @@
+import copy
+import random
 import unittest
 
 from modules.htmlir.element.title import HTMLTitleElement
@@ -6,38 +8,42 @@ from modules.htmlir.element.title import HTMLTitleElement
 class TestHTMLTitleElement(unittest.TestCase):
 
     def test_constructor_works_without_parameters(self):
-        title = HTMLTitleElement()
-        self.assertIsNone(title.text)
-
-    def test_constructor_works_with_parameters(self):
-        title = HTMLTitleElement("Testing domzzer")
-        self.assertEqual(title.text, "Testing domzzer")
+        title = HTMLTitleElement(0)
+        self.assertIsNotNone(title.text)
 
     def test_constructor_throws_type_error(self):
-        self.assertRaises(TypeError, HTMLTitleElement, 666)
+        self.assertRaises(TypeError, HTMLTitleElement, "wrong type")
+
+    def test_constructor_throws_value_error(self):
+        self.assertRaises(ValueError, HTMLTitleElement, None)
 
     def get_text_works(self):
-        title = HTMLTitleElement("domzzer")
+        random.seed(666)
+        title = HTMLTitleElement(0)
         excpected_str = "domzzer"
         self.assertEqual(title.get_text(), excpected_str)
 
     def test_generate_works(self):
-        title = HTMLTitleElement.generate()
+        title = HTMLTitleElement.generate(0)
         self.assertTrue(isinstance(title, HTMLTitleElement))
 
+    def test_generate_throws_type_error(self):
+        self.assertRaises(TypeError, HTMLTitleElement.generate, "wrong type")
+
+    def test_generate_throws_value_error(self):
+        self.assertRaises(ValueError, HTMLTitleElement.generate, None)
+
     def test_mutate_works(self):
-        title = HTMLTitleElement()
+        random.seed(666)
+        title = HTMLTitleElement(0)
+        title_copy = copy.deepcopy(title)
         title.mutate()
         self.assertTrue(title.text != None)
 
-    def test_convert_works_without_attributes(self):
-        title = HTMLTitleElement()
-        expected_str = "<title></title>"
-        self.assertEqual(title.convert(), expected_str)
-
-    def test_convert_works_with_attributes(self):
-        title = HTMLTitleElement("domzzer")
-        expected_str = "<title>domzzer</title>"
+    def test_convert_works(self):
+        random.seed(666)
+        title = HTMLTitleElement(0)
+        expected_str = "<title>https://github.com/mevid93/domzzer</title>"
         self.assertEqual(title.convert(), expected_str)
 
 

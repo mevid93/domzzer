@@ -7,6 +7,11 @@ class HTMLElement(ABC):
     Abstract base class that must be inherited by all elements.
     Defines multiple methods that must be implemented.
 
+    Attributes
+    ----------
+    document_depth: int
+        Length of the longest path from element to any leaf node
+
     Methods
     -------
     get_child_elements()
@@ -25,6 +30,13 @@ class HTMLElement(ABC):
     generate()
         Generates random instance of element
     """
+    @abstractmethod
+    def __init__(self, document_depth):
+        if document_depth == None:
+            raise ValueError
+        if not isinstance(document_depth, int):
+            raise TypeError
+        self.document_depth = document_depth
 
     @abstractmethod
     def get_child_elements(self):
@@ -81,10 +93,15 @@ class HTMLElement(ABC):
 
     @staticmethod
     @abstractmethod
-    def generate():
+    def generate(document_depth):
         """ Generate random instance of element
 
         Method generates random element instance and returns it.
+
+        Parameters
+        ----------
+        document_depth: int
+            Length of the longest path from element to any leaf node
 
         Returns
         -------

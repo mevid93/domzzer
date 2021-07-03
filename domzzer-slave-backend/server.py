@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from modules.general.config import Config
+from modules.fuzzer.config import Config
 from modules.fuzzer.fuzzer import Fuzzer
 from modules.generator.generator import Generator
 

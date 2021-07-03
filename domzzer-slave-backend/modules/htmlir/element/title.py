@@ -11,23 +11,28 @@ class HTMLTitleElement(HTMLElement):
 
     Attributes
     ----------
+    document_depth: int
+        Length of the longest path from element to any leaf node
     text: str
-        Text of the HTML element 
+        Title text
     """
 
-    def __init__(self, title_text=None):
+    def __init__(self, document_depth):
         """ Constructor for HTMLTitleElement object.
 
         Parameters
         ----------
-        title_text: str
-            Text for title element
+        document_depth: int
+            Length of the longest path from element to any leaf node
         """
-        self.text = None
-        if title_text != None:
-            if not isinstance(title_text, str):
-                raise TypeError
-            self.text = title_text
+        if document_depth == None:
+            raise ValueError
+        if not isinstance(document_depth, int):
+            raise TypeError
+        self.document_depth = document_depth
+        self.document_depth = 0
+        self.text = ""
+        self.mutate()
 
     def get_child_elements(self):
         return []
@@ -39,25 +44,30 @@ class HTMLTitleElement(HTMLElement):
         return self.text
 
     def mutate(self):
-        index = randint(0, len(POSSIBLE_TITLES) - 1)
-        self.text = POSSIBLE_TITLES[index]
+        index = randint(0, len(LIST_OF_POSSIBLE_TEXTS) - 1)
+        self.text = LIST_OF_POSSIBLE_TEXTS[index]
 
     def convert(self):
         title_str = "<title>"
-        title_str += self.text if self.text != None else ""
+        title_str += self.text
         title_str += "</title>"
         return title_str
 
     @staticmethod
-    def generate():
-        title = HTMLTitleElement()
-        title.mutate()
+    def generate(document_depth):
+        if document_depth == None:
+            raise ValueError
+        if not isinstance(document_depth, int):
+            raise TypeError
+        title = HTMLTitleElement(document_depth)
         return title
 
 
 # hard coded list of possible elements
-POSSIBLE_TITLES = [
+LIST_OF_POSSIBLE_TEXTS = [
     "DOMZZER_TITLE",
     "?????????????",
+    "12321321321321",
+    "https://github.com/mevid93/domzzer"
     ""
 ]
