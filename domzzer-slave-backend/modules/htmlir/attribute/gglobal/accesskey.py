@@ -13,7 +13,7 @@ class HTMLAccesskeyGlobalAttribute(HTMLAttribute):
     """
 
     def __init__(self, value=None):
-        """ Constructor for HTMLAccesskeyAttribute object.
+        """ Constructor for HTMLAccesskeyGlobalAttribute object.
 
         Parameters
         ----------
@@ -43,7 +43,7 @@ class HTMLAccesskeyGlobalAttribute(HTMLAttribute):
         return accesskey
 
 
-# hardcoded list of href values
+# hardcoded list of values
 POSSIBLE_ACCESSKEY_VALUES = [
     "a",
     "b",

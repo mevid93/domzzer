@@ -13,7 +13,7 @@ class HTMLSpellcheckGlobalAttribute(HTMLAttribute):
     """
 
     def __init__(self, value=False):
-        """ Constructor for HTMLSpellcheckAttribute object.
+        """ Constructor for HTMLSpellcheckGlobalAttribute object.
 
         Parameters
         ----------
@@ -31,13 +31,13 @@ class HTMLSpellcheckGlobalAttribute(HTMLAttribute):
         self.value = True if index == 1 else False
 
     def convert(self):
-        accesskey_str = "spellcheck=\""
-        accesskey_str += "false" if self.value == False else "true"
-        accesskey_str += "\""
-        return accesskey_str
+        spellcheck_str = "spellcheck=\""
+        spellcheck_str += "false" if self.value == False else "true"
+        spellcheck_str += "\""
+        return spellcheck_str
 
     @staticmethod
     def generate():
-        accesskey = HTMLSpellcheckGlobalAttribute()
-        accesskey.mutate()
-        return accesskey
+        spellcheck = HTMLSpellcheckGlobalAttribute()
+        spellcheck.mutate()
+        return spellcheck
