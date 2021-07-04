@@ -1,7 +1,7 @@
 from random import randint
 
 from modules.htmlir.element.element import HTMLElement
-
+from modules.htmlir.attribute.gglobal.attributes import get_random_global_attributes
 
 class HTMLBodyElement(HTMLElement):
     """ Class representing HTML document body element.
@@ -18,6 +18,8 @@ class HTMLBodyElement(HTMLElement):
         List of element attributes
     includes_global_attributes: boolean
         Does the element include the global attributes
+    global_attributes: list
+        List of global element attributes
     """
 
     def __init__(self, document_depth):
@@ -37,6 +39,7 @@ class HTMLBodyElement(HTMLElement):
         self.attributes = []
         self.text = ""
         self.includes_global_attributes = True
+        self.global_attributes = []
         self.child_elements = []
         self.mutate()
 
@@ -68,6 +71,7 @@ class HTMLBodyElement(HTMLElement):
                 new_attributes.append(attribute_type.generate())
             del copy_of_possible_attributes[index]
         self.attributes = new_attributes
+        self.global_attributes = get_random_global_attributes()
 
         # then handle the text
         index = randint(0, len(LIST_OF_POSSIBLE_TEXTS) - 1)
@@ -105,6 +109,8 @@ class HTMLBodyElement(HTMLElement):
     def convert(self):
         body_str = "<body"
         for attribute in self.attributes:
+            body_str += " " + attribute.convert()
+        for attribute in self.global_attributes:
             body_str += " " + attribute.convert()
         body_str += ">\n"
         for element in self.child_elements:

@@ -13,6 +13,8 @@ class HTMLElement(ABC):
         Length of the longest path from element to any leaf node
     includes_global_attributes: boolean
         Does the element include the global attributes
+    global_attributes: list
+        List of global attributes
 
     Methods
     -------

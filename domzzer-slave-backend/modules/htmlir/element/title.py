@@ -1,6 +1,7 @@
 from random import randint
 
 from modules.htmlir.element.element import HTMLElement
+from modules.htmlir.attribute.gglobal.attributes import get_random_global_attributes
 
 
 class HTMLTitleElement(HTMLElement):
@@ -15,6 +16,8 @@ class HTMLTitleElement(HTMLElement):
         Length of the longest path from element to any leaf node
     includes_global_attributes: boolean
         Does the element include the global attributes
+    global_attributes: list
+        List of global element attributes
     text: str
         Title text
     """
@@ -35,6 +38,7 @@ class HTMLTitleElement(HTMLElement):
         self.document_depth = 0
         self.text = ""
         self.includes_global_attributes = True
+        self.global_attributes = []
         self.mutate()
 
     def get_child_elements(self):
@@ -49,12 +53,16 @@ class HTMLTitleElement(HTMLElement):
     def mutate(self):
         index = randint(0, len(LIST_OF_POSSIBLE_TEXTS) - 1)
         self.text = LIST_OF_POSSIBLE_TEXTS[index]
+        self.global_attributes = get_random_global_attributes()
 
     def add_css(self):
         raise NotImplementedError
 
     def convert(self):
-        title_str = "<title>"
+        title_str = "<title"
+        for attribute in self.global_attributes:
+            title_str += " " + attribute.convert()
+        title_str += ">"
         title_str += self.text
         title_str += "</title>"
         return title_str

@@ -2,6 +2,7 @@ from random import randint
 
 from modules.htmlir.attribute.href import HTMLHrefAttribute
 from modules.htmlir.attribute.target import HTMLTargetAttribute
+from modules.htmlir.attribute.gglobal.attributes import get_random_global_attributes
 from modules.htmlir.element.element import HTMLElement
 
 
@@ -19,6 +20,8 @@ class HTMLBaseElement(HTMLElement):
         List of element attributes
     includes_global_attributes: boolean
         Does the element include the global attributes
+    global_attributes: list
+        List of global element attributes
     """
 
     def __init__(self, document_depth):
@@ -37,6 +40,7 @@ class HTMLBaseElement(HTMLElement):
         self.document_depth = 0
         self.attributes = []
         self.includes_global_attributes = True
+        self.global_attributes = []
         self.mutate()
 
     def get_child_elements(self):
@@ -66,6 +70,7 @@ class HTMLBaseElement(HTMLElement):
                 new_attributes.append(attribute_type.generate())
             del copy_of_possible_attributes[index]
         self.attributes = new_attributes
+        self.global_attributes = get_random_global_attributes()
 
     def add_css(self):
         raise NotImplementedError
@@ -73,6 +78,8 @@ class HTMLBaseElement(HTMLElement):
     def convert(self):
         base_str = "<base"
         for attribute in self.attributes:
+            base_str += " " + attribute.convert()
+        for attribute in self.global_attributes:
             base_str += " " + attribute.convert()
         base_str += ">"
         return base_str

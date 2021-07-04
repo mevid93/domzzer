@@ -10,6 +10,7 @@ from modules.htmlir.element.script import HTMLScriptElement
 from modules.htmlir.element.style import HTMLStyleElement
 from modules.htmlir.element.template import HTMLTemplateElement
 from modules.htmlir.element.title import HTMLTitleElement
+from modules.htmlir.attribute.gglobal.attributes import get_random_global_attributes
 
 
 class HTMLHeadElement(HTMLElement):
@@ -28,6 +29,8 @@ class HTMLHeadElement(HTMLElement):
         List of child elements
     attributes: list
         List of element attributes
+    global_attributes: list
+        List of global element attributes
     """
 
     def __init__(self, document_depth):
@@ -46,6 +49,7 @@ class HTMLHeadElement(HTMLElement):
         self.document_depth = 0
         self.attributes = []
         self.includes_global_attributes = True
+        self.global_attributes = []
         self.child_elements = []
         self.mutate()
 
@@ -77,6 +81,7 @@ class HTMLHeadElement(HTMLElement):
                 new_attributes.append(attribute_type.generate())
             del copy_of_possible_attributes[index]
         self.attributes = new_attributes
+        self.global_attributes = get_random_global_attributes()
 
         if self.document_depth <= 0:
             return
@@ -107,6 +112,8 @@ class HTMLHeadElement(HTMLElement):
     def convert(self):
         head_str = "<head"
         for attribute in self.attributes:
+            head_str += " " + attribute.convert()
+        for attribute in self.global_attributes:
             head_str += " " + attribute.convert()
         head_str += ">\n"
         for element in self.child_elements:
