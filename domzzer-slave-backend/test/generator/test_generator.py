@@ -46,7 +46,7 @@ class TestGenerator(unittest.TestCase):
         expected_str += "<head>\n"
         expected_str += "</head>\n"
         expected_str += "<body>\n"
-        expected_str += "https://github.com/mevid93/domzzer\n"
+        expected_str += "mevid93\n"
         expected_str += "</body>"
         self.assertEqual(converted_str, expected_str)
 

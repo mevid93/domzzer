@@ -48,7 +48,7 @@ class TestHTMLDocument(unittest.TestCase):
         expected_str += "<head profile=\"???????????????????????????\">\n"
         expected_str += "</head>\n"
         expected_str += "<body>\n"
-        expected_str += "https://github.com/mevid93/domzzer\n"
+        expected_str += "domzzer\n"
         expected_str += "</body>"
         self.assertEqual(document.convert(), expected_str)
 
