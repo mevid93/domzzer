@@ -9,7 +9,7 @@ class TestGetRandomGlobalAttributes(unittest.TestCase):
     def test_function_works(self):
         random.seed(5)
         attributes = get_random_global_attributes()
-        self.assertEqual(len(attributes), 1)
+        self.assertEqual(len(attributes), 2)
 
 if __name__ == '__main__':
     unittest.main()
