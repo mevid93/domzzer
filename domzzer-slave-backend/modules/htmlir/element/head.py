@@ -22,6 +22,8 @@ class HTMLHeadElement(HTMLElement):
     ----------
     document_depth: int
         Length of the longest path from element to any leaf node
+    includes_global_attributes: boolean
+        Does the element include the global attributes
     child_elements: list
         List of child elements
     attributes: list
@@ -43,6 +45,7 @@ class HTMLHeadElement(HTMLElement):
         self.document_depth = document_depth
         self.document_depth = 0
         self.attributes = []
+        self.includes_global_attributes = True
         self.child_elements = []
         self.mutate()
 
@@ -98,6 +101,9 @@ class HTMLHeadElement(HTMLElement):
             del copy_of_possible_elements[index]
         self.child_elements = new_elements
 
+    def add_css(self):
+        raise NotImplementedError
+
     def convert(self):
         head_str = "<head"
         for attribute in self.attributes:
@@ -122,12 +128,12 @@ class HTMLHeadElement(HTMLElement):
 LIST_OF_POSSIBLE_CHILD_ELEMENTS = [
     HTMLTitleElement,
     HTMLBaseElement,
-    HTMLLinkElement,
-    HTMLStyleElement,
-    HTMLMetaElement,
-    HTMLScriptElement,
-    HTMLNoscriptElement,
-    HTMLTemplateElement
+    # HTMLLinkElement,
+    # HTMLStyleElement,
+    # HTMLMetaElement,
+    # HTMLScriptElement,
+    # HTMLNoscriptElement,
+    # HTMLTemplateElement
 ]
 
 # list of attributes that can be used for <head> element

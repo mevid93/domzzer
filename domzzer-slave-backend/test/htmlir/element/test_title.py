@@ -34,11 +34,11 @@ class TestHTMLTitleElement(unittest.TestCase):
         self.assertRaises(ValueError, HTMLTitleElement.generate, None)
 
     def test_mutate_works(self):
-        random.seed(666)
+        random.seed(66)
         title = HTMLTitleElement(0)
         title_copy = copy.deepcopy(title)
         title.mutate()
-        self.assertTrue(title.text != None)
+        self.assertNotEqual(title.convert(), title_copy.convert())
 
     def test_convert_works(self):
         random.seed(666)

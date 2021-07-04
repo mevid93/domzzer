@@ -36,7 +36,7 @@ class TestHTMLBaseElement(unittest.TestCase):
         base = HTMLBaseElement(0)
         base_copy = copy.deepcopy(base)
         base.mutate()
-        self.assertNotEqual(base_copy, base)
+        self.assertNotEqual(base_copy.convert(), base.convert())
 
     def test_convert_works(self):
         random.seed(666)
