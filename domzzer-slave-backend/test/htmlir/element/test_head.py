@@ -41,7 +41,7 @@ class TestHTMLHeadElement(unittest.TestCase):
     def test_convert_works(self):
         random.seed(666)
         head = HTMLHeadElement(2)
-        expected_str = "<head profile=\"dont know what im doing\" accesskey=\"z\">\n</head>"
+        expected_str = "<head profile=\"dont know what im doing\" translate=\"\" spellcheck=\"false\">\n</head>"
         self.assertEqual(head.convert(), expected_str)
 
 

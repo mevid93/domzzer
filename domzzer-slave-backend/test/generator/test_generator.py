@@ -43,10 +43,10 @@ class TestGenerator(unittest.TestCase):
             document_id="test111", document_depth=2)
         converted_str = Generator.convert_existing_document(document)
         expected_str = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
-        expected_str += "<head>\n"
+        expected_str += "<head translate=\"yes\">\n"
         expected_str += "</head>\n"
-        expected_str += "<body>\n"
-        expected_str += "mevid93\n"
+        expected_str += "<body spellcheck=\"false\">\n"
+        expected_str += "https://github.com/mevid93/domzzer\n"
         expected_str += "</body>"
         self.assertEqual(converted_str, expected_str)
 
