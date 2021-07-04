@@ -13,6 +13,8 @@ class HTMLTitleElement(HTMLElement):
     ----------
     document_depth: int
         Length of the longest path from element to any leaf node
+    includes_global_attributes: boolean
+        Does the element include the global attributes
     text: str
         Title text
     """
@@ -32,6 +34,7 @@ class HTMLTitleElement(HTMLElement):
         self.document_depth = document_depth
         self.document_depth = 0
         self.text = ""
+        self.includes_global_attributes = True
         self.mutate()
 
     def get_child_elements(self):
@@ -46,6 +49,9 @@ class HTMLTitleElement(HTMLElement):
     def mutate(self):
         index = randint(0, len(LIST_OF_POSSIBLE_TEXTS) - 1)
         self.text = LIST_OF_POSSIBLE_TEXTS[index]
+
+    def add_css(self):
+        raise NotImplementedError
 
     def convert(self):
         title_str = "<title>"

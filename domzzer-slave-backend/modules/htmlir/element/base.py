@@ -17,6 +17,8 @@ class HTMLBaseElement(HTMLElement):
         Length of the longest path from element to any leaf node
     attributes: list
         List of element attributes
+    includes_global_attributes: boolean
+        Does the element include the global attributes
     """
 
     def __init__(self, document_depth):
@@ -34,6 +36,7 @@ class HTMLBaseElement(HTMLElement):
         self.document_depth = document_depth
         self.document_depth = 0
         self.attributes = []
+        self.includes_global_attributes = True
         self.mutate()
 
     def get_child_elements(self):
@@ -63,6 +66,9 @@ class HTMLBaseElement(HTMLElement):
                 new_attributes.append(attribute_type.generate())
             del copy_of_possible_attributes[index]
         self.attributes = new_attributes
+
+    def add_css(self):
+        raise NotImplementedError
 
     def convert(self):
         base_str = "<base"

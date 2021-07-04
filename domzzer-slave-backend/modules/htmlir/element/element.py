@@ -11,6 +11,8 @@ class HTMLElement(ABC):
     ----------
     document_depth: int
         Length of the longest path from element to any leaf node
+    includes_global_attributes: boolean
+        Does the element include the global attributes
 
     Methods
     -------
@@ -22,6 +24,8 @@ class HTMLElement(ABC):
         Returns text of HTML element
     mutate()
         Randomly mutates the element
+    add_css()
+        Inserts random css rules for element
     convert()
         Converts the element into real HTML code
 
@@ -37,6 +41,7 @@ class HTMLElement(ABC):
         if not isinstance(document_depth, int):
             raise TypeError
         self.document_depth = document_depth
+        self.includes_global_attributes = True
 
     @abstractmethod
     def get_child_elements(self):
@@ -72,10 +77,16 @@ class HTMLElement(ABC):
         str
             Text of HTML element
         """
+        raise NotImplementedError
 
     @abstractmethod
     def mutate(self):
         """ Randomly mutate the element """
+        raise NotImplementedError
+
+    @abstractmethod
+    def add_css(self):
+        """ Inserts random css rules for element """
         raise NotImplementedError
 
     @abstractmethod

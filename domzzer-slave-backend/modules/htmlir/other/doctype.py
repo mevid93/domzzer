@@ -31,7 +31,7 @@ class HTMLDoctype:
 
     Attributes
     ----------
-    type: integer, optional
+    document_type: integer, optional
         HTMLDocument type (default is 1)
 
     Methods
@@ -47,32 +47,31 @@ class HTMLDoctype:
         Generates random HTMLDoctype object and returns it
     """
 
-    def __init__(self, type=0):
+    def __init__(self, document_type=0):
         """ Constructor for HTMLDoctype object.
 
-        Takes optional parameter type (integer from 0 to 20) as input.
+        Takes optional parameter document_type (integer from 0 to 20) as input.
         If no parameter is given, the default value is used instead.
         Raises error, if parameter provided is not integer.
 
         Parameters
         ----------
-        type: integer, optional
+        document_type: integer, optional
             HTML document type declaration (default is None)
         """
-        if isinstance(type, int) and type >= 0 and type <= 20:
-            self.type = type
-        elif isinstance(type, int) and (type < 0 or type > 20):
+        if document_type == None or isinstance(document_type, int) and (document_type < 0 or document_type > 20):
             raise ValueError
-        else:
+        if document_type != None and not isinstance(document_type, int):
             raise TypeError
+        self.document_type = document_type
 
     def mutate(self):
         """ Mutates the HTMLDocument. 
 
         Randomly changes the document type to another.
         """
-        new_type = randint(0, len(DOCTYPES) - 1)
-        self.type = DOCTYPES[new_type]
+        new_type = randint(0, len(LIST_OF_POSSIBLE_DOCTYPES) - 1)
+        self.document_type = new_type
 
     def convert(self):
         """ Returns HTMLDoctype as string.
@@ -84,8 +83,7 @@ class HTMLDoctype:
         str
             a string of real HTML code
         """
-        type_str = DOCTYPES[self.type]
-        type_str += "\n"
+        type_str = LIST_OF_POSSIBLE_DOCTYPES[self.document_type]
         return type_str
 
     @staticmethod
@@ -99,15 +97,15 @@ class HTMLDoctype:
         HTMLDoctype
             Randomly generated doctype
         """
-        type = randint(0, len(DOCTYPES) - 1)
-        return HTMLDoctype(type)
+        index = randint(0, len(LIST_OF_POSSIBLE_DOCTYPES) - 1)
+        return HTMLDoctype(index)
 
 
 # list of all possible doctypes
-DOCTYPES = [
+LIST_OF_POSSIBLE_DOCTYPES = [
     "<!DOCTYPE html>",  # 0
     "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">",  # 1
-    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"",  # 2
+    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">",  # 2
     "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">",  # 3
     "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">",  # 4
     "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">",  # 5

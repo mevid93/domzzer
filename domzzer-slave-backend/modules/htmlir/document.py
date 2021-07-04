@@ -1,4 +1,4 @@
-from modules.htmlir.doctype import HTMLDoctype
+from modules.htmlir.other.doctype import HTMLDoctype
 from modules.htmlir.element.body import HTMLBodyElement
 from modules.htmlir.element.head import HTMLHeadElement
 
@@ -74,32 +74,35 @@ class HTMLDocument:
         if self.doctype != None:
             self.doctype.mutate()
         else:
-            self.doctype = HTMLDoctype.generate(self.document_depth - 1)
+            self.doctype = HTMLDoctype.generate(self.document_depth)
         if self.head != None:
             self.head.mutate()
         else:
-            self.head = HTMLHeadElement.generate(self.document_depth - 1)
+            self.head = HTMLHeadElement.generate(self.document_depth)
         if self.body != None:
             self.body.mutate()
         else:
-            self.body = HTMLBodyElement.generate(self.document_depth - 1)
+            self.body = HTMLBodyElement.generate(self.document_depth)
         self.add_css()
         self.add_scripts()
 
     def add_css(self):
-        raise NotImplementedError
+        self.body.add_css()
 
     def add_scripts(self):
-        raise NotImplementedError
+        self.body.add_scripts()
 
     def convert(self):
-        raise NotImplementedError
+        document_str = self.doctype.convert() + "\n"
+        document_str += self.head.convert() + "\n"
+        document_str += self.body.convert()
+        return document_str
 
     @staticmethod
     def generate(document_depth=5, document_id=None):
         doctype = HTMLDoctype.generate()
-        head = HTMLBodyElement.generate()
-        body = HTMLBodyElement.generate()
+        head = HTMLHeadElement.generate(document_depth)
+        body = HTMLBodyElement.generate(document_depth)
         document = HTMLDocument(document_depth, doctype,
                                 head, body, document_id)
         document.add_css()
