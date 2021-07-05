@@ -18,7 +18,7 @@ class Generator:
     """
 
     @staticmethod
-    def generate_new_document(document_id, document_depth):
+    def generate_new_document(document_id, document_depth=5):
         """ Generate new document
 
         Method generated new HTMLDocument object with given id and returns it.
@@ -27,8 +27,8 @@ class Generator:
         ----------
         document_id: str
             Document id for identification
-        document_depth: int
-            Document depth, i.e. length of longest path to any leaf node from root node
+        document_depth: int, optional
+            Document depth, i.e. length of longest path to any leaf node from root node (default is 5)
         Retuns
         ------
         HTMLDocument

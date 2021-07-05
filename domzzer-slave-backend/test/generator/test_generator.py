@@ -15,11 +15,11 @@ class TestGenerator(unittest.TestCase):
 
     def test_generate_new_document_throws_type_error(self):
         self.assertRaises(
-            TypeError, Generator.generate_new_document, "wrong type")
+            TypeError, Generator.generate_new_document, 123)
 
     def test_generate_new_document_throws_value_error(self):
         self.assertRaises(
-            ValueError, Generator.generate_new_document, None, None)
+            ValueError, Generator.generate_new_document, None)
 
     def test_mutate_existing_document_works(self):
         random.seed(55)

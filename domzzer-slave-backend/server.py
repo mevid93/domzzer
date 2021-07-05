@@ -10,7 +10,13 @@ from modules.generator.generator import Generator
 app = Flask(__name__)
 config = Config(os.getcwd())
 generator = Generator()
-dom_fuzzer = Fuzzer(generator, [], None)
+server_address = "http://localhost:"
+port = config.get_server_port()
+if port == None:
+        server_address += "80/"
+else:
+        server_address += str(port) + "/"
+dom_fuzzer = Fuzzer(generator, config.get_browsers(), server_address)
 
 
 @app.route("/fuzzer/document/loaded")
