@@ -42,14 +42,15 @@ class TestHTMLDocument(unittest.TestCase):
 
     def test_convert_works(self):
         random.seed(666)
+        self.maxDiff = None
         document = HTMLDocument.generate(
             document_depth=2, document_id="test111")
         expected_str = "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
-        expected_str += "<head profile=\"???????????????????????????\" accesskey=\"z\" translate=\"no\""
-        expected_str += " title=\"Attribute title with multiline\ntext\" spellcheck=\"false\">\n"
+        expected_str += "<head profile=\"???????????????????????????\" accesskey=\"z\""
+        expected_str += " title=\"Attribute title with multiline\ntext\" spellcheck=\"false\" translate=\"no\">\n"
         expected_str += "</head>\n"
-        expected_str += "<body spellcheck=\"false\" accesskey=\"i\" title=\"\">\n"
-        expected_str += "mevid93\n"
+        expected_str += "<body spellcheck=\"false\" accesskey=\"i\" tabindex=\"23\" title=\"Another title for attribute\">\n"
+        expected_str += "https://github.com/mevid93/domzzer\n"
         expected_str += "</body>"
         self.assertEqual(document.convert(), expected_str)
 

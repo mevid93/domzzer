@@ -43,7 +43,7 @@ class TestGenerator(unittest.TestCase):
             document_id="test111", document_depth=2)
         converted_str = Generator.convert_existing_document(document)
         expected_str = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n"
-        expected_str += "<head title=\"Attribute title with multiline\ntext\">\n"
+        expected_str += "<head tabindex=\"\">\n"
         expected_str += "</head>\n"
         expected_str += "<body accesskey=\"l\" translate=\"no\">\n"
         expected_str += "\n"
