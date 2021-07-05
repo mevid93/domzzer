@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from modules.htmlir.attribute.gglobal.spellcheck import HTMLSpellcheckGlobalAttribute
+from modules.htmlir.attribute.globl.spellcheck import HTMLSpellcheckGlobalAttribute
 
 
 class TestHTMLSpellcheckAttribute(unittest.TestCase):

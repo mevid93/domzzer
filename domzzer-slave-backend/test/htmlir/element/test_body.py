@@ -41,7 +41,7 @@ class TestHTMLBodyElement(unittest.TestCase):
     def test_convert_works(self):
         random.seed(27)
         body = HTMLBodyElement(2)
-        expected_str = "<body tabindex=\"23\" spellcheck=\"false\" accesskey=\"i\" translate=\"yes\" title=\"Title\">\nmevid93\n</body>"
+        expected_str = "<body spellcheck=\"true\" autocapitalize=\"off\" accesskey=\"i\" translate=\"yes\" title=\"123132132132312\">\n\n</body>"
         self.assertEqual(body.convert(), expected_str)
 
 

@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from modules.htmlir.attribute.gglobal.translate import HTMLTranslateGlobalAttribute
+from modules.htmlir.attribute.globl.translate import HTMLTranslateGlobalAttribute
 
 
 class TestHTMLTranslateAttribute(unittest.TestCase):

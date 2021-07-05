@@ -2,7 +2,7 @@ import copy
 import random
 import unittest
 
-from modules.htmlir.attribute.gglobal.tabindex import HTMLTabindexGlobalAttribute
+from modules.htmlir.attribute.globl.tabindex import HTMLTabindexGlobalAttribute
 
 
 class TestHTMLTabindexAttribute(unittest.TestCase):
