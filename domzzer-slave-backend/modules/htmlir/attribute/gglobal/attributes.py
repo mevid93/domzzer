@@ -2,6 +2,7 @@ from random import randint
 
 from modules.htmlir.attribute.gglobal.accesskey import HTMLAccesskeyGlobalAttribute
 from modules.htmlir.attribute.gglobal.spellcheck import HTMLSpellcheckGlobalAttribute
+from modules.htmlir.attribute.gglobal.title import HTMLTitleGlobalAttribute
 from modules.htmlir.attribute.gglobal.translate import HTMLTranslateGlobalAttribute
 
 def get_random_global_attributes():
@@ -26,5 +27,6 @@ def get_random_global_attributes():
 LIST_OF_GLOBAL_ATTRIBUTES = [
     HTMLAccesskeyGlobalAttribute,
     HTMLSpellcheckGlobalAttribute,
+    HTMLTitleGlobalAttribute,
     HTMLTranslateGlobalAttribute
 ]
