@@ -2,7 +2,7 @@ from random import randint
 
 from modules.htmlir.attribute.href import HTMLHrefAttribute
 from modules.htmlir.attribute.target import HTMLTargetAttribute
-from modules.htmlir.attribute.gglobal.attributes import get_random_global_attributes
+from modules.htmlir.attribute.globl.attributes import get_random_global_attributes
 from modules.htmlir.element.element import HTMLElement
 
 

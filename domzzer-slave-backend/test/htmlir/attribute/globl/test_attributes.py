@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from modules.htmlir.attribute.gglobal.attributes import get_random_global_attributes
+from modules.htmlir.attribute.globl.attributes import get_random_global_attributes
 
 
 class TestGetRandomGlobalAttributes(unittest.TestCase):

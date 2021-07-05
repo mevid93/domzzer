@@ -10,7 +10,7 @@ from modules.htmlir.element.script import HTMLScriptElement
 from modules.htmlir.element.style import HTMLStyleElement
 from modules.htmlir.element.template import HTMLTemplateElement
 from modules.htmlir.element.title import HTMLTitleElement
-from modules.htmlir.attribute.gglobal.attributes import get_random_global_attributes
+from modules.htmlir.attribute.globl.attributes import get_random_global_attributes
 
 
 class HTMLHeadElement(HTMLElement):

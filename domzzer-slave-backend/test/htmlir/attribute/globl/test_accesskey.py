@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from modules.htmlir.attribute.gglobal.accesskey import HTMLAccesskeyGlobalAttribute
+from modules.htmlir.attribute.globl.accesskey import HTMLAccesskeyGlobalAttribute
 
 
 class TestHTMLHrefAttribute(unittest.TestCase):

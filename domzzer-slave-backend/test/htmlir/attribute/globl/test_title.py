@@ -2,7 +2,7 @@ import copy
 import random
 import unittest
 
-from modules.htmlir.attribute.gglobal.title import HTMLTitleGlobalAttribute
+from modules.htmlir.attribute.globl.title import HTMLTitleGlobalAttribute
 
 
 class TestHTMLTitleAttribute(unittest.TestCase):

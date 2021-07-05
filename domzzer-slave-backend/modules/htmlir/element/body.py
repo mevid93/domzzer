@@ -1,7 +1,7 @@
 from random import randint
 
 from modules.htmlir.element.element import HTMLElement
-from modules.htmlir.attribute.gglobal.attributes import get_random_global_attributes
+from modules.htmlir.attribute.globl.attributes import get_random_global_attributes
 
 class HTMLBodyElement(HTMLElement):
     """ Class representing HTML document body element.
