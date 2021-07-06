@@ -1,5 +1,3 @@
-import copy
-import random
 import unittest
 
 from modules.fuzzer.fuzzer import Fuzzer

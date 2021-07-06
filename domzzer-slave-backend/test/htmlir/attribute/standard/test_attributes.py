@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from modules.htmlir.attribute.globl.attributes import get_random_global_attributes
+from modules.htmlir.attribute.utilities import get_random_global_attributes
 
 
 class TestGetRandomGlobalAttributes(unittest.TestCase):
@@ -10,6 +10,7 @@ class TestGetRandomGlobalAttributes(unittest.TestCase):
         random.seed(5)
         attributes = get_random_global_attributes()
         self.assertEqual(len(attributes), 4)
+
 
 if __name__ == '__main__':
     unittest.main()

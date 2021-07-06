@@ -46,11 +46,11 @@ class TestHTMLDocument(unittest.TestCase):
         document = HTMLDocument.generate(
             document_depth=2, document_id="test111")
         expected_str = "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
-        expected_str += "<head profile=\"???????????????????????????\" accesskey=\"z\" translate=\"no\" tabindex=\"\" autocapitalize=\"none\">\n"
+        expected_str += "<head profile=\"http://localhost:3002/profiles/core\" title=\"Attribute title with multiline\n"
+        expected_str += "text\" accesskey=\"m\" translate=\"\" autocapitalize=\"on\" spellcheck=\"false\" tabindex=\"32767\">\n"
         expected_str += "</head>\n"
-        expected_str += "<body tabindex=\"11\" accesskey=\"d\" title=\"Attribute title with multiline\ntext\""
-        expected_str += " spellcheck=\"false\" autocapitalize=\"on\">\n"
-        expected_str += "\n"
+        expected_str += "<body translate=\"no\" accesskey=\"g\">\n"
+        expected_str += "domzzer\n"
         expected_str += "</body>"
         self.assertEqual(document.convert(), expected_str)
 

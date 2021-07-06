@@ -1,6 +1,6 @@
 from random import randint
 
-from modules.htmlir.attribute.profile import HTMLProfileAttribute
+from modules.htmlir.attribute.optional.profile import HTMLProfileAttribute
 from modules.htmlir.element.base import HTMLBaseElement
 from modules.htmlir.element.element import HTMLElement
 from modules.htmlir.element.link import HTMLLinkElement
@@ -10,7 +10,7 @@ from modules.htmlir.element.script import HTMLScriptElement
 from modules.htmlir.element.style import HTMLStyleElement
 from modules.htmlir.element.template import HTMLTemplateElement
 from modules.htmlir.element.title import HTMLTitleElement
-from modules.htmlir.attribute.globl.attributes import get_random_global_attributes
+from modules.htmlir.attribute.utilities import get_random_global_attributes
 
 
 class HTMLHeadElement(HTMLElement):

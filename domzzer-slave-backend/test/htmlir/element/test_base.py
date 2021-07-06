@@ -41,7 +41,8 @@ class TestHTMLBaseElement(unittest.TestCase):
     def test_convert_works(self):
         random.seed(666)
         base = HTMLBaseElement(0)
-        expected_str = "<base href=\"\" target=\"framename\">"
+        expected_str = "<base href=\"\" target=\"framename\" translate=\"\" accesskey=\"m\" "
+        expected_str += "title=\"Nice attribute title\" autocapitalize=\"off\" tabindex=\"0\" spellcheck=\"true\">"
         self.assertEqual(base.convert(), expected_str)
 
 
