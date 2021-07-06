@@ -7,6 +7,11 @@ class HTMLAttribute(ABC):
     Abstract base class that must be inherited by all attributes.
     Defines multiple methods that must be implemented.
 
+    Attributes
+    ----------
+    value: str
+        Attribute value
+
     Methods
     -------
     mutate()
@@ -19,6 +24,11 @@ class HTMLAttribute(ABC):
     generate()
         Generates random instance of attribute
     """
+
+    def __init__(self):
+        """ Constructor for attribute object. """
+        self.value = ""
+        self.mutate()
 
     @abstractmethod
     def mutate(self):
