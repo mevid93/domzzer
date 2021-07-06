@@ -8,8 +8,9 @@ from modules.htmlir.attribute.standard.autocapitalize import HTMLAutocapitalizeG
 class TestHTMLAutocapitalizeAttribute(unittest.TestCase):
 
     def test_constructor_works(self):
+        random.seed(666)
         autocapitalize = HTMLAutocapitalizeGlobalAttribute()
-        self.assertEqual(autocapitalize.value, "words")
+        self.assertEqual(autocapitalize.value, "sentences")
 
     def test_generate_works(self):
         random.seed(33)
