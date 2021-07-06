@@ -4,7 +4,7 @@ import unittest
 from modules.htmlir.attribute.standard.spellcheck import HTMLSpellcheckGlobalAttribute
 
 
-class TestHTMLSpellcheckAttribute(unittest.TestCase):
+class TestHTMLSpellcheckGlobalAttribute(unittest.TestCase):
 
     def test_constructor_works(self):
         random.seed(1)

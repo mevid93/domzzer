@@ -41,7 +41,8 @@ class TestHTMLHeadElement(unittest.TestCase):
     def test_convert_works(self):
         random.seed(666)
         head = HTMLHeadElement(2)
-        expected_str = "<head profile=\"???????????????????????????\" accesskey=\"r\" translate=\"yes\" autocapitalize=\"none\" tabindex=\"11\">\n</head>"
+        expected_str = "<head profile=\"???????????????????????????\" accesskey=\"r\" "
+        expected_str += "title=\"Attribute title with multiline\ntext\" autocapitalize=\"sentences\" translate=\"\">\n</head>"
         self.assertEqual(head.convert(), expected_str)
 
 

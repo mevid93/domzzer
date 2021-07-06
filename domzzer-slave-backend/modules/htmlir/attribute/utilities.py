@@ -2,6 +2,7 @@ from random import randint
 
 from modules.htmlir.attribute.standard.accesskey import HTMLAccesskeyGlobalAttribute
 from modules.htmlir.attribute.standard.autocapitalize import HTMLAutocapitalizeGlobalAttribute
+from modules.htmlir.attribute.standard.hidden import HTMLHiddenGlobalAttribute
 from modules.htmlir.attribute.standard.spellcheck import HTMLSpellcheckGlobalAttribute
 from modules.htmlir.attribute.standard.tabindex import HTMLTabindexGlobalAttribute
 from modules.htmlir.attribute.standard.title import HTMLTitleGlobalAttribute
@@ -16,7 +17,8 @@ def get_random_global_attributes():
     list: Attribute
         Random list of global attributes
     """
-    number_of_attributes = randint(0, len(GLOBAL_ATTRIBUTES))
+    max_number = min(4, len(GLOBAL_ATTRIBUTES))
+    number_of_attributes = randint(0, max_number)
     copy_of_possible_attributes = GLOBAL_ATTRIBUTES.copy()
     new_attributes = []
     for i in range(number_of_attributes):
@@ -32,8 +34,9 @@ def get_random_global_attributes():
 GLOBAL_ATTRIBUTES = [
     HTMLAccesskeyGlobalAttribute,
     HTMLAutocapitalizeGlobalAttribute,
+    HTMLHiddenGlobalAttribute,
     HTMLSpellcheckGlobalAttribute,
     HTMLTabindexGlobalAttribute,
     HTMLTitleGlobalAttribute,
-    HTMLTranslateGlobalAttribute
+    HTMLTranslateGlobalAttribute,
 ]
