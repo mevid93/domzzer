@@ -3,6 +3,7 @@ from random import randint
 from modules.htmlir.attribute.standard.accesskey import HTMLAccesskeyGlobalAttribute
 from modules.htmlir.attribute.standard.autocapitalize import HTMLAutocapitalizeGlobalAttribute
 from modules.htmlir.attribute.standard.hidden import HTMLHiddenGlobalAttribute
+from modules.htmlir.attribute.standard.inputmode import HTMLInputmodeGlobalAttribute
 from modules.htmlir.attribute.standard.spellcheck import HTMLSpellcheckGlobalAttribute
 from modules.htmlir.attribute.standard.tabindex import HTMLTabindexGlobalAttribute
 from modules.htmlir.attribute.standard.title import HTMLTitleGlobalAttribute
@@ -35,6 +36,7 @@ GLOBAL_ATTRIBUTES = [
     HTMLAccesskeyGlobalAttribute,
     HTMLAutocapitalizeGlobalAttribute,
     HTMLHiddenGlobalAttribute,
+    HTMLInputmodeGlobalAttribute,
     HTMLSpellcheckGlobalAttribute,
     HTMLTabindexGlobalAttribute,
     HTMLTitleGlobalAttribute,
