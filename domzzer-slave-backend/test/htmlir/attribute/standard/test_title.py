@@ -5,7 +5,7 @@ import unittest
 from modules.htmlir.attribute.standard.title import HTMLTitleGlobalAttribute
 
 
-class TestHTMLTitleAttribute(unittest.TestCase):
+class TestHTMLTitleGlobalAttribute(unittest.TestCase):
 
     def test_constructor_works(self):
         random.seed(1)
