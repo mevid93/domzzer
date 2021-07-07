@@ -3,11 +3,13 @@ from random import randint
 from modules.htmlir.attribute.standard.accesskey import HTMLAccesskeyGlobalAttribute
 from modules.htmlir.attribute.standard.autocapitalize import HTMLAutocapitalizeGlobalAttribute
 from modules.htmlir.attribute.standard.autofocus import HTMLAutofocusGlobalAttribute
+from modules.htmlir.attribute.standard.contenteditable import HTMLContenteditableGlobalAttribute
 from modules.htmlir.attribute.standard.dir import HTMLDirGlobalAttribute
 from modules.htmlir.attribute.standard.draggable import HTMLDraggableGlobalAttribute
 from modules.htmlir.attribute.standard.enterkeyhint import HTMLEnterkeyhintGlobalAttribute
 from modules.htmlir.attribute.standard.hidden import HTMLHiddenGlobalAttribute
 from modules.htmlir.attribute.standard.inputmode import HTMLInputmodeGlobalAttribute
+from modules.htmlir.attribute.standard.itemprop import HTMLItempropGlobalAttribute
 from modules.htmlir.attribute.standard.spellcheck import HTMLSpellcheckGlobalAttribute
 from modules.htmlir.attribute.standard.tabindex import HTMLTabindexGlobalAttribute
 from modules.htmlir.attribute.standard.title import HTMLTitleGlobalAttribute
@@ -43,11 +45,13 @@ GLOBAL_ATTRIBUTES = [
     HTMLAccesskeyGlobalAttribute,
     HTMLAutocapitalizeGlobalAttribute,
     HTMLAutofocusGlobalAttribute,
+    HTMLContenteditableGlobalAttribute,
     HTMLDirGlobalAttribute,
     HTMLDraggableGlobalAttribute,
     HTMLEnterkeyhintGlobalAttribute,
     HTMLHiddenGlobalAttribute,
     HTMLInputmodeGlobalAttribute,
+    HTMLItempropGlobalAttribute,
     HTMLSpellcheckGlobalAttribute,
     HTMLTabindexGlobalAttribute,
     HTMLTitleGlobalAttribute,
