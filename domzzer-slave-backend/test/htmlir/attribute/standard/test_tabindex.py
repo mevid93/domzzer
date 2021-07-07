@@ -5,7 +5,7 @@ import unittest
 from modules.htmlir.attribute.standard.tabindex import HTMLTabindexGlobalAttribute
 
 
-class TestHTMLTabindexAttribute(unittest.TestCase):
+class TestHTMLTabindexGlobalAttribute(unittest.TestCase):
 
     def test_constructor_works(self):
         random.seed(1)

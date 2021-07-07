@@ -42,7 +42,7 @@ class TestHTMLHeadElement(unittest.TestCase):
         random.seed(666)
         head = HTMLHeadElement(2)
         expected_str = "<head profile=\"???????????????????????????\" accesskey=\"r\" "
-        expected_str += "translate=\"yes\" draggable=\"false\" inputmode=\"numeric\">\n</head>"
+        expected_str += "tabindex=\"\" autocapitalize=\"sentences\" title=\"Nice attribute title\">\n</head>"
         self.assertEqual(head.convert(), expected_str)
 
 

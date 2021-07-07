@@ -4,7 +4,7 @@ import unittest
 from modules.htmlir.attribute.standard.translate import HTMLTranslateGlobalAttribute
 
 
-class TestHTMLTranslateAttribute(unittest.TestCase):
+class TestHTMLTranslateGlobalAttribute(unittest.TestCase):
 
     def test_constructor_works(self):
         random.seed(1)

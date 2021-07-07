@@ -5,7 +5,7 @@ import unittest
 from modules.htmlir.attribute.standard.accesskey import HTMLAccesskeyGlobalAttribute
 
 
-class TestHTMLAcceskeyAttribute(unittest.TestCase):
+class TestHTMLAcceskeyGlobalAttribute(unittest.TestCase):
 
     def test_constructor_works(self):
         random.seed(1)

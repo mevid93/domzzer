@@ -5,7 +5,7 @@ import unittest
 from modules.htmlir.attribute.standard.autocapitalize import HTMLAutocapitalizeGlobalAttribute
 
 
-class TestHTMLAutocapitalizeAttribute(unittest.TestCase):
+class TestHTMLAutocapitalizeGlobalAttribute(unittest.TestCase):
 
     def test_constructor_works(self):
         random.seed(666)
