@@ -43,8 +43,9 @@ class TestHTMLTitleElement(unittest.TestCase):
     def test_convert_works(self):
         random.seed(666)
         title = HTMLTitleElement(0)
-        expected_str = "<title title=\"Nice attribute title\" translate=\"no\" tabindex=\"\">"
-        expected_str += "https://github.com/mevid93/domzzer</title>"
+        expected_str = "<title spellcheck=\"false\" translate=\"no\" inputmode=\"none\">"
+        expected_str += "https://github.com/mevid93/domzzer"
+        expected_str += "</title>"
         self.assertEqual(title.convert(), expected_str)
 
 

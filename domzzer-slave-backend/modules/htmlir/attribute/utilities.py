@@ -2,6 +2,8 @@ from random import randint
 
 from modules.htmlir.attribute.standard.accesskey import HTMLAccesskeyGlobalAttribute
 from modules.htmlir.attribute.standard.autocapitalize import HTMLAutocapitalizeGlobalAttribute
+from modules.htmlir.attribute.standard.draggable import HTMLDraggableGlobalAttribute
+from modules.htmlir.attribute.standard.enterkeyhint import HTMLEnterkeyhintGlobalAttribute
 from modules.htmlir.attribute.standard.hidden import HTMLHiddenGlobalAttribute
 from modules.htmlir.attribute.standard.inputmode import HTMLInputmodeGlobalAttribute
 from modules.htmlir.attribute.standard.spellcheck import HTMLSpellcheckGlobalAttribute
@@ -12,6 +14,9 @@ from modules.htmlir.attribute.standard.translate import HTMLTranslateGlobalAttri
 
 def get_random_global_attributes():
     """ Returns list of random global attributes
+
+    Returns a list of random global attributes. 
+    The maximum size of the list is limited to 4 attributes.
 
     Returns
     -------
@@ -35,6 +40,8 @@ def get_random_global_attributes():
 GLOBAL_ATTRIBUTES = [
     HTMLAccesskeyGlobalAttribute,
     HTMLAutocapitalizeGlobalAttribute,
+    HTMLDraggableGlobalAttribute,
+    HTMLEnterkeyhintGlobalAttribute,
     HTMLHiddenGlobalAttribute,
     HTMLInputmodeGlobalAttribute,
     HTMLSpellcheckGlobalAttribute,
