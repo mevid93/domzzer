@@ -10,6 +10,7 @@ from modules.htmlir.attribute.standard.enterkeyhint import HTMLEnterkeyhintGloba
 from modules.htmlir.attribute.standard.hidden import HTMLHiddenGlobalAttribute
 from modules.htmlir.attribute.standard.inputmode import HTMLInputmodeGlobalAttribute
 from modules.htmlir.attribute.standard.itemprop import HTMLItempropGlobalAttribute
+from modules.htmlir.attribute.standard.nonce import HTMLNonceGlobalAttribute
 from modules.htmlir.attribute.standard.spellcheck import HTMLSpellcheckGlobalAttribute
 from modules.htmlir.attribute.standard.tabindex import HTMLTabindexGlobalAttribute
 from modules.htmlir.attribute.standard.title import HTMLTitleGlobalAttribute
@@ -52,6 +53,7 @@ GLOBAL_ATTRIBUTES = [
     HTMLHiddenGlobalAttribute,
     HTMLInputmodeGlobalAttribute,
     HTMLItempropGlobalAttribute,
+    HTMLNonceGlobalAttribute,
     HTMLSpellcheckGlobalAttribute,
     HTMLTabindexGlobalAttribute,
     HTMLTitleGlobalAttribute,

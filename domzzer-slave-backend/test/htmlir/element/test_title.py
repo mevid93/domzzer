@@ -43,7 +43,7 @@ class TestHTMLTitleElement(unittest.TestCase):
     def test_convert_works(self):
         random.seed(666)
         title = HTMLTitleElement(0)
-        expected_str = "<title enterkeyhint=\"previous\" accesskey=\"r\" spellcheck=\"false\">"
+        expected_str = "<title enterkeyhint=\"previous\" accesskey=\"r\" nonce=\"0x62afb68e245572fed09418850c9d7fb2\">"
         expected_str += "https://github.com/mevid93/domzzer"
         expected_str += "</title>"
         self.assertEqual(title.convert(), expected_str)
