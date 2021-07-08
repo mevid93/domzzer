@@ -42,7 +42,7 @@ class TestHTMLHeadElement(unittest.TestCase):
         random.seed(666)
         head = HTMLHeadElement(2)
         expected_str = "<head profile=\"???????????????????????????\" accesskey=\"r\" "
-        expected_str += "itemprop=\"name\" autocapitalize=\"sentences\" translate=\"no\">\n</head>"
+        expected_str += "itemprop=\"name\" autocapitalize=\"sentences\" title=\"Lirum larum attribute title\">\n</head>"
         self.assertEqual(head.convert(), expected_str)
 
 
