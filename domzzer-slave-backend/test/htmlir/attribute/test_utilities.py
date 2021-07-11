@@ -5,7 +5,7 @@ import unittest
 import modules.htmlir.attribute.utilities as autily
 
 
-class TestUtilitiesFunctions(unittest.TestCase):
+class TestAttributeUtilities(unittest.TestCase):
 
     def test_get_random_global_attributes_works(self):
         random.seed(5)
@@ -16,7 +16,7 @@ class TestUtilitiesFunctions(unittest.TestCase):
         random.seed(17)
         ga = autily.get_random_global_attributes()
         a = autily.choose_random_attributes(ga)
-        self.assertEqual(len(a), 3)
+        self.assertEqual(len(a), 1)
 
     def test_mutate_attributes_works(self):
         random.seed(1)

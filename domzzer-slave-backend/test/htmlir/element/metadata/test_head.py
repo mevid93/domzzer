@@ -31,7 +31,7 @@ class TestHTMLHead(unittest.TestCase):
         random.seed(1)
         doc_details = HTMLDocumentDetails()
         head = HTMLHeadElement.generate(0, doc_details)
-        expected_str = "<head id=\"e_0\" autocapitalize=\"sentences\" inputmode=\"numeric\">\n"
+        expected_str = "<head id=\"e_0\" contenteditable=\"true\" inputmode=\"numeric\">\n"
         expected_str += "</head>"
         self.assertEqual(head.convert(), expected_str)
 
