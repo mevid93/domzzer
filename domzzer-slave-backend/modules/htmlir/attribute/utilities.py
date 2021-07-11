@@ -15,6 +15,7 @@ from modules.htmlir.attribute.standard.inputmode import HTMLInputmodeGlobalAttri
 from modules.htmlir.attribute.standard.itemprop import HTMLItempropGlobalAttribute
 from modules.htmlir.attribute.standard.nonce import HTMLNonceGlobalAttribute
 from modules.htmlir.attribute.standard.spellcheck import HTMLSpellcheckGlobalAttribute
+from modules.htmlir.attribute.standard.style import HTMLStyleGlobalAttribute
 from modules.htmlir.attribute.standard.tabindex import HTMLTabindexGlobalAttribute
 from modules.htmlir.attribute.standard.title import HTMLTitleGlobalAttribute
 from modules.htmlir.attribute.standard.translate import HTMLTranslateGlobalAttribute
@@ -58,6 +59,7 @@ GLOBAL_ATTRIBUTES = [
     HTMLItempropGlobalAttribute,
     HTMLNonceGlobalAttribute,
     HTMLSpellcheckGlobalAttribute,
+    HTMLStyleGlobalAttribute,
     HTMLTabindexGlobalAttribute,
     HTMLTitleGlobalAttribute,
     HTMLTranslateGlobalAttribute,
