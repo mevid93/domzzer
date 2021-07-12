@@ -41,6 +41,26 @@ class HTMLStyleGlobalAttribute(HTMLAttribute):
         style.mutate()
         return style
 
+    @staticmethod
+    def get_random_css_rule():
+        """ Create random css rule.
+
+        Method creates random css rule and returns it.
+
+        Returns
+        -------
+        str
+            Random css rule
+        """
+        keys = list(POSSIBLE_PROPERTIES.keys())
+        count_keys = len(keys)
+        index = randint(0, count_keys - 1)
+        key = keys[index]
+        key_values = POSSIBLE_PROPERTIES[key]
+        index = randint(0, len(key_values) - 1)
+        value = key_values[index]
+        return key + ":" + value + ";"
+
 
 POSSIBLE_PROPERTIES = {
     "align-content": ["stretch", "center", "flex-start", "flex-end", "space-between", "space-around", "space-evenly", "initial", "inherit"],

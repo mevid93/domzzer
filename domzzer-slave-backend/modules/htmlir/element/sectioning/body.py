@@ -11,6 +11,7 @@ class HTMLBodyElement(HTMLElement):
 
     def __init__(self, document_depth, doc_details):
         super().__init__(document_depth, doc_details)
+        self.mutate()
 
     def mutate(self):
         # mutate attributes

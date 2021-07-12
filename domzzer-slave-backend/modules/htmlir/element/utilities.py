@@ -1,6 +1,8 @@
 import copy
 from random import randint
 
+from modules.htmlir.element.metadata.style import HTMLStyleElement
+
 
 def choose_random_elements(possible_elements, document_depth, doc_details):
     """ Select random elements from list of elements.
@@ -32,3 +34,23 @@ def mutate_elements(elements):
     """
     for e in elements:
         e.mutate()
+
+
+def create_style_element(name, document_depth, doc_details):
+    """ Create style element with given css class name.
+
+    Parameters
+    ----------
+    name: str
+        css class name inside style element
+    document_depth: int
+        maximum distance from element to any leaf node
+    doc_details:
+        document details of the document where element belongs
+
+    Returns
+    -------
+    HTMLElement
+        HTML style element
+    """
+    return HTMLStyleElement(name, document_depth, doc_details)
