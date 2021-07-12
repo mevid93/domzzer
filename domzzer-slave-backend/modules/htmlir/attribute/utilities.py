@@ -24,7 +24,7 @@ from modules.htmlir.attribute.standard.translate import HTMLTranslateGlobalAttri
 def get_random_global_attributes():
     """ Returns list of random global attributes
 
-    Returns a list of random global attributes. 
+    Returns a list of random global attributes.
     The maximum size of the list is limited to 4 attributes.
 
     Returns
@@ -90,7 +90,7 @@ def choose_random_attributes(possible_attributes):
 
 
 def mutate_attributes(attributes):
-    """ Mutate attributes. 
+    """ Mutate attributes.
 
     Function mutates each attribute in the given list.
     """
@@ -118,3 +118,14 @@ def create_class_attribute(classes):
         Class attribute
     """
     return HTMLClassGlobalAttribute(classes)
+
+
+def create_random_css_class_rule():
+    """ Create random css class rule.
+
+    Returns
+    -------
+    str
+        Random css rule
+    """
+    return HTMLStyleGlobalAttribute.get_random_css_rule()

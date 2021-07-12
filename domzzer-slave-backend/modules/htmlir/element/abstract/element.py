@@ -78,11 +78,8 @@ class HTMLElement(ABC):
         self.child_elements = []
         self.attributes = []
         self.global_attributes = []
-        self.classes = self.details.get_css_classes()
+        self.classes = self.details.get_random_css_classes()
         self.text = None
-
-        # finally mutate the element
-        self.mutate()
 
     def get_child_elements(self):
         """ Get list of child elements.

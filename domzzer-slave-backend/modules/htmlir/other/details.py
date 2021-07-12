@@ -38,7 +38,7 @@ class HTMLDocumentDetails:
         self.id += 1
         return "e_" + str(self.id - 1)
 
-    def get_css_classes(self):
+    def get_random_css_classes(self):
         """ Returns random list of available css class names.
 
         Returns random list of available css class names.
@@ -60,3 +60,15 @@ class HTMLDocumentDetails:
             names.append(available_names[index])
             del available_names[index]
         return names
+
+    def get_css_classes(self):
+        """ Get full list of all css classes.
+
+        Method returns list of all css class names available.
+
+        Returns
+        -------
+        list[str]
+            List of available css class names
+        """
+        return self.css_classes

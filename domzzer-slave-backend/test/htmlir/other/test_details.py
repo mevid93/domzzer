@@ -17,11 +17,11 @@ class TestHTMLDocumentDetails(unittest.TestCase):
         self.assertEqual(details.id, 1)
         self.assertEqual(element_id, "e_0")
 
-    def test_get_css_classes_works(self):
+    def test_get_random_css_classes_work(self):
         random.seed(81)
         details = HTMLDocumentDetails()
         self.assertEqual(len(details.css_classes), 8)
-        classes = details.get_css_classes()
+        classes = details.get_random_css_classes()
         self.assertEqual(classes[0], "myClass6")
 
 

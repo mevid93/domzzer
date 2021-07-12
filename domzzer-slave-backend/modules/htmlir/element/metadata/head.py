@@ -11,6 +11,8 @@ class HTMLHeadElement(HTMLElement):
 
     def __init__(self, document_depth, doc_details):
         super().__init__(0, doc_details)
+        self.style_elements = []
+        self.mutate()
 
     def mutate(self):
         # mutate attributes
@@ -33,6 +35,17 @@ class HTMLHeadElement(HTMLElement):
         else:
             eutily.mutate_elements(self.child_elements)
 
+        # mutate style elements
+        if len(self.style_elements) == 0:
+            classes = self.details.get_css_classes()
+            for cn in classes:
+                c = eutily.create_style_element(
+                    cn, self.document_depth - 1, self.details)
+                self.style_elements.append(c)
+        else:
+            for style_element in self.style_elements:
+                style_element.mutate()
+
     def convert(self):
         convert_str = "<head"
         # insert id attribute
@@ -53,9 +66,14 @@ class HTMLHeadElement(HTMLElement):
             convert_str += " " + ga.convert()
 
         convert_str += ">\n"
-        #insert child elements
+
+        # insert child elements
         for e in self.child_elements:
             convert_str += e.convert() + "\n"
+
+        # insert css classes
+        for c in self.style_elements:
+            convert_str += c.convert() + "\n"
 
         convert_str += "</head>"
         return convert_str
