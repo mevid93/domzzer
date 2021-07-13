@@ -1,7 +1,7 @@
 import copy
 from random import randint
 
-from modules.htmlir.element.metadata.style import HTMLStyleElement
+from modules.htmlir.element.metadata.elem_style import HTMLStyleElement
 
 
 def choose_random_elements(possible_elements, document_depth, doc_details):
