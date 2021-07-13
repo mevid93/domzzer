@@ -1,24 +1,24 @@
 import copy
 from random import randint
 
-from modules.htmlir.attribute.standard.accesskey import HTMLAccesskeyGlobalAttribute
-from modules.htmlir.attribute.standard.a_class import HTMLClassGlobalAttribute
-from modules.htmlir.attribute.standard.autocapitalize import HTMLAutocapitalizeGlobalAttribute
-from modules.htmlir.attribute.standard.autofocus import HTMLAutofocusGlobalAttribute
-from modules.htmlir.attribute.standard.contenteditable import HTMLContenteditableGlobalAttribute
-from modules.htmlir.attribute.standard.dir import HTMLDirGlobalAttribute
-from modules.htmlir.attribute.standard.draggable import HTMLDraggableGlobalAttribute
-from modules.htmlir.attribute.standard.enterkeyhint import HTMLEnterkeyhintGlobalAttribute
-from modules.htmlir.attribute.standard.hidden import HTMLHiddenGlobalAttribute
-from modules.htmlir.attribute.standard.id import HTMLIdGlobalAttribute
-from modules.htmlir.attribute.standard.inputmode import HTMLInputmodeGlobalAttribute
-from modules.htmlir.attribute.standard.itemprop import HTMLItempropGlobalAttribute
-from modules.htmlir.attribute.standard.nonce import HTMLNonceGlobalAttribute
-from modules.htmlir.attribute.standard.spellcheck import HTMLSpellcheckGlobalAttribute
-from modules.htmlir.attribute.standard.style import HTMLStyleGlobalAttribute
-from modules.htmlir.attribute.standard.tabindex import HTMLTabindexGlobalAttribute
-from modules.htmlir.attribute.standard.title import HTMLTitleGlobalAttribute
-from modules.htmlir.attribute.standard.translate import HTMLTranslateGlobalAttribute
+from modules.htmlir.attribute.standard.attr_accesskey import HTMLAccesskeyGlobalAttribute
+from modules.htmlir.attribute.standard.attr_class import HTMLClassGlobalAttribute
+from modules.htmlir.attribute.standard.attr_autocapitalize import HTMLAutocapitalizeGlobalAttribute
+from modules.htmlir.attribute.standard.attr_autofocus import HTMLAutofocusGlobalAttribute
+from modules.htmlir.attribute.standard.attr_contenteditable import HTMLContenteditableGlobalAttribute
+from modules.htmlir.attribute.standard.attr_dir import HTMLDirGlobalAttribute
+from modules.htmlir.attribute.standard.attr_draggable import HTMLDraggableGlobalAttribute
+from modules.htmlir.attribute.standard.attr_enterkeyhint import HTMLEnterkeyhintGlobalAttribute
+from modules.htmlir.attribute.standard.attr_hidden import HTMLHiddenGlobalAttribute
+from modules.htmlir.attribute.standard.attr_id import HTMLIdGlobalAttribute
+from modules.htmlir.attribute.standard.attr_inputmode import HTMLInputmodeGlobalAttribute
+from modules.htmlir.attribute.standard.attr_itemprop import HTMLItempropGlobalAttribute
+from modules.htmlir.attribute.standard.attr_nonce import HTMLNonceGlobalAttribute
+from modules.htmlir.attribute.standard.attr_spellcheck import HTMLSpellcheckGlobalAttribute
+from modules.htmlir.attribute.standard.attr_style import HTMLStyleGlobalAttribute
+from modules.htmlir.attribute.standard.attr_tabindex import HTMLTabindexGlobalAttribute
+from modules.htmlir.attribute.standard.attr_title import HTMLTitleGlobalAttribute
+from modules.htmlir.attribute.standard.attr_translate import HTMLTranslateGlobalAttribute
 
 
 def get_random_global_attributes():
