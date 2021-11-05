@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Switch, Route, Link, useHistory, Redirect } from "react-router-dom"
+import { Switch, Route, Link, useHistory, Navigate } from "react-router-dom"
 
 import InfoNotification from './components/InfoNotification'
 import ErrorNotification from './components/ErrorNotification'
@@ -145,37 +145,37 @@ function App() {
 
             <Switch>
               <Route path="/login">
-                {user === null ? <LoginPage /> : <Redirect to="/" />}
+                {user === null ? <LoginPage /> : <Navigate to="/" />}
               </Route>
               <Route path="/settings">
-                {user !== null && user.userRole === 'ADMIN' ? <SettingsPage /> : <Redirect to="/login" />}
+                {user !== null && user.userRole === 'ADMIN' ? <SettingsPage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/users/new">
-                {user !== null && user.userRole === 'ADMIN' ? <NewUserPage /> : <Redirect to="/login" />}
+                {user !== null && user.userRole === 'ADMIN' ? <NewUserPage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/users/:id">
-                {user !== null ? <UserPage /> : <Redirect to="/login" />}
+                {user !== null ? <UserPage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/users">
-                {user !== null && user.userRole === 'ADMIN' ? <UsersPage /> : <Redirect to="/login" />}
+                {user !== null && user.userRole === 'ADMIN' ? <UsersPage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/vulnerabilities/:id">
-                {user !== null ? <VulnerabilityPage /> : <Redirect to="/login" />}
+                {user !== null ? <VulnerabilityPage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/vulnerabilities">
-                {user !== null ? <VulnerabilitiesPage /> : <Redirect to="/login" />}
+                {user !== null ? <VulnerabilitiesPage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/slaves/new">
-                {user !== null && user.userRole !== 'LITE' ? <NewSlavePage /> : <Redirect to="/login" />}
+                {user !== null && user.userRole !== 'LITE' ? <NewSlavePage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/slaves/:id">
-                {user !== null ? <SlavePage /> : <Redirect to="/login" />}
+                {user !== null ? <SlavePage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/slaves">
-                {user !== null ? <SlavesPage /> : <Redirect to="/login" />}
+                {user !== null ? <SlavesPage /> : <Navigate to="/login" />}
               </Route>
               <Route path="/">
-                {user !== null ? <HomePage /> : <Redirect to="/login" />}
+                {user !== null ? <HomePage /> : <Navigate to="/login" />}
               </Route>
             </Switch>
           </Container>
