@@ -28,13 +28,4 @@ jobs:
         - npm run lint
         - npm run test
 
-    # tests for the domzzer-slave-backend
-    - language: python
-      python: 3.6
-      before_install:
-        - cd ./domzzer-slave-backend
-      install:
-        - pip install -r requirements.txt    
-      script:
-        - pytest
 
