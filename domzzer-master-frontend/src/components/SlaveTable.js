@@ -49,7 +49,7 @@ const SlaveTable = ({ slaves }) => {
         count={slaves.length}
         rowsPerPage={10}
         page={page}
-        onChangePage={(event, newPage) => setPage(newPage)}
+        onPageChange={(event, newPage) => setPage(newPage)}
       />
     </TableContainer>
   )
