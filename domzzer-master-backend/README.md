@@ -4,17 +4,17 @@
 
 In the project directory, you can run:
 
+### `npm run tsc`
+
+Creates build folder and converts the typescript files into javascript files.
+
 ### `npm start`
 
-Runs the app in the development mode.
+Runs the app in production mode.
 
 ### `npm run dev`
 
 Runs the app in the development mode, where code changes will restart the server.
-
-### `npm run build:ui`
-
-Builds the domzzer-master-frontend and copies to build folder into the root folder of domzzer-master-backend.
 
 ### `npm run lint`
 
