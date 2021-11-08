@@ -12,3 +12,10 @@ Runs the app in the development mode.
 
 Builds the app for production to the `build` folder.
 
+### `npm run lint`
+
+Checks errors in coding style.
+
+### `npm run test`
+
+Run automated tests.
