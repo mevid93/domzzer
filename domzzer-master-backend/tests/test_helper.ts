@@ -72,7 +72,8 @@ const initialVulnerabilities = [
     serverAddress: 'http://192.168.1.1',
     targetBrowser: 'chrome',
     timestamp: new Date(2021, 6, 25, 10, 51, 0, 0),
-    status: 'OPEN'
+    status: 'OPEN',
+    payload: "<html>hacked</html>"
   },
 ];
 

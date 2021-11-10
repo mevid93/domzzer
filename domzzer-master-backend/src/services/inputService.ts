@@ -1,6 +1,7 @@
-import { Credentials, UpdateVulnerability } from "../types/types";
+import { Credentials } from "../types/types";
 import { NewSlave, UpdateSlave } from "../types/types";
 import { NewUser, UpdateUser } from '../types/types';
+import { NewVulnerability, UpdateVulnerability } from "../types/types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toCredentials = (object: any): Credentials => {
@@ -141,6 +142,49 @@ const parseStatus = (status: unknown): 'OPEN' | 'ZERODAY' | 'CLOSED' | undefined
   return status;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const toNewVulnerability = (object: any): NewVulnerability => {
+  const newVulnerability: NewVulnerability = {
+    serverAddress: parseAddress(object.serverAddress),
+    targetBrowser: parseTargetBrowser(object.targetBrowser),
+    timestamp: parseTimestamp(object.timestamp),
+    status: 'OPEN',
+    payload: parsePayload(object.payload)
+  };
+
+  return newVulnerability;
+};
+
+const parseTargetBrowser = (browser: unknown): string | undefined => {
+  if (!browser || !(typeof browser === 'string' || browser instanceof String)) {
+    return undefined;
+  }
+
+  return browser.toString();
+};
+
+const parseTimestamp = (timestamp: unknown): Date | undefined => {
+  if (!timestamp || !(typeof timestamp === 'string' || timestamp instanceof String)) {
+    return undefined;
+  }
+
+  const milliseconds = Date.parse(timestamp.toString());
+
+  if (isNaN(milliseconds)) {
+    return undefined;
+  }
+
+  return new Date(milliseconds);
+};
+
+const parsePayload = (payload: unknown): string | undefined => {
+  if (!payload || !(typeof payload === 'string' || payload instanceof String)) {
+    return undefined;
+  }
+
+  return payload.toString();
+};
+
 export default {
   toCredentials,
   toPollInverval,
@@ -148,5 +192,6 @@ export default {
   toUpdateSlave,
   toNewUser,
   toUpdateUser,
+  toNewVulnerability,
   toUpdateVulnerability
 };

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "start": "cross-env NODE_ENV=production node ./build/index.js",
-    "dev": "cross-env NODE_ENV=development ts-node-dev ./src/index.ts",
+    "start": "cross-env NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED='0' node ./build/index.js",
+    "dev": "cross-env NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED='0' ts-node-dev ./src/index.ts",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
     "lint": "eslint --ext .ts ."
   },
@@ -19,6 +19,7 @@
     "@types/jsonwebtoken": "^8.5.5",
     "@types/mongoose-unique-validator": "^1.0.5",
     "@types/node": "^16.11.6",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

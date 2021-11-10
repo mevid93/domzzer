@@ -45,7 +45,7 @@ const VulnerabilitiesPage = () => {
     <div>
       <h1>domzzer / Vulnerabilities</h1>
 
-      <Grid container spacing={3} justify="flex-start">
+      <Grid container spacing={3} justifyContent="flex-start">
 
         <Grid item xs={6} style={{ marginTop: 15, display: "flex", justifyContent: "flex-start" }}>
           <TextField

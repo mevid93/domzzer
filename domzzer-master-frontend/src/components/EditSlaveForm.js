@@ -122,7 +122,7 @@ const EditSlaveForm = ({ slave }) => {
 
       </form>
 
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Grid container direction="column" justifyContent="center" alignItems="center">
         <Grid item className={classes.gridItem} xs>
 
           {loggeduser.userRole !== 'LITE' &&

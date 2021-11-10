@@ -99,6 +99,7 @@ export interface Vulnerability {
   targetBrowser: string,
   timestamp: Date,
   status: 'OPEN' | 'ZERODAY' | 'CLOSED',
+  payload: string,
   _id: ObjectId
 }
 
@@ -107,9 +108,20 @@ export interface TransformedVulnerability {
   serverAddress: string,
   targetBrowser: string,
   timestamp: Date,
-  status: 'OPEN' | 'ZERODAY' | 'CLOSED'
+  status: 'OPEN' | 'ZERODAY' | 'CLOSED',
+  payload: string,
   id: string
 }
+
+// type for new Vulnerability to be created
+export interface NewVulnerability {
+  serverAddress?: string,
+  targetBrowser?: string,
+  timestamp?: Date,
+  payload?: string,
+  status?: 'OPEN' | 'ZERODAY' | 'CLOSED',
+}
+
 
 // type for updating Vulnerability
 export interface UpdateVulnerability {

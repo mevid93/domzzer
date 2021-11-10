@@ -100,7 +100,7 @@ const SlavePage = () => {
       </Container>
 
       {user !== null && user.userRole !== 'LITE' &&
-        <Grid container direction="column" justify="center" alignItems="center">
+        <Grid container direction="column" justifyContent="center" alignItems="center">
           <Grid item xs>
             <Button
               style={{ marginTop: 25 }}
