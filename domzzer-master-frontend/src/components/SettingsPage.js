@@ -89,7 +89,7 @@ const SettingsPage = () => {
         </div>
       </Container>
 
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Grid container direction="column" justifyContent="center" alignItems="center">
         {loggedUser !== null && loggedUser.userRole === 'ADMIN' &&
           <Grid item xs>
             <Button
