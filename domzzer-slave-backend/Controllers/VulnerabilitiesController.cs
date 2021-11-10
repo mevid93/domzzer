@@ -2,11 +2,13 @@ namespace SlaveAPI.Controllers
 {
     using System.Collections.Generic;
     using AutoMapper;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SlaveAPI.Data;
     using SlaveAPI.DTOs;
     using SlaveAPI.Models;
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class VulnerabilitiesController : ControllerBase
