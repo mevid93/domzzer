@@ -15,7 +15,7 @@ namespace SlaveAPI.Services
         public AuthenticationManager(string apiUsername, string apiPassword, string apiSecurityKey)
         {
             this.apiUsername = apiUsername != null ? apiUsername : string.Empty;
-            this.apiPassword = apiPassword != null ? apiUsername : string.Empty;
+            this.apiPassword = apiPassword != null ? apiPassword : string.Empty;
             this.apiSecurityKey = apiSecurityKey;
         }
 
