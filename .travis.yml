@@ -29,4 +29,12 @@ jobs:
         - npm run lint
         - npm run test
 
-
+    # tests for the domzzer-slave-backend
+    - language: csharp
+      mono: none
+      dotnet: 5.0.403
+      before_script:
+        - cs ./domzzer-slave-backend
+      script:
+        - dotnet build
+        - dotnet test
