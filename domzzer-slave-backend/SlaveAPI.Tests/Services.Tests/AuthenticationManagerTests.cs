@@ -1,4 +1,4 @@
-namespace SlaveAPI.Tests
+namespace SlaveAPI.Tests.Services.Tests
 {
     using Xunit;
     using SlaveAPI.Services;
