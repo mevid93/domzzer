@@ -34,7 +34,7 @@ jobs:
       mono: none
       dotnet: 5.0.403
       before_script:
-        - cs ./domzzer-slave-backend
+        - cd ./domzzer-slave-backend
       script:
         - dotnet build
         - dotnet test
