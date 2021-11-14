@@ -54,3 +54,9 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# results folder
+results/
+
+# pytest cache
+.pytest_cache/
