@@ -38,3 +38,16 @@ jobs:
       script:
         - dotnet build
         - dotnet test
+
+    # tests for the domzzer-slave-fuzzer
+    - language: python
+      python:
+        - 3.6
+      before_script:
+        - cd ./domzzer-slave-fuzzer
+      script:
+        - pytest
+
+
+
+
