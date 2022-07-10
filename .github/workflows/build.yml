@@ -24,10 +24,10 @@ jobs:
       with:
         node-version: 16
         cache: 'npm'
-        #cache-dependency-path: 'domzzer-master-frontend/package-lock.json'
+        cache-dependency-path: 'domzzer-master-frontend/package-lock.json'
   
     - name: Install
-      run: npm ci
+      run: cd ./domzzer-master-frontend/ && npm ci
     
     - name: Lint
       run: npm run lint
