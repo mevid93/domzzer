@@ -39,6 +39,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: GET LOCALHOST
+      run: curl 'http://localhost:27017'
+
     # Test the master backend
     - name: Use Node.js
       uses: actions/setup-node@v2
