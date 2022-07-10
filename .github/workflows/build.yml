@@ -15,6 +15,7 @@ jobs:
       TEST_MONGODB_URI: mongodb://admin:admin@localhost:27017/domzzer_test
       TEST_AES256_KEY: UjXn2r5u8x/A?D*G-KaPdSgVkYp3s6v9
       TEST_SECRET: Xn2r5u8x
+      PORT: 3001
 
     defaults:
       run:
