@@ -32,10 +32,10 @@ jobs:
       run: dotnet restore ./domzzer-slave-backend/
     
     - name: Build
-      run: dotnet build -c Release --no-restore
+      run: dotnet build ./domzzer-slave-backend/ -c Release --no-restore
     
     - name: Test
-      run: dotnet test -c Release --no-build --verbosity normal
+      run: dotnet test ./domzzer-slave-backend/ -c Release --no-build --verbosity normal
 
     # Test the slave fuzzer
 
