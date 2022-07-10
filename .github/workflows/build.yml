@@ -11,6 +11,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      MONGODB_URI: mongodb://admin:admin@localhost:27017/domzzer_test
+      TEST_AES256_KEY: UjXn2r5u8x/A?D*G-KaPdSgVkYp3s6v9
+      TEST_SECRET: Xn2r5u8x
+
     defaults:
       run:
         shell: bash
@@ -26,6 +31,14 @@ jobs:
         cache: 'npm'
         cache-dependency-path: 'domzzer-master-backend/package-lock.json'
     
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.7.0
+      with:
+        mongodb-version: '5.0'
+        mongodb-username: admin
+        mongodb-password: admin
+        mongodb-db: domzzer_test
+
     - name: Install
       run: cd ./domzzer-master-backend/ && npm ci
     
