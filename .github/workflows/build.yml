@@ -20,20 +20,24 @@ jobs:
     defaults:
       run:
         shell: bash
-    
+
+    services:
+      mongo:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: admin
+          MONGO_INITDB_DATABASE: domzzer_test
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017: 27017
+
     steps:
     - uses: actions/checkout@v2
-
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.7.0
-      with:
-        mongodb-version: '5.0'
-        mongodb-username: admin
-        mongodb-password: admin
-        mongodb-db: domzzer_test
-
-    - name: GET MONGO_URL
-      run: curl http://localhost:27017
 
     # Test the master backend
     - name: Use Node.js
