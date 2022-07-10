@@ -29,19 +29,19 @@ test('renders content', () => {
     }
   ]
 
-  const component = render(
+  const view = render(
     <Router>
       <UserTable users={users} />
     </Router>
   )
 
-  expect(component.container).toHaveTextContent(
+  expect(view.container).toHaveTextContent(
     'LiteUser'
   )
-  expect(component.container).toHaveTextContent(
+  expect(view.container).toHaveTextContent(
     'PRO'
   )
-  expect(component.container).not.toHaveTextContent(
+  expect(view.container).not.toHaveTextContent(
     'iamalmighty'
   )
 })

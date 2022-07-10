@@ -1,44 +1,46 @@
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SlaveAPI.Context;
+using SlaveAPI.DTOs;
+using SlaveAPI.Models;
+
 namespace SlaveAPI.Controllers
 {
-    using System.Collections.Generic;
-    using AutoMapper;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using SlaveAPI.Data;
-    using SlaveAPI.DTOs;
-    using SlaveAPI.Models;
 
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/vulnerabilities")]
     [ApiController]
     public class VulnerabilitiesController : ControllerBase
     {
-        private readonly IVulnerabilityRepository repository;
-        private readonly IMapper mapper;
+        private readonly SlaveAPIContext _slaveAPIContext;
+        private readonly IMapper _mapper;
 
-        public VulnerabilitiesController(IVulnerabilityRepository repository, IMapper mapper)
+        public VulnerabilitiesController(SlaveAPIContext slaveAPIContext, IMapper mapper)
         {
-            this.repository = repository;
-            this.mapper = mapper;
+            _slaveAPIContext = slaveAPIContext;
+            _mapper = mapper;
         }
 
         // GET api/vulnerabilities
         [HttpGet]
-        public ActionResult<IEnumerable<VulnerabilityReadDTO>> GetAllVulnerabilities()
+        public ActionResult<List<Vulnerability>> GetAllVulnerabilities()
         {
-            var vulnerabilities = repository.GetAllVulnerabilities();
-            return Ok(mapper.Map<IEnumerable<VulnerabilityReadDTO>>(vulnerabilities));
+            var vulnerabilities = _slaveAPIContext.Vulnerabilities;
+            return Ok(vulnerabilities);
         }
 
         // GET api/vulnerabilities/{id}
         [HttpGet("{id:int}", Name="GetVulnerabilityById")]
-        public ActionResult<IEnumerable<VulnerabilityReadDTO>> GetVulnerabilityById(int id)
+        public ActionResult<Vulnerability> GetVulnerabilityById(int id)
         {
-            var vulnerability = repository.GetVulnerabilityById(id);
+            var vulnerability = _slaveAPIContext.Vulnerabilities.FirstOrDefault(v => v.Id == id);
 
             if (vulnerability != null)
             {
-                return Ok(mapper.Map<VulnerabilityReadDTO>(vulnerability));
+                return Ok(vulnerability);
             }
 
             return NotFound();
@@ -46,14 +48,15 @@ namespace SlaveAPI.Controllers
 
         // DELETE api/vulnerablities/{id}
         [HttpDelete("{id:int}")]
-        public ActionResult<VulnerabilityReadDTO> DeleteVulnerabilityById(int id)
+        public ActionResult DeleteVulnerabilityById(int id)
         {
-            var vulnerability = repository.DeleteVulnerabilityById(id);
+            var vulnerability = _slaveAPIContext.Vulnerabilities.FirstOrDefault(v => v.Id == id);
 
             if (vulnerability != null)
             {
-                repository.SaveChanges();
-                return Ok(mapper.Map<VulnerabilityReadDTO>(vulnerability));
+                _slaveAPIContext.Vulnerabilities.Remove(vulnerability);
+                _slaveAPIContext.SaveChanges();
+                return NoContent();
             }
 
             return NotFound();
@@ -61,17 +64,19 @@ namespace SlaveAPI.Controllers
 
         // POST api/vulnerabilities
         [HttpPost]
-        public ActionResult<VulnerabilityCreateDTO> CreateVulnerability(VulnerabilityCreateDTO vulnerabilityCreateDTO)
+        public ActionResult<Vulnerability> CreateVulnerability(VulnerabilityDTO vulnerabilityDTO)
         {
-            var vulnerabilityModel = mapper.Map<Vulnerability>(vulnerabilityCreateDTO);
-            vulnerabilityModel.Timestamp = System.DateTime.Now;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-            repository.CreateVulnerability(vulnerabilityModel);
-            repository.SaveChanges();
+            var vulnerability = _mapper.Map<Vulnerability>(vulnerabilityDTO);
+            vulnerability.Timestamp = System.DateTime.Now;
+            _slaveAPIContext.Vulnerabilities.Add(vulnerability);
+            _slaveAPIContext.SaveChanges();
 
-            var vulnerabilityReadDTO = mapper.Map<VulnerabilityReadDTO>(vulnerabilityModel);
-
-            return CreatedAtRoute(nameof(GetVulnerabilityById), new { Id = vulnerabilityReadDTO.Id }, vulnerabilityReadDTO);
+            return CreatedAtRoute(nameof(GetVulnerabilityById), new { Id = vulnerability.Id }, vulnerability);
         }
     }
 }

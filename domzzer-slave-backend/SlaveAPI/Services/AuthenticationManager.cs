@@ -8,27 +8,27 @@ namespace SlaveAPI.Services
 
     public class AuthenticationManager : IAuthenticationManager
     {
-        private readonly string apiUsername;
-        private readonly string apiPassword;
-        private readonly string apiSecurityKey;
+        private readonly string _apiUsername;
+        private readonly string _apiPassword;
+        private readonly string _apiSecurityKey;
 
         public AuthenticationManager(string apiUsername, string apiPassword, string apiSecurityKey)
         {
-            this.apiUsername = apiUsername != null ? apiUsername : string.Empty;
-            this.apiPassword = apiPassword != null ? apiPassword : string.Empty;
-            this.apiSecurityKey = apiSecurityKey;
+            _apiUsername = apiUsername ?? string.Empty;
+            _apiPassword = apiPassword ?? string.Empty;
+            _apiSecurityKey = apiSecurityKey;
         }
 
         public string Authenticate(string username, string password)
         {
-            if ((this.apiUsername != string.Empty && this.apiUsername != username) ||
-                (this.apiPassword != string.Empty && this.apiPassword != password))
+            if ((_apiUsername != string.Empty && _apiUsername != username) ||
+                (_apiPassword != string.Empty && _apiPassword != password))
             {
                 return null;
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.ASCII.GetBytes(this.apiSecurityKey);
+            var tokenKey = Encoding.ASCII.GetBytes(_apiSecurityKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]{

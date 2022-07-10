@@ -53,15 +53,7 @@ describe('/api/info', () => {
     expect(response.body.numberOfSlaves).toBeDefined();
   });
 
-  test('should return json which contains number of tests performed', () => {
-    expect(response.body.numberOfTestsPerformed).toBeDefined();
-  });
-
   test('should return json which contains number of potential vulnerabilities found', () => {
-    expect(response.body.numberOfPotentialVulnerabilities).toBeDefined();
-  });
-
-  test('should return json which contains potential vulnerabilities to tests ratio', () => {
     expect(response.body.numberOfPotentialVulnerabilities).toBeDefined();
   });
 });
