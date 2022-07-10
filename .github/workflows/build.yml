@@ -39,7 +39,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: GET LOCALHOST
+    - name: Check that mongodb is up and running
       run: curl 'http://localhost:27017'
 
     # Test the master backend

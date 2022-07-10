@@ -7,7 +7,7 @@
     "tsc": "tsc",
     "start": "cross-env NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED='0' node ./build/index.js",
     "dev": "cross-env NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED='0' ts-node-dev ./src/index.ts",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit --detectOpenHandles",
     "lint": "eslint --ext .ts ."
   },
   "author": "Martin Vidjeskog",
