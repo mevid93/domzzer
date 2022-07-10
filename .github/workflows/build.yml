@@ -40,6 +40,9 @@ jobs:
         mongodb-password: admin
         mongodb-db: domzzer_test
 
+    - name: GET MONGO_URL
+      run: curl http://localhost:27017
+
     - name: Install
       run: cd ./domzzer-master-backend/ && npm ci
     

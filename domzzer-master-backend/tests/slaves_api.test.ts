@@ -29,17 +29,6 @@ describe('/api/slaves', () => {
   });
 
   test('should return existing slaves as json', async () => {
-
-    console.log('Trying to connect mongodb');
-    mongoose.connect(config.MONGODB_URI)
-      .then(() => {
-        console.log('Connected to mongodb');
-      })
-      .catch((error) => {
-        console.log('Error when tried to connect MongoDB:', error.message);
-      });
-
-
     const response = await request(app).get('/api/slaves').set('authorization', `bearer ${token}`);
     expect(response.status).toEqual(200);
     expect(response.type).toEqual('application/json');
