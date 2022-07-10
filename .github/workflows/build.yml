@@ -34,6 +34,7 @@ jobs:
       run: cd ./domzzer-master-frontend/
     
     - name: Install
+      run: cd ./domzzer-master-frontend/
       run: npm ci
     
     - name: Lint
