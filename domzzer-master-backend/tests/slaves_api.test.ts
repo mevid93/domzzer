@@ -101,7 +101,7 @@ describe('/api/slaves', () => {
       expect(response.error).not.toEqual(false);
       return;
     }
-    
+
     const errorText = JSON.parse(response.error.text).error as string;
     expect(errorText).toEqual('Slave validation failed: address: field is required!');
   });

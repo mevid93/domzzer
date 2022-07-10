@@ -32,6 +32,10 @@ if (AES256_KEY === undefined) {
   throw 'AES256_KEY (environmental variable) can not be undefined!';
 }
 
+if (PORT === undefined || Number.isNaN(PORT)) {
+  throw 'PORT (environmental variable) can not be undefined!';
+}
+
 const configuration: Configuration = {
   SALT_ROUNDS,
   SECRET,

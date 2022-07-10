@@ -1,0 +1,95 @@
+name: "Build"
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      TEST_MONGODB_URI: mongodb://admin:admin@localhost:27017
+      TEST_AES256_KEY: UjXn2r5u8x/A?D*G-KaPdSgVkYp3s6v9
+      TEST_SECRET: Xn2r5u8x
+      PORT: 3001
+
+    defaults:
+      run:
+        shell: bash
+
+    services:
+      mongo:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: admin
+          MONGO_INITDB_DATABASE: domzzer_test
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Check that mongodb is up and running
+      run: curl 'http://localhost:27017'
+
+    # Test the master backend
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+        cache: 'npm'
+        cache-dependency-path: 'domzzer-master-backend/package-lock.json'
+
+    - name: Install
+      run: cd ./domzzer-master-backend/ && npm ci
+    
+    - name: Lint
+      run: cd ./domzzer-master-backend/ && npm run lint
+    
+    - name: Test
+      run: cd ./domzzer-master-backend/ && npm test
+
+    # Test the master frontend
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+        cache: 'npm'
+        cache-dependency-path: 'domzzer-master-frontend/package-lock.json'
+  
+    - name: Install
+      run: cd ./domzzer-master-frontend/ && npm ci
+    
+    - name: Lint
+      run: cd ./domzzer-master-frontend/ && npm run lint
+    
+    - name: Test
+      run: cd ./domzzer-master-frontend/ && npm test
+
+    # Test the slave backend
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x 
+
+    - name: Restore dependencies
+      run: dotnet restore ./domzzer-slave-backend/
+    
+    - name: Build
+      run: dotnet build ./domzzer-slave-backend/ -c Release --no-restore
+    
+    - name: Test
+      run: dotnet test ./domzzer-slave-backend/ -c Release --no-build --verbosity normal
+
+    # Test the slave fuzzer
+

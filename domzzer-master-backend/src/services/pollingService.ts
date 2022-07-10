@@ -4,95 +4,114 @@ import Vulnerability from '../models/vulnerability';
 import aes256 from '../services/aesCryptoService';
 import inputService from '../services/inputService';
 import { NewVulnerability } from '../types/types';
-
+import logger from '../utils/logger';
 
 let ID: NodeJS.Timeout | undefined;
 let POLL_INTERVAL = 10;
-let pollFlag = false;
+let POLL_FLAG = false;
 
 const pollSlaves = async () => {
-  if (pollFlag) {
-    return;
-  }
+  try {
+    POLL_FLAG = true;
+    logger.info('Started polling cycle');
 
-  pollFlag = true;
+    const slaves = await Slave.find({}).lean();
+    const loginPromises: Promise<AxiosResponse>[] = [];
+    const vulnerabilityPromises: Promise<AxiosResponse>[] = [];
+    const addressesOfServersOnline: string[] = [];
+    const tokensForServersOnline: string[] = [];
 
-  const slaves = await Slave.find({}).lean();
-  const loginPromises: Promise<AxiosResponse>[] = [];
-  const vulnerabilityPromises: Promise<AxiosResponse>[] = [];
-  const addressesOfServersOnline: string[] = [];
-  const tokensForServersOnline: string[] = [];
+    if (!POLL_FLAG) {
+      return;
+    }
 
-  slaves.forEach(slave => {
-    // create address where to poll
-    const address = slave.address.slice(-1) == '/' ? slave.address : slave.address + '/';
-    const username = slave.username;
-    const password = slave.password !== undefined ? aes256.decrypt(slave.password) : '';
-
-    // try login to slave
-    const login = axios.post(`${address}api/login`, { username, password });
-    loginPromises.push(login);
-  });
-
-  // once all requests are done, check the status of each request.
-  // if response was rejected, then set status of the slave to be offline
-  // if response was fulfilled, then set the status to be online and poll vulnerabilities
-  let index = 0;
-  await Promise.allSettled(loginPromises).then((responses) => {
-    responses.forEach((response: PromiseSettledResult<AxiosResponse>) => {
-      const slave = slaves[index];
+    logger.info('Logging to slaves...');
+    slaves.forEach(slave => {
+      // create address where to poll
       const address = slave.address.slice(-1) == '/' ? slave.address : slave.address + '/';
+      const username = slave.username;
+      const password = slave.password !== undefined ? aes256.decrypt(slave.password) : '';
 
-      if (response.status == 'fulfilled') {
-        void setSlaveStatus(slave._id.toString(), 'ONLINE');
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const token: string = response.value.data;
-        const vulnerabilities = axios.get(`${address}api/vulnerabilities`, {
-          headers: { Authorization: 'Bearer ' + token }
-        });
-        vulnerabilityPromises.push(vulnerabilities);
-        addressesOfServersOnline.push(address);
-        tokensForServersOnline.push(token);
-      } else {
-        void setSlaveStatus(slave._id.toString(), 'OFFLINE');
-      }
-      index += 1;
+      // try login to slave
+      const login = axios.post(`${address}api/login`, { username, password });
+      loginPromises.push(login);
     });
-  }).catch((error) => console.log(error));
 
-  // once all requests to retrieve vulnerabilities have been done, chec the status of each request
-  // if response was rejected --> ignore it
-  // if response was fullfilled, check if any vulnerabilities were returned
-  // if no vulnerabilities were returned --> move to next response
-  // if vulnerabilities were found --> then save them to the database, and remove them from the slave
-  index = 0;
-  await Promise.allSettled(vulnerabilityPromises).then((responses) => {
-    responses.forEach((response: PromiseSettledResult<AxiosResponse>) => {
-      if (response.status === 'fulfilled' && response.value.data instanceof Array
-        && response.value.data.length > 0) {
-        const address = addressesOfServersOnline[index];
-        const token = tokensForServersOnline[index];
-        response.value.data.forEach(data => {
-          const newVulnerability = inputService.toNewVulnerability(data);
-          newVulnerability.serverAddress = address;
-          saveNewVulnerability(newVulnerability).then((wasSaved) => {
-            if (!wasSaved) {
-              return;
-            }
+    if (!POLL_FLAG) {
+      return;
+    }
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            const apiId = data.id;
-            void axios.delete(`${address}api/vulnerabilities/${apiId}`, {
-              headers: { Authorization: 'Bearer ' + token }
-            });
-          }).catch((error) => console.log(error));
-        });
-      }
-      index += 1;
-    });
-  }).catch((error) => console.log(error));
+    // once all requests are done, check the status of each request.
+    // if response was rejected, then set status of the slave to be offline
+    // if response was fulfilled, then set the status to be online and poll vulnerabilities
+    logger.info('Retrieving vulnerability info from slaves...');
+    let index = 0;
+    await Promise.allSettled(loginPromises).then((responses) => {
+      responses.forEach((response: PromiseSettledResult<AxiosResponse>) => {
+        const slave = slaves[index];
+        const address = slave.address.slice(-1) == '/' ? slave.address : slave.address + '/';
 
-  pollFlag = false;
+        if (response.status == 'fulfilled') {
+          void setSlaveStatus(slave._id.toString(), 'ONLINE');
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          const token: string = response.value.data;
+          const vulnerabilities = axios.get(`${address}api/vulnerabilities`, {
+            headers: { Authorization: 'Bearer ' + token }
+          });
+          vulnerabilityPromises.push(vulnerabilities);
+          addressesOfServersOnline.push(address);
+          tokensForServersOnline.push(token);
+        } else {
+          void setSlaveStatus(slave._id.toString(), 'OFFLINE');
+        }
+        index += 1;
+      });
+    }).catch((error) => logger.error(error));
+
+    if (!POLL_FLAG) {
+      return;
+    }
+
+    // once all requests to retrieve vulnerabilities have been done, check the status of each request
+    // if response was rejected --> ignore it
+    // if response was fullfilled, check if any vulnerabilities were returned
+    // if no vulnerabilities were returned --> move to next response
+    // if vulnerabilities were found --> then save them to the database, and remove them from the slave
+    logger.info('Process retrieved vulnerabilities...');
+    index = 0;
+    await Promise.allSettled(vulnerabilityPromises).then((responses) => {
+      responses.forEach((response: PromiseSettledResult<AxiosResponse>) => {
+        if (response.status === 'fulfilled' && response.value.data instanceof Array
+          && response.value.data.length > 0) {
+          const address = addressesOfServersOnline[index];
+          const token = tokensForServersOnline[index];
+          response.value.data.forEach(data => {
+            const newVulnerability = inputService.toNewVulnerability(data);
+            newVulnerability.serverAddress = address;
+            saveNewVulnerability(newVulnerability).then((wasSaved) => {
+              if (!wasSaved) {
+                return;
+              }
+
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              const apiId = data.id;
+              void axios.delete(`${address}api/vulnerabilities/${apiId}`, {
+                headers: { Authorization: 'Bearer ' + token }
+              });
+            }).catch((error) => logger.error(error));
+          });
+        }
+        index += 1;
+      });
+    }).catch((error) => logger.error(error));
+
+    logger.info('Completed polling cycle');
+  
+  } catch (error) {
+    // some unknown error happened --> log it
+    logger.error('Critical error in slave polling!');
+    logger.error(error);
+  }
 };
 
 const setSlaveStatus = async (id: string, newStatus: 'ONLINE' | 'OFFLINE') => {
@@ -111,9 +130,9 @@ const saveNewVulnerability = async (newVulnerability: NewVulnerability): Promise
   try {
     await vulnerability.save();
     return true;
-  } catch (error){
-    console.log(error);
-    console.log("ERROR: SlaveAPI returned invalid data!");
+  } catch (error) {
+    logger.error("ERROR: SlaveAPI returned invalid data!");
+    logger.error(error);
     return false;
   }
 };
@@ -122,9 +141,10 @@ const stopPolling = () => {
   if (ID !== undefined) {
     clearInterval(ID);
     ID = undefined;
+    logger.info('Polling disabled');
   }
 
-  pollFlag = false;
+  POLL_FLAG = false;
 };
 
 const startPolling = () => {
@@ -132,8 +152,11 @@ const startPolling = () => {
     stopPolling();
   }
 
+  logger.info('Polling enabled');
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  pollSlaves();
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  ID = setInterval(pollSlaves, POLL_INTERVAL * 1000 * 60);
+  ID = setInterval(pollSlaves, POLL_INTERVAL * 1000);
 };
 
 const isPolling = () => {

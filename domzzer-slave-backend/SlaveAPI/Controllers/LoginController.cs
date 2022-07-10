@@ -1,23 +1,21 @@
+using SlaveAPI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using SlaveAPI.Models;
+using Microsoft.AspNetCore.Authorization;
+
 namespace SlaveAPI.Controllers
 {
-    using SlaveAPI.Services;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
-    using SlaveAPI.Models;
-    using Microsoft.AspNetCore.Authorization;
-
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/login")]
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly IConfiguration configuration;
-        private readonly IAuthenticationManager authenticationManager;
+        private readonly IAuthenticationManager _authenticationManager;
 
         public LoginController(IConfiguration configuration)
         {
-            this.configuration = configuration;
-            this.authenticationManager = new AuthenticationManager(
+            _authenticationManager = new AuthenticationManager(
                                                 configuration["API_USERNAME"],
                                                 configuration["API_PASSWORD"],
                                                 configuration["API_SECURITY_KEY"]);
@@ -28,7 +26,8 @@ namespace SlaveAPI.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] Credentials credentials)
         {
-            var token = authenticationManager.Authenticate(credentials.Username, credentials.Password);
+            var token = _authenticationManager.Authenticate(credentials.Username ?? string.Empty, 
+                credentials.Password ?? string.Empty);
 
             if (token == null)
             {
