@@ -2,11 +2,12 @@ import argparse
 import dotenv
 import os
 import requests
+import sys
 import warnings
 
 from modules.fuzzer import Fuzzer
 from modules.generator import Generator
-
+from modules.resultwriter import ResultWriter
 
 def parse_arguments():
     """Extract arguments and return them.
@@ -57,7 +58,7 @@ def load_environmental_variables(args):
             pass
 
     if not at_least_one_browser:
-        raise Exception("--mode fuzzer requires at least one browser!")
+        raise Exception("--mode fuzzer requires at least one browser (environmental variables)!")
 
     # if operation mode is fuzzer and storage method is file, then we only need browser variables
     if args.mode == "fuzzer" and args.save == "file":
@@ -105,12 +106,13 @@ def test_slave_api_connection(address, username, password):
     try:
         response = requests.post(url, json=login_object, verify=False)
         if response.status_code == 200:
-            print("ok")
             return
-        raise Exception(
-            "Connection to SlaveAPI failed! (status_code == " + str(response.status_code) + ")")
-    except e:
-        raise Exception("Connection to SlaveAPI failed!")
+        print("Connection to SlaveAPI failed! (status_code == " + str(response.status_code) + ")")
+        sys.exit()
+    except Exception as e:
+        print(e)
+        print("Connection to SlaveAPI failed!")
+        sys.exit()
 
 
 def main(args, envs):
