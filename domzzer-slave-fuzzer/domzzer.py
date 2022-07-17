@@ -7,7 +7,6 @@ import warnings
 
 from modules.fuzzer import Fuzzer
 from modules.generator import Generator
-from modules.resultwriter import ResultWriter
 
 def parse_arguments():
     """Extract arguments and return them.
