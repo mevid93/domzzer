@@ -7,15 +7,12 @@ class HTMLDocument:
     """
 
     def __init__(self):
-        self.use_try_catch = True
+        """Constucts new HTMLDocument object instance.
+        """
+        self.dom_commands = []  # js string (all dom api calls)
+        self.element_ids = []   # id list of all elements in the document
 
     def generate_new_element(self):
-        raise NotImplementedError()
-
-    def generate_new_dom_api_call(self):
-        raise NotImplementedError()
-
-    def generate_new_css_api_call(self):
         raise NotImplementedError()
 
     def convert(self):
@@ -32,7 +29,7 @@ class HTMLDocument:
         docstr += "</head>\n"
         docstr += "<body>\n"
         docstr += "<script>\n"
-        # TODO: convert elements and api calls
+        docstr += "\n".join(self.dom_commands)
         docstr += "</script>\n"
         docstr += "</body>\n"
         docstr += "</html>"

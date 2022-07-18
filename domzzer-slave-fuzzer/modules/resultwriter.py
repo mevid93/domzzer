@@ -5,13 +5,9 @@ import sys
 
 class ResultWriter:
 
-    # default destination is file (other possibilities are DB and DBFILE)
-    _destination = "FILE"
-    _db_address = None      # default db address is none
-    _db_username = None     # default db username is none
-    _db_password = None     # default db passoword is none
-
     def __init__(self, destination="FILE", db_address=None, db_username=None, db_password=None):
+        """Constructs new ResultWriter object instance. 
+        """
         self._destination = destination
         self._db_address = db_address
         self._db_username = db_username

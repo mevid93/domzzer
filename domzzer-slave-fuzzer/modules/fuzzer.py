@@ -1,3 +1,5 @@
+import uuid
+
 from .dom.dombuilder import DOMBuilder
 
 
@@ -28,11 +30,9 @@ class Fuzzer:
         """
         while(True):
             dombuilder = DOMBuilder()
-            dombuilder.configure(initial_elements=20,
-                                 api_call_limit=100,
-                                 allow_css_api=True,
-                                 use_try_catch=True)
-            document = dombuilder.build()
+            
+            document_content = dombuilder.build()
+            document_name = str(uuid.uuid4())
 
             # feed the document for each configured browser
             raise NotImplementedError()
