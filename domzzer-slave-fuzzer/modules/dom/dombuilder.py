@@ -25,16 +25,19 @@ class DOMBuilder:
 
         # random values for settings
         doc_elements_limit = random.randint(self.ELEMENTS_LIMIT_MIN, self.ELEMENTS_LIMIT_MAX)
-        doc_api_calls_limit = random.randint(self.API_CALLS_LIMIT_MIN, self.API_CALLS_LIMIT_MAX)
+        doc_mutations_limit = random.randint(self.MUTATIONS_LIMIT_MIN, self.MUTATIONS_LIMIT_MAX)
         
-        # fill the document with initial elements
+        # generate initial elements and build random dom tree
         element_counter = 0
-        while elements < doc_elements_limit:
-            document.generate_new_element()
+        while element_counter < doc_elements_limit:
+            element_id = "id" + str(element_counter)
+            var_name = "var" + str(element_counter)
+            document.generate_new_element(element_id, var_name)
             element_counter += 1
 
-        # ...???...
+        # set random attributes for generated elements
+
+        # mutate and stuff...
 
         # convert the document into string and return it
-        document.use_try_catch = True
         return document.convert()
