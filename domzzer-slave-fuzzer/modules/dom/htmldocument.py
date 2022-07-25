@@ -80,7 +80,11 @@ class HTMLDocument:
         
         # generate an SVG element and set it to random location in the document
         elif type_to_generate == "SVG":
-            pass
+            tag = random.choice(SVG_TAGS)
+            parent_id = random.choice(self.svg_element_ids)
+            self.dom_commands.append(generate_element_js_command(tag, element_id, var_name))
+            self.dom_commands.append(set_as_child_element_js_command(var_name, parent_id))
+            self.svg_element_ids.append(element_id)
 
         # generate an MATHML element and set it to random location in the document
         elif type_to_generate == "MATHML":
