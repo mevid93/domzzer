@@ -21,7 +21,7 @@ class Generator:
         Generated documents are stored into results/documents folder.
         """
         counter = 0
-        while(counter < 1000):
+        while(counter < 100):
             dombuilder = DOMBuilder()
             
             document_content = dombuilder.build()
@@ -30,5 +30,5 @@ class Generator:
             self.result_writer.save_document(document_name, document_content)
             
             counter += 1
-            if counter % 100 == 0:
-                print("Documents generated: " + str(counter) + "/1000")
+            if counter % 10 == 0:
+                print("Documents generated: " + str(counter) + "/100")

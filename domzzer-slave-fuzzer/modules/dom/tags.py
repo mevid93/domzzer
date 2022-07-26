@@ -200,6 +200,39 @@ SVG_TAGS = [
     'view',
 ]
 
-MATHML_TAGS = []
+MATHML_TAGS = [
+    'mi',
+    'mn',
+    'mo',
+    'ms',
+    'mspace',
+    'mtext',
+    'menclose',
+    'merror',
+    'mfenced',
+    'mfrac',
+    'mpadded',
+    'mphantom',
+    'mroot',
+    'mrow',
+    'msqrt',
+    'mstyle',
+    'mmultiscripts',
+    'mover',
+    'mprescripts',
+    'msub',
+    'msubsup',
+    'msup',
+    'munder',
+    'munderover',
+    'none',
+    'mtable',
+    'mtd',
+    'mtr',
+    'maction',
+    'annotation',
+    'annotation-xml',
+    'semantics',
+]
 
 CANVAS_TAGS = []

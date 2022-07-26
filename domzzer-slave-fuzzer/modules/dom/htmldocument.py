@@ -1,9 +1,11 @@
 import random
 
-from modules.dom.helper import append_to_document_body_js_command
-from modules.dom.helper import declare_global_variables_js_command
-from modules.dom.helper import generate_element_js_command
-from modules.dom.helper import set_as_child_element_js_command
+from modules.dom.attributes import HTML_ATTRIBUTES
+from modules.dom.jshelper import append_to_document_body_js_command
+from modules.dom.jshelper import declare_global_variables_js_command
+from modules.dom.jshelper import generate_element_js_command
+from modules.dom.jshelper import set_as_child_element_js_command
+from modules.dom.jshelper import try_to_add_attribute_js_command
 from modules.dom.tags import HTML_TAGS
 from modules.dom.tags import SVG_TAGS
 from modules.dom.tags import MATHML_TAGS
@@ -88,12 +90,25 @@ class HTMLDocument:
 
         # generate an MATHML element and set it to random location in the document
         elif type_to_generate == "MATHML":
-            pass
+            tag = random.choice(MATHML_TAGS)
+            parent_id = random.choice(self.mathml_element_ids)
+            self.dom_commands.append(generate_element_js_command(tag, element_id, var_name))
+            self.dom_commands.append(set_as_child_element_js_command(var_name, parent_id))
+            self.mathml_element_ids.append(element_id)
 
         # generate an CANVAS element and set it to random location in the document
         elif type_to_generate == "CANVAS":
             pass
 
+    def generate_attribute_for_element(self, element_id):
+        """ Generate one random attribute for element with given id. """ 
+        attribute = random.choice(list(HTML_ATTRIBUTES.keys()))
+        value_function = HTML_ATTRIBUTES[attribute]
+        
+        if value_function == None:
+            self.dom_commands.append(try_to_add_attribute_js_command(element_id, attribute, None))
+        else:
+            self.dom_commands.append(try_to_add_attribute_js_command(element_id, attribute, value_function()))
 
     def convert(self):
         """Convert the document into string representation.
