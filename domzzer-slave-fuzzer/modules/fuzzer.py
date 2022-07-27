@@ -1,16 +1,18 @@
+import uuid
+
 from .dom.dombuilder import DOMBuilder
 
 
 class Fuzzer:
-    """Fuzzer class for fuzzing web browsers.
+    """ Fuzzer class for fuzzing web browsers.
 
     Generates html-documents and feeds them to different browsers.
     If abnormalities are detected, the document will be saved into
-    configured destination (database or results/vulnerabilities folder).
+    configured destination (database or /results/vulnerabilities folder).
     """
 
     def __init__(self, args, envs):
-        """Constructs new Fuzzer object instance.
+        """ Constructs new Fuzzer object instance.
 
         Args:
             args (argparse.Namespace): command line parameters
@@ -20,7 +22,7 @@ class Fuzzer:
         self.envs = envs
 
     def run(self):
-        """Perform browser fuzzing.
+        """ Perform browser fuzzing.
 
         Generates new html-documents and feeds them to browsers.
         If abnormalities are detected, the triggering document will be saved
@@ -28,11 +30,9 @@ class Fuzzer:
         """
         while(True):
             dombuilder = DOMBuilder()
-            dombuilder.configure(initial_elements=20,
-                                 api_call_limit=100,
-                                 allow_css_api=True,
-                                 use_try_catch=True)
-            document = dombuilder.build()
+            
+            document_content = dombuilder.build()
+            document_name = str(uuid.uuid4())
 
             # feed the document for each configured browser
             raise NotImplementedError()

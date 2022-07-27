@@ -1,3 +1,5 @@
+import uuid
+
 from .dom.dombuilder import DOMBuilder
 from .resultwriter import ResultWriter
 
@@ -5,7 +7,7 @@ from .resultwriter import ResultWriter
 class Generator:
     """ Generator class for generating html-documents.
 
-    Generator html-documents and stores them into results/documents folder.
+    Generator html-documents and stores them into /results/documents folder.
     """
 
     def __init__(self):
@@ -14,15 +16,19 @@ class Generator:
         self.result_writer = ResultWriter()
 
     def run(self):
-        """Generates new html-documents.
+        """Generates 100 new html-documents.
 
-        Generated documents are stored into results/documents folder.
+        Generated documents are stored into /results/documents folder.
         """
-        while(True):
+        counter = 0
+        while(counter < 100):
             dombuilder = DOMBuilder()
-            dombuilder.configure(initial_elements=20,
-                                 api_call_limit=100,
-                                 allow_css_api=True,
-                                 use_try_catch=True)
-            document = dombuilder.build()
-            self.result_writer.save_document(document)
+            
+            document_content = dombuilder.build()
+            document_name = str(uuid.uuid4())
+            
+            self.result_writer.save_document(document_name, document_content)
+            
+            counter += 1
+            if counter % 10 == 0:
+                print("Documents generated: " + str(counter) + "/100")

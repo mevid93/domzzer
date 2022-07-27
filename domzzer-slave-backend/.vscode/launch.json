@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SlaveAPI.Tests/bin/Debug/net5.0/SlaveAPI.Tests.dll",
+            "program": "${workspaceFolder}/SlaveAPI.Tests/bin/Debug/net6.0/SlaveAPI.Tests.dll",
             "args": [],
             "cwd": "${workspaceFolder}/SlaveAPI.Tests",
             "console": "internalConsole",
