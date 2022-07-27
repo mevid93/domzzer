@@ -17,6 +17,7 @@ class TestHTMLDocument(unittest.TestCase):
         expected += "</head>\n"
         expected += "<body>\n"
         expected += "<script>\n"
+        expected += "var global_tmp;\n"
         expected += "</script>\n"
         expected += "</body>\n"
         expected += "</html>"

@@ -8,8 +8,9 @@ import warnings
 from modules.fuzzer import Fuzzer
 from modules.generator import Generator
 
+
 def parse_arguments():
-    """Extract arguments and return them.
+    """ Extract command line arguments and return them.
 
     Returns:
         argparse.Namespace: argument namespace holding command line parameters 
@@ -22,14 +23,14 @@ def parse_arguments():
                         help="result storing method (default for fuzzer is db, generator mode only supports file)")
     args = parser.parse_args()
 
-    # if generator mode, then set the storing method
     if args.mode == "generator":
         args.save = "file"
+
     return args
 
 
 def load_environmental_variables(args):
-    """Load environmental variables into dictionary.
+    """ Load environmental variables into dictionary.
 
     Args:
         args (argparse.Namespace): command line parameters
@@ -57,14 +58,14 @@ def load_environmental_variables(args):
             pass
 
     if not at_least_one_browser:
-        raise Exception("--mode fuzzer requires at least one browser (environmental variables)!")
+        raise Exception(
+            "--mode fuzzer requires at least one browser (environmental variables)!")
 
     # if operation mode is fuzzer and storage method is file, then we only need browser variables
     if args.mode == "fuzzer" and args.save == "file":
         return envs
 
     # otherwise we also need SlaveAPI configuration
-    # when storing to database, we actually save the data by using SlaveAPI
     api_address = os.getenv("SLAVE_API_ADDRESS")
     api_username = os.getenv("SLAVE_API_USERNAME")
     api_password = os.getenv("SLAVE_API_PASSWORD")
@@ -75,18 +76,17 @@ def load_environmental_variables(args):
     if api_address == None or api_address == "":
         raise Exception("--save db|dbfile requires api address!")
     if api_password == None:
-        raise Exception("--save db|dbfile requires api username!")
+        raise Exception("--save db|dbfile requires api password!")
     if api_username == None:
         raise Exception("--save db|dbfile requires api username!")
 
     # last step is to make sure that we can actually reach the api
     test_slave_api_connection(api_address, api_username, api_password)
-
     return envs
 
 
 def test_slave_api_connection(address, username, password):
-    """Test connection to SlaveAPI.
+    """ Test connection to SlaveAPI.
 
     Throws exception if connection to SlaveAPI fails.
 
@@ -106,7 +106,8 @@ def test_slave_api_connection(address, username, password):
         response = requests.post(url, json=login_object, verify=False)
         if response.status_code == 200:
             return
-        print("Connection to SlaveAPI failed! (status_code == " + str(response.status_code) + ")")
+        print("Connection to SlaveAPI failed! (status_code == " +
+              str(response.status_code) + ")")
         sys.exit()
     except Exception as e:
         print(e)
@@ -115,7 +116,7 @@ def test_slave_api_connection(address, username, password):
 
 
 def main(args, envs):
-    """Main function for fuzzer.
+    """ Main function for fuzzer.
 
     Args:
         args (argparse.Namespace): command line parameters

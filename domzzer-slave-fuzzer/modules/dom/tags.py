@@ -1,4 +1,4 @@
-
+# list of possible html tag names
 HTML_TAGS = [
     "a",
     "abbr",
@@ -131,6 +131,7 @@ HTML_TAGS = [
     "xmp",
 ]
 
+# list of possible svg tag names
 SVG_TAGS = [
     'a',
     'animate',
@@ -200,6 +201,7 @@ SVG_TAGS = [
     'view',
 ]
 
+# list of possible mathml tag names
 MATHML_TAGS = [
     'mi',
     'mn',
@@ -234,5 +236,3 @@ MATHML_TAGS = [
     'annotation-xml',
     'semantics',
 ]
-
-CANVAS_TAGS = []

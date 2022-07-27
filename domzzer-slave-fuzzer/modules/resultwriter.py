@@ -6,7 +6,13 @@ import sys
 class ResultWriter:
 
     def __init__(self, destination="FILE", db_address=None, db_username=None, db_password=None):
-        """Constructs new ResultWriter object instance. 
+        """ Constructs a new ResultWriter object instance.
+
+        Args:
+            destination (str): destination of write operations (FILE, DB, DBFILE)
+            db_address (str): database address
+            db_username (str): database username
+            db_password (str): database password
         """
         self._destination = destination
         self._db_address = db_address
@@ -14,14 +20,14 @@ class ResultWriter:
         self._db_password = db_password
 
     def save_document(self, document_name, document_content):
-        """Save document into /results/documents folder.
+        """ Save document into /results/documents folder.
 
         Takes a generated html document and saves it into /results/documents folder.
         If document with a given document name already exists, it will be overwritten.
 
         Args:
             document_name (str): name of a the document to be saved (without filetype extension)
-            document_content (std): content of the html file to be saved
+            document_content (str): content of the html file to be saved
         """
         # get current directory
         cwd = os.getcwd()
@@ -45,7 +51,7 @@ class ResultWriter:
         if not documents_dir_exists:
             os.mkdir(os.path.join(results_dir, "documents"))
 
-        # write html documen inside the document folder
+        # write html document inside the documents folder
         documents_dir = os.path.join(results_dir, "documents")
         new_file_path = os.path.join(documents_dir, document_name + ".html")
         f = open(new_file_path, "w")
@@ -53,9 +59,9 @@ class ResultWriter:
         f.close()
 
     def save_vulnerability(self, vulnerability_name, vulnerability_content, target_browser):
-        """Save vulnerability to database, file, or both.
+        """ Save vulnerability to database, file, or both.
 
-        The destination depends on the ResultWriter attributes. The folder location for 
+        The destination depends on the ResultWriter configuration. The folder location for 
         files is /results/vulnerabilities folder.
         If vulnerability with a given vulnerability name already exists, it will be overwritten.
 
@@ -68,8 +74,10 @@ class ResultWriter:
             raise Exception("Unsupported vulnerability save destination!")
 
         if (self._destination in ["DB", "DBFILE"]):
-            self._save_vulnerability_to_db(vulnerability_content, target_browser)
+            self._save_vulnerability_to_db(
+                vulnerability_content, target_browser)
 
+        # return if vulnerability should not be saved into file
         if (self._destination != "FILE" and self._destination != "DBFILE"):
             return
 
@@ -145,7 +153,8 @@ class ResultWriter:
             url += "/api/vulnerabilities"
 
         try:
-            response = requests.post(url, json=payload, verify=False, headers={'Authorization': "Bearer " + token})
+            response = requests.post(url, json=payload, verify=False, headers={
+                                     'Authorization': "Bearer " + token})
             if response.status_code == 200:
                 pass
         except Exception as e:

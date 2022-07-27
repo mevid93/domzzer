@@ -7,7 +7,7 @@ from .resultwriter import ResultWriter
 class Generator:
     """ Generator class for generating html-documents.
 
-    Generator html-documents and stores them into results/documents folder.
+    Generator html-documents and stores them into /results/documents folder.
     """
 
     def __init__(self):
@@ -16,9 +16,9 @@ class Generator:
         self.result_writer = ResultWriter()
 
     def run(self):
-        """Generates 1000 new html-documents.
+        """Generates 100 new html-documents.
 
-        Generated documents are stored into results/documents folder.
+        Generated documents are stored into /results/documents folder.
         """
         counter = 0
         while(counter < 100):

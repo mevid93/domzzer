@@ -1,27 +1,22 @@
 import random
 
 from modules.dom.attributes import HTML_ATTRIBUTES
-from modules.dom.jshelper import append_to_document_body_js_command
-from modules.dom.jshelper import declare_global_variables_js_command
-from modules.dom.jshelper import generate_element_js_command
-from modules.dom.jshelper import set_as_child_element_js_command
-from modules.dom.jshelper import try_to_add_attribute_js_command
+from modules.dom.jshelper import *
 from modules.dom.tags import HTML_TAGS
 from modules.dom.tags import SVG_TAGS
 from modules.dom.tags import MATHML_TAGS
-from modules.dom.tags import CANVAS_TAGS
 
 class HTMLDocument:
-    """Class representing html-document.
+    """ Class representing html-document.
 
     Provides functionality to generate new document with
     random elements, dom-api calls, and css-api calls.
     """
 
     def __init__(self):
-        """Constucts new HTMLDocument object instance.
+        """ Constucts new HTMLDocument object instance.
         """
-        self.dom_commands = []          # js string (all dom api calls)
+        self.dom_commands = []          # list of js commands (all dom api calls)
         self.html_element_ids = []      # id list of all html elements in the document (other than svg and mathml)
         self.svg_element_ids = []       # id list of all svg elements in the document
         self.mathml_element_ids = []    # id list of all mathML elements in the document
@@ -30,7 +25,7 @@ class HTMLDocument:
         self.dom_commands.append(declare_global_variables_js_command())
 
     def generate_new_element(self, element_id, var_name):
-        """Create new element
+        """ Create new element
         
         Randomly generates a dom element and saves the id into correct list.
         """
@@ -111,7 +106,7 @@ class HTMLDocument:
             self.dom_commands.append(try_to_add_attribute_js_command(element_id, attribute, value_function()))
 
     def convert(self):
-        """Convert the document into string representation.
+        """ Convert the document into string representation.
 
         Returns:
             str: document in string representation 

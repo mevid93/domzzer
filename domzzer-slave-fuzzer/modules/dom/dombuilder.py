@@ -6,7 +6,7 @@ from .htmldocument import HTMLDocument
 class DOMBuilder:
 
     def __init__(self):
-        """Constucts new DOMBuilder object instance.
+        """ Constucts new DOMBuilder object instance.
         """
         self.ELEMENTS_LIMIT_MIN = 500
         self.ELEMENTS_LIMIT_MAX = 2500
@@ -16,7 +16,7 @@ class DOMBuilder:
         self.MUTATION_ROUNDS_LIMIT_MAX = 5
 
     def build(self):
-        """Builds the html-document.
+        """ Builds the html-document.
 
         Generates new html-document based on the configurations.
         

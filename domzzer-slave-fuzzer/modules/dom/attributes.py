@@ -1,6 +1,6 @@
 
 # dictionary of html attributes, where attribute name is the key
-# and value is a function that generate a random value for the attribute
+# and value is a function which generates a random value for the attribute
 HTML_ATTRIBUTES = {
     "accept" : None,
     "accept-charset" : None,
