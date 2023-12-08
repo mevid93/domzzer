@@ -131,10 +131,10 @@ describe('/api/vulnerabilities/:id', () => {
 
   test('should update existing vulnerability when id is valid and update information is valid', async () => {
     const vulnerabilities = await helper.vulnerabilitiesInDb();
-    const { id, ...vulnerability } = vulnerabilities[0];
+    const vulnerability = vulnerabilities[0];
     const updatedVulnerability = { ...vulnerability, status: 'CLOSED' };
     const response = await request(app)
-      .put(`/api/vulnerabilities/${id}`)
+      .put(`/api/vulnerabilities/${vulnerability.id}`)
       .send(updatedVulnerability)
       .set('authorization', `bearer ${token}`);
     expect(response.status).toEqual(200);
@@ -143,10 +143,10 @@ describe('/api/vulnerabilities/:id', () => {
 
   test('should return 400 when vulnerability id is valid and update information is invalid', async () => {
     const vulnerabilities = await helper.vulnerabilitiesInDb();
-    const { id, ...vulnerability } = vulnerabilities[0];
+    const vulnerability = vulnerabilities[0];
     const updatedVulnerability = { ...vulnerability, status: 'not supported status' };
     const response = await request(app)
-      .put(`/api/vulnerabilities/${id}`)
+      .put(`/api/vulnerabilities/${vulnerability.id}`)
       .send(updatedVulnerability)
       .set('authorization', `bearer ${token}`);
     expect(response.status).toEqual(400);
@@ -154,10 +154,10 @@ describe('/api/vulnerabilities/:id', () => {
 
   test('should return correct error message when vulnerability id is valid and update contains invalid status', async () => {
     const vulnerabilities = await helper.vulnerabilitiesInDb();
-    const { id, ...vulnerability } = vulnerabilities[0];
+    const vulnerability = vulnerabilities[0];
     const updatedVulnerability = { ...vulnerability, status: 'NOT SUPPORTED' };
     const response = await request(app)
-      .put(`/api/vulnerabilities/${id}`)
+      .put(`/api/vulnerabilities/${vulnerability.id}`)
       .send(updatedVulnerability)
       .set('authorization', `bearer ${token}`);
     if (response.error === false) {

@@ -193,7 +193,7 @@ describe('/api/users', () => {
       const passwordHash = await bcrypt.hash('othersekret', config.SALT_ROUNDS);
       const user = new User({ username: 'otheraccount', userRole: 'PRO', passwordHash });
       const saved = await user.save();
-      const response = await request(app).get(`/api/users/${saved._id}`).set('authorization', `bearer ${token}`);
+      const response = await request(app).get(`/api/users/${saved.id}`).set('authorization', `bearer ${token}`);
       expect(response.status).toEqual(401);
     });
 

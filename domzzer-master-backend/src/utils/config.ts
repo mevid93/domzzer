@@ -1,24 +1,44 @@
+import { Environment } from '../shared/enums';
 import { Configuration } from '../types/types';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 // eslint-disable-next-line
 require('dotenv').config();
 
-const PORT = Number(process.env.PORT);
+// create in memory database instance for testing
+const getTestDatabaseUri = async (): Promise<string> => {
+  const mongodb = new MongoMemoryServer({
+    instance: {
+      dbName: 'domzzer_test_db'
+    }
+  });
+  await mongodb.start();
+  return mongodb.getUri();
+};
 
 const MONGODB_URI = process.env.NODE_ENV === 'test'
-  ? process.env.TEST_MONGODB_URI
+  ? getTestDatabaseUri()
   : process.env.PROD_MONGODB_URI;
 
+const PORT = process.env.NODE_ENV === 'test'
+  ? 5000
+  : Number(process.env.PORT);
+
 const AES256_KEY = process.env.NODE_ENV === 'test'
-  ? process.env.TEST_AES256_KEY
+  ? 'UjXn2r5u8x/A?D*G-KaPdSgVkYp3s6v9'
   : process.env.PROD_AES256_KEY;
 
 const SECRET = process.env.NODE_ENV === 'test'
-  ? process.env.TEST_SECRET
+  ? 'Xn2r5u8x'
   : process.env.PROD_SECRET;
 
 const SALT_ROUNDS = 10;
 
+const ENVIRONMENT = process.env.NODE_ENV === 'test'
+  ? Environment.Test
+  : process.env.NODE_ENV === 'development'
+    ? Environment.Development
+    : Environment.Production;
 
 if (MONGODB_URI === undefined) {
   throw 'MONGODB_URI (environmental variable) can not be undefined!';
@@ -41,7 +61,8 @@ const configuration: Configuration = {
   SECRET,
   AES256_KEY,
   MONGODB_URI,
-  PORT
+  PORT,
+  ENVIRONMENT
 };
 
 export default configuration;

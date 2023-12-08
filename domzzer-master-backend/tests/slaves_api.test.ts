@@ -278,9 +278,9 @@ describe('/api/slaves/:id', () => {
 
   test('should update existing slave when id is valid and update information is valid', async () => {
     const slaves = await helper.slavesInDb();
-    const { id, ...slave } = slaves[0];
+    const slave = slaves[0];
     const updatedSlave = { ...slave, name: 'UpdatedName1' };
-    const response = await request(app).put(`/api/slaves/${id}`).send(updatedSlave).set('authorization', `bearer ${token}`);
+    const response = await request(app).put(`/api/slaves/${slave.id}`).send(updatedSlave).set('authorization', `bearer ${token}`);
     expect(response.status).toEqual(200);
     expect(response.body.name).toEqual('UpdatedName1');
   });
@@ -292,25 +292,25 @@ describe('/api/slaves/:id', () => {
     const r = await request(app).post('/api/login').send({ username: 'noobster', password: 'sekret' });
     const newtoken = r.body.token as string;
     const slaves = await helper.slavesInDb();
-    const { id, ...slave } = slaves[0];
+    const slave = slaves[0];
     const updatedSlave = { ...slave, name: 'UpdatedName1' };
-    const response = await request(app).put(`/api/slaves/${id}`).send(updatedSlave).set('authorization', `bearer ${newtoken}`);
+    const response = await request(app).put(`/api/slaves/${slave.id}`).send(updatedSlave).set('authorization', `bearer ${newtoken}`);
     expect(response.status).toEqual(401);
   });
 
   test('should return 400 when id is valid and update information is invalid', async () => {
     const slaves = await helper.slavesInDb();
-    const { id, ...slave } = slaves[0];
+    const slave = slaves[0];
     const updatedSlave = { ...slave, name: '12' };
-    const response = await request(app).put(`/api/slaves/${id}`).send(updatedSlave).set('authorization', `bearer ${token}`);
+    const response = await request(app).put(`/api/slaves/${slave.id}`).send(updatedSlave).set('authorization', `bearer ${token}`);
     expect(response.status).toEqual(400);
   });
 
   test('should return correct error message when id is valid and update contains invalid name', async () => {
     const slaves = await helper.slavesInDb();
-    const { id, ...slave } = slaves[0];
+    const slave = slaves[0];
     const updatedSlave = { ...slave, name: '12' };
-    const response = await request(app).put(`/api/slaves/${id}`).send(updatedSlave).set('authorization', `bearer ${token}`);
+    const response = await request(app).put(`/api/slaves/${slave.id}`).send(updatedSlave).set('authorization', `bearer ${token}`);
     if (response.error === false) {
       expect(response.error).not.toEqual(false);
       return;

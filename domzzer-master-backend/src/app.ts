@@ -13,20 +13,28 @@ import slavesRouter from './routes/slaves';
 import usersRouter from './routes/users';
 import vulnerabilitiesRouter from './routes/vulnerabilities';
 
-const app:Application = express();
+const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-logger.info('connecting to', config.MONGODB_URI);
+// MONGODB_URI is promise in test environment, 
+// so it needs to be resolved before it can be used.
+Promise.resolve(config.MONGODB_URI).then((resolvedUri) => {
+  logger.info('connecting to', resolvedUri);
 
-mongoose.set('runValidators', true);
-mongoose.connect(config.MONGODB_URI)
-  .then(() => {
-    logger.info('connected to MongoDB');
-  })
-  .catch((error) => {
-    logger.error('error when tried to connect MongoDB:', error.message);
-  });
+  mongoose.set('runValidators', true);
+  mongoose.set('strictQuery', false);
+  mongoose.connect(resolvedUri)
+    .then(() => {
+      logger.info('connected to MongoDB');
+    })
+    .catch((error) => {
+      logger.error('error when tried to connect MongoDB:', error.message);
+    });
+}).catch((error) => {
+  throw Error(`Failed to connect MongoDb: ${error}`);
+});
+
 
 app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);

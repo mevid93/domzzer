@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongoose';
 import Slave from '../src/models/slave';
 import User from '../src/models/user';
 import Vulnerability from '../src/models/vulnerability';
@@ -41,18 +40,18 @@ const nonExistingSlaveId = async (): Promise<string> => {
   });
   const savedSlave = await slave.save();
   await savedSlave.remove();
-  const id = savedSlave._id as ObjectId;
+  const id = savedSlave._id;
   return id.toString();
 };
 
 const slavesInDb = async () => {
   const slaves = await Slave.find({});
-  return slaves.map(slave => slave.toJSON());
+  return slaves;
 };
 
 const usersInDb = async () => {
   const users = await User.find({});
-  return users.map(user => user.toJSON());
+  return users;
 };
 
 const nonExistingUserId = async (): Promise<string> => {
@@ -63,7 +62,7 @@ const nonExistingUserId = async (): Promise<string> => {
   });
   const savedUser = await user.save();
   await savedUser.remove();
-  const id = savedUser._id as ObjectId;
+  const id = savedUser._id;
   return id.toString();
 };
 
@@ -81,13 +80,13 @@ const nonExistingVulnerabilityId = async (): Promise<string> => {
   const vulnerability = new Vulnerability(initialVulnerabilities[0]);
   const savedVulnerability = await vulnerability.save();
   await savedVulnerability.remove();
-  const id = savedVulnerability._id as ObjectId;
+  const id = savedVulnerability._id;
   return id.toString();
 };
 
 const vulnerabilitiesInDb = async () => {
   const vulnerabilities = await Vulnerability.find({});
-  return vulnerabilities.map(vulnerability => vulnerability.toJSON());
+  return vulnerabilities;
 };
 
 export default {

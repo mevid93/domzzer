@@ -1,5 +1,6 @@
 import { ObjectId } from "mongoose";
 import { Request } from 'express';
+import { Environment } from "../shared/enums";
 
 // custom Request that includes token
 export interface CustomRequest extends Request {
@@ -11,8 +12,9 @@ export interface Configuration {
   SALT_ROUNDS: number,
   SECRET: string,
   AES256_KEY: string,
-  MONGODB_URI: string,
-  PORT: number
+  MONGODB_URI: string | Promise<string>,
+  PORT: number,
+  ENVIRONMENT: Environment
 }
 
 // type for system information

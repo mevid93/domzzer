@@ -2,8 +2,6 @@
 
 ## Available Scripts
 
-In the project directory, you can run:
-
 ### `npm run tsc`
 
 Creates build folder and converts the typescript files into javascript files.
